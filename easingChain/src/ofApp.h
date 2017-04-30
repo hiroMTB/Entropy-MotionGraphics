@@ -13,8 +13,8 @@ class ofApp : public ofBaseApp{
         float length;
     
     struct EasingPrm{
-        float startTime;
-        float endTime;
+        int startFrame;
+        int endFrame;
         float startVal;
         float endVal;
         ofxeasing::function easing;
