@@ -1,36 +1,53 @@
 #include "ofApp.h"
 
-/*
 
+/*
     Replace ofTrueTypeFont::stringWidth function with following code
- 
+
     .h
- 	float stringWidth(char prepC, char c) const;
- 
+    float stringWidth(char prepC, char c) const;
+
     .cpp
-    ofRectangle ofTrueTypeFont::getStringBoundingBox(const std::string& c, float x, float y, bool vflip) const{
-        if(c.empty()){
-            return ofRectangle(x,y,0,0);
+    //-----------------------------------------------------------
+    float ofTrueTypeFont::stringWidth(char prevC, char c) const{
+        //ofRectangle rect = getStringBoundingBox(c, 0,0);
+        //return rect.width;
+        
+        GLfloat		X		= 0;
+        GLfloat		Y		= 0;
+        int newLineDirection		= 1;
+        
+        if(!ofIsVFlipped()){
+            // this would align multiline texts to the last line when vflip is disabled
+            //int lines = ofStringTimesInString(c,"\n");
+            //Y = lines*lineHeight;
+            newLineDirection = -1;
         }
         
-        ofMesh mesh = getStringMesh(c,x,y,vflip);
-        ofRectangle bb(std::numeric_limits<float>::max(),std::numeric_limits<float>::max(),0,0);
-        float maxX = std::numeric_limits<float>::min();
-        float maxY = std::numeric_limits<float>::min();
-        for(const auto & v: mesh.getVertices()){
-            bb.x = min(v.x,bb.x);
-            bb.y = min(v.y,bb.y);
-            maxX = max(v.x,maxX);
-            maxY = max(v.y,maxY);
+        try{
+            int cy = c - NUM_CHARACTER_TO_START;
+            if (c == '\n') {
+                return 0;
+            } else if( c == ' ' && spaceSize>0 ) {
+                X += spaceSize;
+                if(prevC > -1) {
+                    X += getKerning(c,prevC) * letterSpacing;
+                }
+            } else if(cy >=0 && cy<nCharacters){
+                if(prevC > -1) {
+                    X += getKerning(c,prevC) * letterSpacing;
+                }
+                X += cps[cy].advance * letterSpacing;
+            }
+        }catch(...){
         }
-        bb.width = maxX - bb.x;
-        bb.height = maxY - bb.y;
-        return bb;
-}
+        
+        return X;
+    }
 */
 
 void ofApp::setup(){
-	ofBackground(0);	
+	ofBackground(0);
 	ofTrueTypeFont::setGlobalDpi(72);
 
 	verdana14.load("verdana.ttf", 40, true, true);
