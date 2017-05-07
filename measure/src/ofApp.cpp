@@ -9,7 +9,7 @@ void ofApp::setup(){
     len = ofGetWidth() - vMargin*2;
 
     ofTrueTypeFont::setGlobalDpi(72);
-    font.load("font/KP Bob Bold.otf", 40.0f*scale);
+    font.load("font/Roboto-Medium.ttf", 40.0f*scale);
     font.setLetterSpacing(1.1);
     
     // make data
@@ -32,9 +32,9 @@ void ofApp::setup(){
     int prevx = 0;
     for( int i=0; i<age.size(); i++){
         Motion m;
-        m.age.val = std::get<0>(age[i]);
+        m.age.exp = std::get<0>(age[i]);
         m.age.text = std::get<1>(age[i]);
-        m.basex = ofMap(m.age.val, -44, 18, 0, len);
+        m.basex = ofMap(m.age.exp, -44, 18, 0, len);
         m.age.lineStartx = prevx;
         m.age.lineEndx = m.basex;
         m.setup();
@@ -59,12 +59,21 @@ void ofApp::draw(){
         ofSetLineWidth(lineW);
 
         bool startNext = true;
-        for( shared_ptr<Motion> m : ms){
-            if(startNext)m->startAnim();
+        for( int i=0; i<ms.size(); i++){
+
+            shared_ptr<Motion> m = ms[i];
+            
+            if(startNext){
+                m->startAnim();
+            }
+            
             m->update();
             //ofTranslate(0, 50);
             m->draw();
+            
             startNext = m->isFinished();
+            
+            
         }
         
     }ofPopMatrix();

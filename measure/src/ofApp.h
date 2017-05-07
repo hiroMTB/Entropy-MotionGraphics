@@ -17,7 +17,7 @@ public:
     void  setup();
     void  draw();
     
-    float vMargin = 50;
+    float vMargin = 100;
     float len;
     float lineW = 4;
     vector<shared_ptr<Motion>> ms;
