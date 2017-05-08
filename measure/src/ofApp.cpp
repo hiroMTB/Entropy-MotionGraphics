@@ -7,7 +7,8 @@ void ofApp::setup(){
     ofSetWindowPosition(0, 0);
     float scale = ofGetHeight()/1080.0f;
     len = ofGetWidth() - vMargin*2;
-
+    lineW *= scale;
+    
     ofTrueTypeFont::setGlobalDpi(72);
     font.load("font/Roboto-Medium.ttf", 40.0f*scale);
     font.setLetterSpacing(1.1);
@@ -16,7 +17,7 @@ void ofApp::setup(){
     vector<tuple<float, string>> age =
 
     // Please see excel file for exponential calc
-    //age log sec,   text
+    // age log sec,   text
     {   {   -43.0,   "0.000000000000000000000000000000000000000000 1 sec"},
         {   -32.0,   "0.0000000000000000000000000000001 sec"},
         {   -12.0,   "0.000000000001 sec"},
@@ -28,27 +29,67 @@ void ofApp::setup(){
         {    17.64,  "1380000000 years"}
     };
     
-    
     int prevx = 0;
-    for( int i=0; i<age.size(); i++){
+    
+    // setup global sequence
+    float fps = ofGetTargetFrameRate();
+    for(int i=0; i<age.size(); i++){
+        float duration = 7;
+        float startFrame =   1 + i*duration*fps;
+        float endFrame   =   (startFrame) + (duration-1)*fps;
+        seq.push_back( Seqfunc(  startFrame, [=](void){ startMotion(i); }) );
+        seq.push_back( Seqfunc(  endFrame,   [=](void){ stopMotion(i); }) );
+        cout << "func : " << startFrame << " - " << endFrame << endl;
+        
         Motion m;
         m.age.exp = std::get<0>(age[i]);
         m.age.text = std::get<1>(age[i]);
         m.basex = ofMap(m.age.exp, -44, 18, 0, len);
         m.age.lineStartx = prevx;
         m.age.lineEndx = m.basex;
-        m.setup();
+        m.setup(startFrame);
         ms.push_back(make_shared<Motion>(m));
         prevx = m.basex;
     }
-    
-    lineW *= scale;
 }
 
+void ofApp::startMotion(int i){
+
+    shared_ptr<Motion> m = ms[i];
+   
+    for(int j=0; j<=i; j++){
+        shared_ptr<Motion> m_before = ms[j];
+        Age & a = m_before->age;
+        a.turnOn(globalFrame);
+    }
+}
+
+void ofApp::stopMotion(int i){
+
+    shared_ptr<Motion> m = ms[i];
+    
+    for(int j=0; j<=i; j++){
+        shared_ptr<Motion> m_before = ms[j];
+        Age & a = m_before->age;
+        a.turnOff(globalFrame);
+    }
+}
+
+void ofApp::update(){
+    
+    globalFrame++;
+    
+    for (int i=0; i<seq.size(); i++) {
+        Seqfunc & s = seq[i];
+        int f = std::get<0>(s);
+        
+        if(f==globalFrame){
+            std::get<1>(s)();
+        }
+    }
+}
 
 void ofApp::draw(){
-    
-    nowFrame++;
     
     float x = vMargin;
     float y = ofGetHeight()*0.3;
@@ -60,28 +101,15 @@ void ofApp::draw(){
 
         bool startNext = true;
         for( int i=0; i<ms.size(); i++){
-
             shared_ptr<Motion> m = ms[i];
-            
-            if(startNext){
-                m->startAnim();
-            }
-            
-            m->update();
-            //ofTranslate(0, 50);
+            m->update(globalFrame);
             m->draw();
-            
-            startNext = m->isFinished();
-            
-            
         }
-        
     }ofPopMatrix();
         
 }
 
-
 int main( ){
-    ofSetupOpenGL(3840*0.6,1080*0.6,OF_WINDOW);
+    ofSetupOpenGL(3840*0.5,1080*0.5,OF_WINDOW);
     ofRunApp(ofApp::get());
 }

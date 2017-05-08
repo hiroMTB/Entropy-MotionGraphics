@@ -41,6 +41,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		45D624591EC0D3C6003FCB11 /* EasingPrm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EasingPrm.h; sourceTree = "<group>"; };
 		4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofApp.cpp; sourceTree = "<group>"; };
 		4D47AFB51EB5F8B800D3F83B /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofApp.h; sourceTree = "<group>"; };
 		4D72C5F91EBE86FD003D039A /* Motion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Motion.h; sourceTree = "<group>"; };
@@ -120,8 +121,9 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */,
 				4D47AFB51EB5F8B800D3F83B /* ofApp.h */,
+				4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */,
+				45D624591EC0D3C6003FCB11 /* EasingPrm.h */,
 				4D72C5F91EBE86FD003D039A /* Motion.h */,
 			);
 			path = src;

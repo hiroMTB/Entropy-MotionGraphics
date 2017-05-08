@@ -1,9 +1,10 @@
 #pragma once
 
 #include "ofMain.h"
+#include <map>
 
 class Motion;
-
+class EasingPrm;
 
 class ofApp : public ofBaseApp{
     
@@ -14,8 +15,12 @@ public:
         return app;
     }
     
-    void  setup();
-    void  draw();
+    void setup();
+    void draw();
+    void update();
+    
+    void startMotion(int i);
+    void stopMotion(int i);
     
     float vMargin = 100;
     float len;
@@ -24,6 +29,10 @@ public:
     
     ofTrueTypeFont font;
 
-    int nowFrame = -1;
+    int globalFrame = -1;
+    
+    typedef tuple<int, std::function<void(void)>> Seqfunc;
+    typedef vector<Seqfunc> SeqfuncCnt;
+    SeqfuncCnt seq;
 };
 
