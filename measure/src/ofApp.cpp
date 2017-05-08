@@ -11,15 +11,15 @@ void ofApp::setup(){
     
     ofTrueTypeFont::setGlobalDpi(72);
     font.load("font/Roboto-Medium.ttf", 40.0f*scale);
-    font.setLetterSpacing(1.1);
+    font.setLetterSpacing(1.05);
     
     // make data
     vector<tuple<float, string>> age =
 
     // Please see excel file for exponential calc
     // age log sec,   text
-    {   {   -43.0,   "0.000000000000000000000000000000000000000000 1 sec"},
-        {   -32.0,   "0.0000000000000000000000000000001 sec"},
+    {   {   -43.0,   "0.0000000000000000000\n000000000000000000000001 sec"},
+        {   -32.0,   "0.0000000000000000000\n000000000001 sec"},
         {   -12.0,   "0.000000000001 sec"},
         {     0.0,   "1 sec"},
         {     2.25,  "180 sec"},
@@ -31,9 +31,13 @@ void ofApp::setup(){
     
     int prevx = 0;
     
-    // setup global sequence
+    // Sequence
     float fps = ofGetTargetFrameRate();
     for(int i=0; i<age.size(); i++){
+        
+        //
+        //  Global timeline, trigger each motion group
+        //
         float duration = 7;
         float startFrame =   1 + i*duration*fps;
         float endFrame   =   (startFrame) + (duration-1)*fps;
@@ -41,15 +45,15 @@ void ofApp::setup(){
         seq.push_back( Seqfunc(  endFrame,   [=](void){ stopMotion(i); }) );
         cout << "func : " << startFrame << " - " << endFrame << endl;
         
-        Motion m;
-        m.age.exp = std::get<0>(age[i]);
-        m.age.text = std::get<1>(age[i]);
-        m.basex = ofMap(m.age.exp, -44, 18, 0, len);
-        m.age.lineStartx = prevx;
-        m.age.lineEndx = m.basex;
-        m.setup(startFrame);
-        ms.push_back(make_shared<Motion>(m));
-        prevx = m.basex;
+        shared_ptr<Motion> m(new Motion());
+        m->age.exp = std::get<0>(age[i]);
+        m->age.text = std::get<1>(age[i]);
+        m->basex = ofMap(m->age.exp, -44, 18, 0, len);
+        m->age.lineStartx = prevx;
+        m->age.lineEndx = m->basex;
+        m->setup(startFrame);
+        ms.push_back(m);
+        prevx = m->basex;
     }
 }
 

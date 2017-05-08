@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45D6245D1EC0F466003FCB11 /* Motion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D6245B1EC0F466003FCB11 /* Motion.cpp */; };
 		4D47AFB61EB5F8B800D3F83B /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 /* End PBXBuildFile section */
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		45D624591EC0D3C6003FCB11 /* EasingPrm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EasingPrm.h; sourceTree = "<group>"; };
+		45D6245B1EC0F466003FCB11 /* Motion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Motion.cpp; sourceTree = "<group>"; };
 		4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofApp.cpp; sourceTree = "<group>"; };
 		4D47AFB51EB5F8B800D3F83B /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofApp.h; sourceTree = "<group>"; };
 		4D72C5F91EBE86FD003D039A /* Motion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Motion.h; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */,
 				45D624591EC0D3C6003FCB11 /* EasingPrm.h */,
 				4D72C5F91EBE86FD003D039A /* Motion.h */,
+				45D6245B1EC0F466003FCB11 /* Motion.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -226,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D47AFB61EB5F8B800D3F83B /* ofApp.cpp in Sources */,
+				45D6245D1EC0F466003FCB11 /* Motion.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
