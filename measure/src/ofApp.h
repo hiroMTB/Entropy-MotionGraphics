@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include <map>
+#include "Measure.h"
 
 class Motion;
 class EasingPrm;
@@ -22,17 +22,23 @@ public:
     void startMotion(int i);
     void stopMotion(int i);
     
-    float vMargin = 100;
-    float len;
+    float vMargin;
+    float hMargin;
+
+    ofRectangle canvas;
     float lineW = 4;
     vector<shared_ptr<Motion>> ms;
     
     ofTrueTypeFont font;
+    ofTrueTypeFont font_m;
+    ofTrueTypeFont font_s;
 
     int globalFrame = -1;
     
     typedef tuple<int, std::function<void(void)>> Seqfunc;
     typedef vector<Seqfunc> SeqfuncCnt;
     SeqfuncCnt seq;
+    
+    Indicator ind;
 };
 

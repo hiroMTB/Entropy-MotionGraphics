@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		45D6245D1EC0F466003FCB11 /* Motion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D6245B1EC0F466003FCB11 /* Motion.cpp */; };
+		45D6245D1EC0F466003FCB11 /* Age.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D6245B1EC0F466003FCB11 /* Age.cpp */; };
+		45D624601EC122B2003FCB11 /* Temperature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D6245E1EC122B2003FCB11 /* Temperature.cpp */; };
+		45D624671EC12C96003FCB11 /* Velocity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D624641EC124EB003FCB11 /* Velocity.cpp */; };
+		45D624681EC12C96003FCB11 /* Scale.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D624651EC124F5003FCB11 /* Scale.cpp */; };
+		45D624691EC143CB003FCB11 /* Indicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D624661EC12957003FCB11 /* Indicator.cpp */; };
 		4D47AFB61EB5F8B800D3F83B /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 /* End PBXBuildFile section */
@@ -43,7 +47,12 @@
 
 /* Begin PBXFileReference section */
 		45D624591EC0D3C6003FCB11 /* EasingPrm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EasingPrm.h; sourceTree = "<group>"; };
-		45D6245B1EC0F466003FCB11 /* Motion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Motion.cpp; sourceTree = "<group>"; };
+		45D6245B1EC0F466003FCB11 /* Age.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Age.cpp; sourceTree = "<group>"; };
+		45D6245E1EC122B2003FCB11 /* Temperature.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Temperature.cpp; sourceTree = "<group>"; };
+		45D624611EC123CF003FCB11 /* Measure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Measure.h; sourceTree = "<group>"; };
+		45D624641EC124EB003FCB11 /* Velocity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Velocity.cpp; sourceTree = "<group>"; };
+		45D624651EC124F5003FCB11 /* Scale.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Scale.cpp; sourceTree = "<group>"; };
+		45D624661EC12957003FCB11 /* Indicator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Indicator.cpp; sourceTree = "<group>"; };
 		4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofApp.cpp; sourceTree = "<group>"; };
 		4D47AFB51EB5F8B800D3F83B /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofApp.h; sourceTree = "<group>"; };
 		4D72C5F91EBE86FD003D039A /* Motion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Motion.h; sourceTree = "<group>"; };
@@ -127,7 +136,12 @@
 				4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */,
 				45D624591EC0D3C6003FCB11 /* EasingPrm.h */,
 				4D72C5F91EBE86FD003D039A /* Motion.h */,
-				45D6245B1EC0F466003FCB11 /* Motion.cpp */,
+				45D624611EC123CF003FCB11 /* Measure.h */,
+				45D6245B1EC0F466003FCB11 /* Age.cpp */,
+				45D6245E1EC122B2003FCB11 /* Temperature.cpp */,
+				45D624651EC124F5003FCB11 /* Scale.cpp */,
+				45D624641EC124EB003FCB11 /* Velocity.cpp */,
+				45D624661EC12957003FCB11 /* Indicator.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -228,8 +242,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45D624691EC143CB003FCB11 /* Indicator.cpp in Sources */,
+				45D624671EC12C96003FCB11 /* Velocity.cpp in Sources */,
+				45D624681EC12C96003FCB11 /* Scale.cpp in Sources */,
+				45D624601EC122B2003FCB11 /* Temperature.cpp in Sources */,
+				45D6245D1EC0F466003FCB11 /* Age.cpp in Sources */,
 				4D47AFB61EB5F8B800D3F83B /* ofApp.cpp in Sources */,
-				45D6245D1EC0F466003FCB11 /* Motion.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
