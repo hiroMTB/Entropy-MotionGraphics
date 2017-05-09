@@ -59,8 +59,8 @@ void ofApp::setup(){
     vector<tuple<float, string>> temperature =
     
     //  temperature log celcius, text
-    {   {  32,   "100000000000000000000\n000000000000 ℃"},
-        {  22,   "100000000000000000000\n00 ℃"},
+    {   {  32,   "100000000000000000000000000000000 ℃"},
+        {  22,   "10000000000000000000000 ℃"},
         {  12,   "1000000000000 ℃"},
         {  10,   "10000000000 ℃"},
         {  9,    "1000000000 ℃"},
@@ -97,10 +97,10 @@ void ofApp::setup(){
         float duration = 16;
         float ageTurnOffTiming = 4.5;
         float startFrame =   1 + i*duration*fps;
-        float endFrame   =   startFrame + ageTurnOffTiming*fps;
-        seq.push_back( Seqfunc(  startFrame, [=](void){ startMotion(i); }) );
-        seq.push_back( Seqfunc(  endFrame,   [=](void){ stopMotion(i); }) );
-        cout << "func : " << startFrame << " - " << endFrame << endl;
+//        float endFrame   =   startFrame + ageTurnOffTiming*fps;
+//        seq.push_back( Seqfunc(  startFrame, [=](void){ startMotion(i); }) );
+//        seq.push_back( Seqfunc(  endFrame,   [=](void){ stopMotion(i); }) );
+//        cout << "func : " << startFrame << " - " << endFrame << endl;
         
         shared_ptr<Motion> m(new Motion());
         
@@ -123,9 +123,9 @@ void ofApp::setup(){
             m->tmprt.val  = std::get<0>(temperature[i]);
             m->tmprt.text = std::get<1>(temperature[i]);
             
-            float min = std::get<0>(temperature[0])+5;
-            float max = std::get<0>(temperature[8])-5;
-            m->basey = ofMap(m->tmprt.val, min, max, vMargin, canvas.height);
+            float min = std::get<0>(temperature[8])-2;
+            float max = std::get<0>(temperature[0])+2;
+            m->basey = ofMap(m->tmprt.val, min, max, canvas.height, 0);
             m->tmprt.lineStarty = 0;
             m->tmprt.lineEndy = canvas.height;
         }
@@ -140,7 +140,8 @@ void ofApp::setup(){
             m->scale.targetRectSize = ofMap(m->scale.val, min, max, 0, canvas.height*2);
         }
         
-        m->setup(startFrame);
+        int motionId = i;
+        m->setup(startFrame, motionId);
         ms.push_back(m);
         
         prevx = m->basex;
@@ -149,40 +150,40 @@ void ofApp::setup(){
     }
 }
 
-void ofApp::startMotion(int i){
-    
-    shared_ptr<Motion> m = ms[i];
-    
-    for(int j=0; j<=i; j++){
-        shared_ptr<Motion> m_before = ms[j];
-        Age & a = m_before->age;
-        a.turnOn(globalFrame);
-    }
-}
-
-void ofApp::stopMotion(int i){
-    
-    shared_ptr<Motion> m = ms[i];
-    
-    for(int j=0; j<=i; j++){
-        shared_ptr<Motion> m_before = ms[j];
-        Age & a = m_before->age;
-        a.turnOff(globalFrame);
-    }
-}
+//void ofApp::startMotion(int i){
+//    
+//    shared_ptr<Motion> m = ms[i];
+//    
+//    for(int j=0; j<=i; j++){
+//        shared_ptr<Motion> m_before = ms[j];
+//        Age & a = m_before->age;
+//        a.turnOn(frame);
+//    }
+//}
+//
+//void ofApp::stopMotion(int i){
+//    
+//    shared_ptr<Motion> m = ms[i];
+//    
+//    for(int j=0; j<=i; j++){
+//        shared_ptr<Motion> m_before = ms[j];
+//        Age & a = m_before->age;
+//        a.turnOff(frame);
+//    }
+//}
 
 void ofApp::update(){
     
-    globalFrame++;
+    frame++;
     
-    for (int i=0; i<seq.size(); i++) {
-        Seqfunc & s = seq[i];
-        int f = std::get<0>(s);
-        
-        if(f==globalFrame){
-            std::get<1>(s)();
-        }
-    }
+//    for (int i=0; i<seq.size(); i++) {
+//        Seqfunc & s = seq[i];
+//        int f = std::get<0>(s);
+//        
+//        if(f==frame){
+//            std::get<1>(s)();
+//        }
+//    }
 }
 
 void ofApp::draw(){
@@ -197,7 +198,7 @@ void ofApp::draw(){
         
         for( int i=0; i<ms.size(); i++){
             shared_ptr<Motion> m = ms[i];
-            m->update(globalFrame);
+            m->update(frame);
             m->draw();
         }
         
@@ -205,6 +206,13 @@ void ofApp::draw(){
         
     }ofPopMatrix();
     
+}
+
+void ofApp::keyPressed(int key){
+    
+    if(key==' '){
+        frame = -1;
+    }
 }
 
 int main(){
@@ -224,3 +232,4 @@ int main(){
     ofCreateWindow(s);
     ofRunApp(ofApp::get());
 }
+

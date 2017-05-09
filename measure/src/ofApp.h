@@ -18,6 +18,7 @@ public:
     void setup();
     void draw();
     void update();
+    void keyPressed(int key);
     
     void startMotion(int i);
     void stopMotion(int i);
@@ -33,7 +34,7 @@ public:
     ofTrueTypeFont font_m;
     ofTrueTypeFont font_s;
 
-    int globalFrame = -1;
+    int frame = -1;
     
     typedef tuple<int, std::function<void(void)>> Seqfunc;
     typedef vector<Seqfunc> SeqfuncCnt;

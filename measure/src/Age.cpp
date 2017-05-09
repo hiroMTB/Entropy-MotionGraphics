@@ -7,10 +7,12 @@
 void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
     
     m = _m;
-    float os = offsetFrame/(float)ofGetTargetFrameRate();
+    float fps = (float)ofGetTargetFrameRate();
+    float os = offsetFrame/fps;
     Indicator & ind = ofApp::get()->ind;
+    linePos = lineStartx;
     
-    // rotate indicator 90 deg
+    // turn on
     {
         EasingPrm e;
         e.setBySec(&(fake), "fake", os, os);
@@ -23,12 +25,23 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
                     
                     ind.posx = lineStartx;
                     ind.posy = 0;
+                    ind.textposx = 0;
+                    ind.textposy = 0;
+                    ofApp * app = ofApp::get();
+                    for(int j=0; j<m->motionId; j++){
+                        shared_ptr<Motion> m_before = app->ms[j];
+                        Age & a = m_before->age;
+                        a.turnOn(app->frame);
+                    }
                 }
                 );
         anim.push_back(e);
     }
 
     EasingPrm e;
+    e.setBySec(&(alphaAll), "alphaAll", os+0.0, os+0.3);
+    anim.push_back(e);
+    
     e.setBySec(&(ind.angle), "ind.angle", os+0.0, os+0.1, 90, 0);
     anim.push_back(e);
     
@@ -47,9 +60,7 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
     e.setBySec(&(ind.textAlpha), "ind.textAlpha", os+1.2, os+1.8, 0, 1);
     anim.push_back(e);
 
-    
-    // show text
-    e.setBySec(&expTxtAlpha, "expTxtAlpha", os+1, os+1.5);
+    e.setBySec(&textAlpha, "textAlpha", os+1, os+1.5);
     anim.push_back(e);
     
     // 90 deg long text, show digit
@@ -61,6 +72,25 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
     e.setBySec(&(ind.textAlpha), "ind.textAlpha", os+4.5, os+5, 1, 0);
     anim.push_back(e);
     
+    e.setBySec(&(alphaAll), "alphaAll", os+4.5, os+5, 1, 0);
+    anim.push_back(e);
+    
+    // turn off
+    {
+        EasingPrm e;
+        e.setBySec(&(fake), "fake", os+4.5, os+4.6);
+        e.setCb(
+                [&](void){
+                    ofApp * app = ofApp::get();
+                    for(int j=0; j<m->motionId; j++){
+                        shared_ptr<Motion> m_before = app->ms[j];
+                        Age & a = m_before->age;
+                        a.turnOff(app->frame);
+                    }
+                }
+                );
+        anim.push_back(e);
+    }
     
 }
 
@@ -68,11 +98,10 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
 void Age::draw(){
     
     ofPushMatrix();
-    ofTranslate(0, ofApp::get()->vMargin/6);
     
     // Horizontal Line
     ofSetColor(255, alphaAll*255.0f);
-    ofSetLineWidth(4);
+    ofSetLineWidth(5);
     ofDrawLine(lineStartx, 0, linePos, 0);
     
     // Vertical Line, short

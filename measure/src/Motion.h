@@ -7,6 +7,7 @@
 class Motion : public std::enable_shared_from_this<Motion> {
     
 public:
+    int motionId;
     int offsetFrame = 0;
     float basex  = 0;
     float basey  = 0;
@@ -16,7 +17,8 @@ public:
     Scale scale;
     Velocity vel;
     
-    void setup(int _offsetFrame){
+    void setup(int _offsetFrame, int mid){
+        motionId = mid;
         offsetFrame = _offsetFrame;
         float fps = ofGetTargetFrameRate();
         age.setup(offsetFrame, shared_from_this() );

@@ -25,7 +25,15 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
                     ind.text2 = "Light Year";
                     ind.textData1 = "10";
                     ind.textData2 = ofToString(val);
-
+                    ind.textposx = 0;
+                    ind.textposy = 0;
+                    
+                    ofApp * app = ofApp::get();
+                    for(int j=0; j<m->motionId; j++){
+                        shared_ptr<Motion> m_before = app->ms[j];
+                        Scale & s = m_before->scale;
+                        s.turnOn(app->frame);
+                    }
                 }
                 );
         anim.push_back(e);
@@ -65,6 +73,24 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
     
     e.setBySec(&(ind.textAlpha), "ind.textAlpha", os+4.5, os+5, 1, 0.0f);
     anim.push_back(e);
+    
+    // turn off
+    {
+        EasingPrm e;
+        e.setBySec(&(fake), "fake", os+4.5, os+4.6);
+        e.setCb(
+                [&](void){
+                    ofApp * app = ofApp::get();
+                    for(int j=0; j<m->motionId; j++){
+                        shared_ptr<Motion> m_before = app->ms[j];
+                        Scale & s = m_before->scale;
+                        s.turnOff(app->frame);
+                    }
+                }
+                );
+        anim.push_back(e);
+    }
+    
 }
 
 void Scale::draw(){

@@ -9,11 +9,12 @@ class Measure{
 public:
     shared_ptr<Motion> m;
     vector<EasingPrm> anim;
-    
+
     float   val;
     string  text;
     
     float alphaAll;
+    float textAlpha;
     float fake;
     
     virtual ~Measure(){};
@@ -29,14 +30,14 @@ public:
     void turnOn(int frame){
         float fps = ofGetTargetFrameRate();
         EasingPrm e;
-        e.setByFrame(&alphaAll, "alphaAll", frame, frame+fps, 0, 1.0f);
+        e.setByFrame(&alphaAll, "alphaAll", frame, frame+fps, 0, 0.3);
         anim.push_back(e);
     }
     
     void turnOff(int frame){
         float fps = ofGetTargetFrameRate();
         EasingPrm e;
-        e.setByFrame(&alphaAll, "alphaAll", frame, (frame+fps), 1, 0.0f);
+        e.setByFrame(&alphaAll, "alphaAll", frame, (frame+fps), 0.3, 0.0f);
         anim.push_back(e);
     }
 };
@@ -48,6 +49,10 @@ public:
     string textData1, textData2;
     float posx = 0;
     float posy = 0;
+    
+    float textposx = 0;
+    float textposy = 0;
+    
     float angle = 0;
     float triAlpha = 0;
     float textAlpha = 0;
@@ -64,7 +69,6 @@ public:
     
     // animation parameter
     float linePos;
-    float expTxtAlpha;
     float stringPos;
     
     void setup(float offsetFrame, const shared_ptr<Motion> m) override;
@@ -77,7 +81,8 @@ public:
     float lineStarty;
     float lineEndy;
     float linePosy;
-
+    float stringPos;
+    
     void setup(float offsetFrame, const shared_ptr<Motion> m) override;
     void draw() override;
 };
