@@ -1,5 +1,6 @@
 #include "Measure.h"
 #include "Motion.h"
+#include "Util.h"
 
 //
 //      class Age
@@ -102,14 +103,15 @@ void Age::draw(){
     
     // Horizontal Line
     ofSetColor(255, alphaAll*255.0f);
-    ofSetLineWidth(5);
-    ofDrawLine(lineStartx, 0, linePos, 0);
+    //ofSetLineWidth(5);
+    //ofDrawLine(lineStartx, 0, linePos, 0);
+    Util::drawLineAsRect(lineStartx, 0, linePos, 0, 5);
     
     // Vertical Line, short
     ofSetLineWidth(2);
     ofSetColor(255, alphaAll * 255.0f);
-    ofDrawLine(lineStartx, -5, lineStartx, 5);
-    ofDrawLine(linePos, -5, linePos, 5);
+    Util::drawLineAsRect(lineStartx, -5, lineStartx, 5, 4);
+    Util::drawLineAsRect(linePos, -5, linePos, 5, 4);
  
     // 90 deg text
     ofPushMatrix();

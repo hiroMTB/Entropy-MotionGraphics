@@ -4,6 +4,7 @@
 
 #include "Measure.h"
 #include "Motion.h"
+#include "Util.h"
 
 void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
     m = _m;
@@ -106,14 +107,14 @@ void Scale::draw(){
     
     int pos = text.size() * stringPos;
  
+    // Circle
+    Util::drawCircle(posx, posy, rectSize, 5);
+   
+    
     // text
     string show = text.substr(0, pos);
     ofApp::get()->font_s.drawString(show, posx+rectSize+100, posy+100);
     
-    // Circle
-    ofSetLineWidth(2);
-    ofNoFill();
-    ofDrawCircle(posx, posy, rectSize);
-        
+    
     ofPopMatrix();
 }

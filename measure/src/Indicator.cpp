@@ -5,6 +5,7 @@
 #include "ofMain.h"
 #include "ofApp.h"
 #include "Measure.h"
+#include "Util.h"
 
 void Indicator::setup(){}
 
@@ -35,11 +36,7 @@ void Indicator::draw(){
     ofFill();
     
     float distFromBase = 20;
-    ofSetLineWidth(10);
-    glLineWidth(5);
     ofDrawTriangle(0, -distFromBase, -6, -30-distFromBase, 6, -30-distFromBase);
-    ofDrawLine(0, -distFromBase, -6, -30-distFromBase);
-    ofDrawLine(0, -distFromBase,   6, -30-distFromBase);
-    
+
     ofPopMatrix();
 }

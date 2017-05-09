@@ -1,5 +1,6 @@
 #include "ofApp.h"
 #include "Motion.h"
+#include "Util.h"
 
 void ofApp::setup(){
     ofSetBackgroundColor(0);
@@ -19,11 +20,12 @@ void ofApp::setup(){
     lineW *= scale;
     
     exporter.setup(1920*2, 1080, 60, GL_RGB, 16);
-    exporter.setOutputDir("render");
+    exporter.setOutputDir("render2");
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
-    exporter.setCompression(ofxExportImageSequence::Compression::UNCOMPRESSED);
-    //exporter.startExport();
+    //exporter.setCompression(ofxExportImageSequence::Compression::UNCOMPRESSED);
+
+    exporter.startExport();
     
     ofTrueTypeFont::setGlobalDpi(72);
     
@@ -221,7 +223,8 @@ void ofApp::draw(){
     }ofPopMatrix();
     exporter.end();
     
-    exporter.draw(0, 0);
+    exporter.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight() );
+    
 }
 
 void ofApp::keyPressed(int key){

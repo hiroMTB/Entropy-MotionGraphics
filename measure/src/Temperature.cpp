@@ -4,7 +4,7 @@
 
 #include "Measure.h"
 #include "Motion.h"
-
+#include "Util.h"
 
 void Temperature::setup(float offsetFrame, const shared_ptr<Motion> _m){
     m = _m;
@@ -98,7 +98,7 @@ void Temperature::draw(){
     // Vertical Line
     ofSetColor(255, alphaAll*255.0f);
     ofSetLineWidth(5);
-    ofDrawLine(x, lineStarty, x, linePosy);
+    Util::drawLineAsRect(x, lineStarty, x, linePosy, 5);
     
     int pos = text.size() * stringPos;
     string show = text.substr(0, pos);

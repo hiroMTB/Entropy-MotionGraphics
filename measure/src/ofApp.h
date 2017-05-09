@@ -45,5 +45,7 @@ public:
 
     bool bExport = false;
     ofxExportImageSequence exporter;
+    
+    
 };
 
