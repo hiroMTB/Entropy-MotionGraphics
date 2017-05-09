@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45C260A11EC211E800B5EE5D /* ofxExportImageSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C2609C1EC211BD00B5EE5D /* ofxExportImageSequence.cpp */; };
+		45C260A51EC21D2B00B5EE5D /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C2609A1EC211BD00B5EE5D /* libtiff.a */; };
 		45D6245D1EC0F466003FCB11 /* Age.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D6245B1EC0F466003FCB11 /* Age.cpp */; };
 		45D624601EC122B2003FCB11 /* Temperature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D6245E1EC122B2003FCB11 /* Temperature.cpp */; };
 		45D624671EC12C96003FCB11 /* Velocity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D624641EC124EB003FCB11 /* Velocity.cpp */; };
@@ -46,6 +48,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		45C260931EC211BD00B5EE5D /* tiff.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tiff.h; sourceTree = "<group>"; };
+		45C260941EC211BD00B5EE5D /* tiffconf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tiffconf.h; sourceTree = "<group>"; };
+		45C260951EC211BD00B5EE5D /* tiffio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tiffio.h; sourceTree = "<group>"; };
+		45C260961EC211BD00B5EE5D /* tiffio.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = tiffio.hxx; sourceTree = "<group>"; };
+		45C260971EC211BD00B5EE5D /* tiffvers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tiffvers.h; sourceTree = "<group>"; };
+		45C2609A1EC211BD00B5EE5D /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtiff.a; sourceTree = "<group>"; };
+		45C2609C1EC211BD00B5EE5D /* ofxExportImageSequence.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxExportImageSequence.cpp; sourceTree = "<group>"; };
+		45C2609D1EC211BD00B5EE5D /* ofxExportImageSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxExportImageSequence.h; sourceTree = "<group>"; };
 		45D624591EC0D3C6003FCB11 /* EasingPrm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EasingPrm.h; sourceTree = "<group>"; };
 		45D6245B1EC0F466003FCB11 /* Age.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Age.cpp; sourceTree = "<group>"; };
 		45D6245E1EC122B2003FCB11 /* Temperature.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Temperature.cpp; sourceTree = "<group>"; };
@@ -69,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45C260A51EC21D2B00B5EE5D /* libtiff.a in Frameworks */,
 				E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -76,6 +87,70 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		45C260811EC211BD00B5EE5D /* ofxExportImageSequence */ = {
+			isa = PBXGroup;
+			children = (
+				45C260901EC211BD00B5EE5D /* libs */,
+				45C2609B1EC211BD00B5EE5D /* src */,
+			);
+			name = ofxExportImageSequence;
+			path = ../../../addons/ofxExportImageSequence;
+			sourceTree = "<group>";
+		};
+		45C260901EC211BD00B5EE5D /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				45C260911EC211BD00B5EE5D /* libtiff */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		45C260911EC211BD00B5EE5D /* libtiff */ = {
+			isa = PBXGroup;
+			children = (
+				45C260921EC211BD00B5EE5D /* include */,
+				45C260981EC211BD00B5EE5D /* lib */,
+			);
+			path = libtiff;
+			sourceTree = "<group>";
+		};
+		45C260921EC211BD00B5EE5D /* include */ = {
+			isa = PBXGroup;
+			children = (
+				45C260931EC211BD00B5EE5D /* tiff.h */,
+				45C260941EC211BD00B5EE5D /* tiffconf.h */,
+				45C260951EC211BD00B5EE5D /* tiffio.h */,
+				45C260961EC211BD00B5EE5D /* tiffio.hxx */,
+				45C260971EC211BD00B5EE5D /* tiffvers.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		45C260981EC211BD00B5EE5D /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				45C260991EC211BD00B5EE5D /* osx */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		45C260991EC211BD00B5EE5D /* osx */ = {
+			isa = PBXGroup;
+			children = (
+				45C2609A1EC211BD00B5EE5D /* libtiff.a */,
+			);
+			path = osx;
+			sourceTree = "<group>";
+		};
+		45C2609B1EC211BD00B5EE5D /* src */ = {
+			isa = PBXGroup;
+			children = (
+				45C2609C1EC211BD00B5EE5D /* ofxExportImageSequence.cpp */,
+				45C2609D1EC211BD00B5EE5D /* ofxExportImageSequence.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		4DADA84A1EB563940065E11A /* ofxEasing */ = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +178,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				45C260811EC211BD00B5EE5D /* ofxExportImageSequence */,
 				4DADA84A1EB563940065E11A /* ofxEasing */,
 			);
 			name = addons;
@@ -242,6 +318,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45C260A11EC211E800B5EE5D /* ofxExportImageSequence.cpp in Sources */,
 				45D624691EC143CB003FCB11 /* Indicator.cpp in Sources */,
 				45D624671EC12C96003FCB11 /* Velocity.cpp in Sources */,
 				45D624681EC12C96003FCB11 /* Scale.cpp in Sources */,
@@ -266,6 +343,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -284,6 +362,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
 					src,
+					../../../addons/ofxExportImageSequence/src,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
@@ -291,6 +370,7 @@
 					"-D__MACOSX_CORE__",
 					"-mtune=native",
 				);
+				OTHER_LDFLAGS = "../../../addons/ofxExportImageSequence-master/libs/libtiff/lib/osx/libtiff.a";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -299,6 +379,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -318,12 +399,14 @@
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
 					src,
+					../../../addons/ofxExportImageSequence/src,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
 					"-mtune=native",
 				);
+				OTHER_LDFLAGS = "../../../addons/ofxExportImageSequence-master/libs/libtiff/lib/osx/libtiff.a";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -350,7 +433,10 @@
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = /Applications;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					../../../addons/ofxExportImageSequence/libs/libtiff/lib/osx,
+				);
 				PRODUCT_NAME = measure.temp_caseinsensitive_renameDebug;
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
@@ -378,7 +464,10 @@
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = /Applications;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					../../../addons/ofxExportImageSequence/libs/libtiff/lib/osx,
+				);
 				PRODUCT_NAME = measure.temp_caseinsensitive_renameDebug;
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;

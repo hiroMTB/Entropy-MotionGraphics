@@ -102,16 +102,18 @@ void Scale::draw(){
      int x = ind.posx;
     
     ofPushMatrix();
+    ofSetColor(255, alphaAll*255.0f);
+    
+    int pos = text.size() * stringPos;
+ 
+    // text
+    string show = text.substr(0, pos);
+    ofApp::get()->font_s.drawString(show, posx+rectSize+100, posy+100);
     
     // Circle
-    ofSetColor(255, alphaAll*255.0f);
     ofSetLineWidth(2);
     ofNoFill();
     ofDrawCircle(posx, posy, rectSize);
-    
-    
-    int pos = text.size() * stringPos;
-    string show = text.substr(0, pos);
-    ofApp::get()->font_s.drawString(show, posx+rectSize+100, posy+100);
+        
     ofPopMatrix();
 }

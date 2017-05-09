@@ -7,13 +7,23 @@ void ofApp::setup(){
     ofSetCircleResolution(120);
     ofSetFullscreen(true);
     
-    float scale = ofGetWindowHeight()/1080.0f;
-    hMargin = ofGetWindowWidth() * 0.06;
-    vMargin = ofGetWindowHeight() * 0.2;
+    int w = 1920*2;
+    int h = 1080;
     
-    canvas.width = ofGetWindowWidth() - hMargin*2;
-    canvas.height = ofGetWindowHeight() - vMargin*2;
+    float scale = h/1080.0f;
+    hMargin = w * 0.06;
+    vMargin = h * 0.2;
+    
+    canvas.width = w - hMargin*2;
+    canvas.height = h - vMargin*2;
     lineW *= scale;
+    
+    exporter.setup(1920*2, 1080, 60, GL_RGB, 16);
+    exporter.setOutputDir("render");
+    exporter.setAutoExit(true);
+    exporter.setOverwriteSequence(true);
+    exporter.setCompression(ofxExportImageSequence::Compression::UNCOMPRESSED);
+    //exporter.startExport();
     
     ofTrueTypeFont::setGlobalDpi(72);
     
@@ -192,6 +202,9 @@ void ofApp::draw(){
     float x = hMargin;
     float y = vMargin;
     
+    exporter.begin();
+    ofBackground(0);
+    
     ofPushMatrix();{
         ofTranslate(x, y);
         ofSetColor(255);
@@ -206,7 +219,9 @@ void ofApp::draw(){
         ind.draw();
         
     }ofPopMatrix();
+    exporter.end();
     
+    exporter.draw(0, 0);
 }
 
 void ofApp::keyPressed(int key){

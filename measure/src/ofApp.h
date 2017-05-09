@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "Measure.h"
+#include "ofxExportImageSequence.h"
 
 class Motion;
 class EasingPrm;
@@ -41,5 +42,8 @@ public:
     SeqfuncCnt seq;
     
     Indicator ind;
+
+    bool bExport = false;
+    ofxExportImageSequence exporter;
 };
 
