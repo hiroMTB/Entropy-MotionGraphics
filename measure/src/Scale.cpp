@@ -25,6 +25,8 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
                     ind.text2 = "Light Year";
                     ind.textData1 = "10";
                     ind.textData2 = ofToString(val);
+                    ind.textUnit = "LY";
+
                     ind.textposx = 0;
                     ind.textposy = 0;
                     
@@ -67,6 +69,8 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
     e.setBySec(&(ind.textAlpha), "ind.textAlpha", os+1.6, os+2.8, 0, 1);
     anim.push_back(e);
 
+    e.setBySec(&stringPos, "stringPos", os+2, os+3);  //3.5f + text.size()*0.05f);
+    anim.push_back(e);
     
     e.setBySec(&alphaAll, "alphaAll", os+4.5, os+5, 1.0, 0.0f);
     anim.push_back(e);
@@ -95,16 +99,19 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
 
 void Scale::draw(){
     Indicator & ind = ofApp::get()->ind;
+     int x = ind.posx;
     
     ofPushMatrix();
     
-    // Vertical Line
+    // Circle
     ofSetColor(255, alphaAll*255.0f);
     ofSetLineWidth(2);
     ofNoFill();
-    //ofSetRectMode(OF_RECTMODE_CENTER);
     ofDrawCircle(posx, posy, rectSize);
     
     
+    int pos = text.size() * stringPos;
+    string show = text.substr(0, pos);
+    ofApp::get()->font_s.drawString(show, posx+rectSize+100, posy+100);
     ofPopMatrix();
 }

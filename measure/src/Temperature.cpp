@@ -23,7 +23,8 @@ void Temperature::setup(float offsetFrame, const shared_ptr<Motion> _m){
                     ind.text2 = "Celcius";
                     ind.textData1 = "10";
                     ind.textData2 = ofToString(val);
-                    
+                    ind.textUnit = "°C";
+
                     ofApp * app = ofApp::get();
                     for(int j=0; j<m->motionId; j++){
                         shared_ptr<Motion> m_before = app->ms[j];
@@ -48,11 +49,11 @@ void Temperature::setup(float offsetFrame, const shared_ptr<Motion> _m){
     e.setBySec(&(ind.posy), "ind.posy", os+1.0, os+1.5, ind.posy, m->basey);
     anim.push_back(e);
     
-    e.setTo(&(ind.textposy), "ind.textposy", os+1.0, os+1.5, 100);
+    e.setTo(&(ind.textposy), "ind.textposy", os+1.0, os+1.8, 160);
     anim.push_back(e);
     
 
-    e.setBySec(&(ind.textAlpha), "ind.textAlpha", os+1.2, os+1.8);
+    e.setBySec(&(ind.textAlpha), "ind.textAlpha", os+1.2, os+1.7);
     anim.push_back(e);
 
     e.setBySec(&textAlpha, "textAlpha", os+1, os+1.5);
@@ -99,7 +100,6 @@ void Temperature::draw(){
     ofSetLineWidth(5);
     ofDrawLine(x, lineStarty, x, linePosy);
     
-    ofSetColor(255, textAlpha * alphaAll * 255.0f);
     int pos = text.size() * stringPos;
     string show = text.substr(0, pos);
     ofApp::get()->font_s.drawString(show, x+100, m->basey+10);

@@ -9,7 +9,7 @@ void ofApp::setup(){
     
     float scale = ofGetWindowHeight()/1080.0f;
     hMargin = ofGetWindowWidth() * 0.06;
-    vMargin = ofGetWindowHeight() * 0.15;
+    vMargin = ofGetWindowHeight() * 0.2;
     
     canvas.width = ofGetWindowWidth() - hMargin*2;
     canvas.height = ofGetWindowHeight() - vMargin*2;
@@ -42,46 +42,46 @@ void ofApp::setup(){
     float fakeRate = 2.5f;
     
     // make data
-    vector<tuple<float, string>> age =
+    vector<tuple<float, float, string>> age =
     
     //  age log sec, text
-    {   {   -43.0/fakeRate,   "0.0000000000000000000000000000000000000000001 sec"},
-        {   -32.0/fakeRate,   "0.0000000000000000000000000000001 sec"},
-        {   -12.0/fakeRate,   "0.000000000001 sec"},
-        {     0.0,   "1 sec"},
-        {     2.25/fakeRate,  "180 sec"},
-        {    12.23*fakeRate,  "6000 years"},
-        {    13.10*fakeRate,  "400000 years"},
-        {    16.50*fakeRate,  "1000000000 years"},
-        {    17.64*fakeRate,  "1380000000 years"}
+    {   {   -43.0, -43.0/fakeRate,   "0.0000000000000000000000000000000000000000001 sec"},
+        {   -32.0, -32.0/fakeRate,   "0.0000000000000000000000000000001 sec"},
+        {   -12.0, -12.0/fakeRate,   "0.000000000001 sec"},
+        {    0.0,             0.0,   "1 sec"},
+        {   2.25,   2.25/fakeRate,  "180 sec"},
+        {   12.23,  12.23*fakeRate,  "6000 years"},
+        {   13.10, 13.10*fakeRate,  "400000 years"},
+        {   16.50, 16.50*fakeRate,  "1000000000 years"},
+        {   17.64, 17.64*fakeRate,  "1380000000 years"}
     };
     
     vector<tuple<float, string>> temperature =
     
     //  temperature log celcius, text
-    {   {  32,   "100000000000000000000000000000000 ℃"},
-        {  22,   "10000000000000000000000 ℃"},
-        {  12,   "1000000000000 ℃"},
-        {  10,   "10000000000 ℃"},
-        {  9,    "1000000000 ℃"},
-        {  4,    "10000 ℃"},
-        {  3,    "1000 ℃"},
-        {  -2,   "-260 ℃"},
-        {  -2.5, "−270.4 ℃"}
+    {   {  32,   "100000000000000000000000000000000 °C"},
+        {  22,   "10000000000000000000000 °C"},
+        {  12,   "1000000000000 °C"},
+        {  10,   "10000000000　°C"},
+        {  9,    "1000000000　°C"},
+        {  4,    "10000 °C"},
+        {  3,    "1000 °C"},
+        {  -2,   "-260 °C"},
+        {  -2.5, "−270.4 °C"}
     };
     
     vector<tuple<float, string>> scaleData =
     
     //  temperature log celcius, text
-    {   {  -10,   "1 Light Year"},
-        {  -4,   "10000 Light Year"},
-        {  2,  "100000000000000 Light Year"},
-        {  4,  "10000000000000000 Light Year"},
-        {  5,  "1000000000000000000 Light Year"},
-        {  10,   "1000000000000000000000000 Light Year"},
-        {  20,   "100000000000000000000000000 Light Year"},
-        {  40,   "10000000000000000000000000000 Light Year"},
-        {  30,   "1000000000000000000000000000000 Light Year"},
+    {   {  -10,  "0.0000000001 LY"},
+        {  -4,   "0.0001 LY"},
+        {  -2,   "0.01 LY"},
+        {   -1,  "0.1 LY"},
+        {  5,    "100000 LY"},
+        {  10,   "10000000000 LY"},
+        {  20,   "100000000000000000000 LY"},
+        {  30,   "1000000000000000000000000000000 LY"},
+        {  40,   "10000000000000000000000000000000000000000 LY"},
     };
     
     int prevx = 0;
@@ -108,12 +108,13 @@ void ofApp::setup(){
         {
             //  Age
             m->age.val = std::get<0>(age[i]);
-            m->age.text = std::get<1>(age[i]);
+            float fake = std::get<1>(age[i]);
+            m->age.text = std::get<2>(age[i]);
             
-            float min = std::get<0>(age[0])-5;
-            float max = std::get<0>(age[8])+20;
+            float min = std::get<1>(age[0])-5;
+            float max = std::get<1>(age[8])+20;
             
-            m->basex = ofMap(m->age.val, min, max, 0, canvas.width);
+            m->basex = ofMap(fake, min, max, 0, canvas.width);
             m->age.lineStartx = prevx;
             m->age.lineEndx = m->basex;
         }
@@ -123,7 +124,7 @@ void ofApp::setup(){
             m->tmprt.val  = std::get<0>(temperature[i]);
             m->tmprt.text = std::get<1>(temperature[i]);
             
-            float min = std::get<0>(temperature[8])-2;
+            float min = std::get<0>(temperature[8])-0.5;
             float max = std::get<0>(temperature[0])+2;
             m->basey = ofMap(m->tmprt.val, min, max, canvas.height, 0);
             m->tmprt.lineStarty = 0;

@@ -4,6 +4,26 @@
 
 class Motion;
 
+class Indicator{
+    
+public:
+    string text1, text2;
+    string textData1, textData2;
+    string textUnit;
+    float posx = 0;
+    float posy = 0;
+    
+    float textposx = 0;
+    float textposy = 0;
+    
+    float angle = 0;
+    float triAlpha = 0;
+    float textAlpha = 0;
+    void setup();
+    void draw();
+};
+
+
 class Measure{
     
 public:
@@ -16,6 +36,7 @@ public:
     float alphaAll;
     float textAlpha;
     float fake;
+    float stringPos;
     
     virtual ~Measure(){};
     virtual void setup(float offsetFrame, const shared_ptr<Motion> m){};
@@ -42,24 +63,6 @@ public:
     }
 };
 
-class Indicator{
-    
-public:
-    string text1, text2;
-    string textData1, textData2;
-    float posx = 0;
-    float posy = 0;
-    
-    float textposx = 0;
-    float textposy = 0;
-    
-    float angle = 0;
-    float triAlpha = 0;
-    float textAlpha = 0;
-    void setup();    
-    void draw();
-};
-
 
 class Age : public Measure{
     
@@ -67,9 +70,7 @@ public:
     float lineStartx;
     float lineEndx;
     
-    // animation parameter
     float linePos;
-    float stringPos;
     
     void setup(float offsetFrame, const shared_ptr<Motion> m) override;
     void draw() override;
@@ -81,8 +82,7 @@ public:
     float lineStarty;
     float lineEndy;
     float linePosy;
-    float stringPos;
-    
+
     void setup(float offsetFrame, const shared_ptr<Motion> m) override;
     void draw() override;
 };
@@ -92,6 +92,7 @@ class Scale : public Measure{
 public:
     float rectSize;
     float targetRectSize;
+    float angle;
     
     float posx, posy;
     void setup(float offsetFrame, const shared_ptr<Motion> m) override;

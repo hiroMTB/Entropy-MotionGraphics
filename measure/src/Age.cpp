@@ -22,7 +22,8 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
                     ind.text2 = "second";
                     ind.textData1 = "10";
                     ind.textData2 = ofToString(val);
-                    
+                    ind.textUnit = "sec";
+
                     ind.posx = lineStartx;
                     ind.posy = 0;
                     ind.textposx = 0;
