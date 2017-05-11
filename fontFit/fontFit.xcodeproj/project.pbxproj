@@ -44,7 +44,7 @@
 
 /* Begin PBXFileReference section */
 		45FDDFBC1EC4D78900374560 /* ofTrueTypeFontCustom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofTrueTypeFontCustom.cpp; path = ../../common/ofTrueTypeFontCustom.cpp; sourceTree = "<group>"; };
-		45FDDFBD1EC4D78900374560 /* ofTrueTypeFontCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofTrueTypeFontCustom.h; path = ../../common/ofTrueTypeFontCustom.h; sourceTree = "<group>"; };
+		45FDDFBD1EC4D78900374560 /* ofTrueTypeFontCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ofTrueTypeFontCustom.h; path = ../../common/ofTrueTypeFontCustom.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E4B69B5B0A3A1756003C02F2 /* fontFitDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fontFitDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
