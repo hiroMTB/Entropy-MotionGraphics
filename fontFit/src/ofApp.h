@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofTrueTypeFontCustom.h"
 
 class ofApp : public ofBaseApp{
     
@@ -11,10 +12,10 @@ public:
     void draw();
     void keyPressed(int key);
     
-    void fit( string & s, const ofTrueTypeFont& f, float fitWidth );
+    void fit( string & s, const ofTrueTypeFontCustom& f, float fitWidth );
     
     string typeStr;    
-    ofTrueTypeFont	verdana14;
+    ofTrueTypeFontCustom verdana14;
     float fitWidth;
 };
 

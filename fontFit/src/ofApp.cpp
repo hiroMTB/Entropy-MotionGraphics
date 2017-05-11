@@ -1,51 +1,5 @@
 #include "ofApp.h"
 
-
-/*
-    Replace ofTrueTypeFont::stringWidth function with following code
-
-    .h
-    float stringWidth(char prepC, char c) const;
-
-    .cpp
-    //-----------------------------------------------------------
-    float ofTrueTypeFont::stringWidth(char prevC, char c) const{
-        //ofRectangle rect = getStringBoundingBox(c, 0,0);
-        //return rect.width;
-        
-        GLfloat		X		= 0;
-        GLfloat		Y		= 0;
-        int newLineDirection		= 1;
-        
-        if(!ofIsVFlipped()){
-            // this would align multiline texts to the last line when vflip is disabled
-            //int lines = ofStringTimesInString(c,"\n");
-            //Y = lines*lineHeight;
-            newLineDirection = -1;
-        }
-        
-        try{
-            int cy = c - NUM_CHARACTER_TO_START;
-            if (c == '\n') {
-                return 0;
-            } else if( c == ' ' && spaceSize>0 ) {
-                X += spaceSize;
-                if(prevC > -1) {
-                    X += getKerning(c,prevC) * letterSpacing;
-                }
-            } else if(cy >=0 && cy<nCharacters){
-                if(prevC > -1) {
-                    X += getKerning(c,prevC) * letterSpacing;
-                }
-                X += cps[cy].advance * letterSpacing;
-            }
-        }catch(...){
-        }
-        
-        return X;
-    }
-*/
-
 void ofApp::setup(){
 	ofBackground(0);
 	ofTrueTypeFont::setGlobalDpi(72);
@@ -60,13 +14,13 @@ void ofApp::setup(){
     fit(typeStr, verdana14, fitWidth);
 }
 
-void ofApp::fit( string& text, const ofTrueTypeFont& font, float fitWidth ){
+void ofApp::fit( string& text, const ofTrueTypeFontCustom& font, float fitWidth ){
     float width = 0;
     
     text.erase( remove_if(text.begin(), text.end(), [](char c){return c=='\n';} ), text.end() );
     
     for(int i=0; i<text.size()-1; i++){
-        float w = font.stringWidth(text[i],text[i+1]);
+        float w = font.getCharWidth(text[i],text[i+1]);
         
         if(w>0){
             width += w;
