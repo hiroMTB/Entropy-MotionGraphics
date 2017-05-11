@@ -3,6 +3,8 @@
 #include "ofMain.h"
 #include "Measure.h"
 #include "ofxExportImageSequence.h"
+#include "TextBox.h"
+#include "ofTrueTypeFontCustom.h"
 
 class Motion;
 class EasingPrm;
@@ -31,9 +33,7 @@ public:
     float lineW = 4;
     vector<shared_ptr<Motion>> ms;
     
-    ofTrueTypeFont font;
-    ofTrueTypeFont font_m;
-    ofTrueTypeFont font_s;
+    unordered_map<string, ofTrueTypeFontCustom> font;
 
     int frame = -1;
     
@@ -46,6 +46,6 @@ public:
     bool bExport = false;
     ofxExportImageSequence exporter;
     
-    
+    TextBox tbL, tbR;
 };
 

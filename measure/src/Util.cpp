@@ -22,12 +22,38 @@ void Util::drawLineAsRect( float x1, float y1, float x2, float y2, float thickne
 
 void Util::drawCircle( float x, float y, float rad, float thickness){
 
-    if(ofGetStyle().color.a>0){
+    if(ofGetStyle().color.a>0 && 0<rad){
         ofPath circle;
         circle.setCircleResolution(120);
         circle.setColor(ofGetStyle().color);
-        circle.arc(x,y,rad,rad, 0,360);
-        circle.arc(x,y,rad-thickness,rad-thickness, 0,360);
+        circle.arc(x,y,rad+thickness/2,rad+thickness/2, 0,360);
+        circle.arc(x,y,rad-thickness/2,rad-thickness/2, 0,360);
         circle.draw();
+    }
+}
+
+void Util::eraseLineBreak(string &text){
+    text.erase( remove_if(text.begin(), text.end(), [](char c){return c=='\n';} ), text.end() );
+}
+
+void Util::fitText(string & text, const ofTrueTypeFontCustom& font, float fitWidth){
+    
+    if(fitWidth<=0 || text.size()<=1) return;
+    
+    float width = 0;
+    eraseLineBreak(text);
+    
+    for(int i=0; i<text.size()-1; i++){
+        float w = font.getCharWidth(text[i],text[i+1]);
+
+        if(w>0){
+            width += w;
+            //cout << w << ", " << width << endl;
+            if(width >= fitWidth){
+                text.insert(i, "\n");
+                i--;
+                width = 0;
+            }
+        }
     }
 }

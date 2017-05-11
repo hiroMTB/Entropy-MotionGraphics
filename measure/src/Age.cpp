@@ -19,6 +19,7 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
         e.setBySec(&(fake), "fake", os, os);
         e.setCb(
                 [&](void){
+                    // init indicator
                     ind.text1 = "Age";
                     ind.text2 = "second";
                     ind.textData1 = "10";
@@ -29,7 +30,17 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
                     ind.posy = 0;
                     ind.textposx = 0;
                     ind.textposy = 0;
+                    
+                    // init safe text box
                     ofApp * app = ofApp::get();
+                    app->tbR.reset();
+                    app->tbR.measure.t = "Age";
+                    app->tbR.base.t = "10";
+                    app->tbR.exp.t = ofToString(val);
+                    app->tbR.unit.t = "seconds";
+                    app->tbR.realNum.t = text;
+                    app->tbR.a = 1;
+
                     for(int j=0; j<m->motionId; j++){
                         shared_ptr<Motion> m_before = app->ms[j];
                         Age & a = m_before->age;
@@ -48,7 +59,6 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
     anim.push_back(e);
     
     // show indicator
-    
     e.setBySec(&(ind.triAlpha), "ind.triAlpha", os+0.1, os+0.6, 0, 1);
     anim.push_back(e);
     
@@ -68,17 +78,44 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
     // 90 deg long text, show digit
     e.setBySec(&stringPos, "stringPos", os+2, os+3);  //3.5f + text.size()*0.05f);
     anim.push_back(e);
- 
+
     
-    // show indicator
-    e.setBySec(&(ind.textAlpha), "ind.textAlpha", os+4.5, os+5, 1, 0);
-    anim.push_back(e);
-    
-    e.setBySec(&(alphaAll), "alphaAll", os+4.5, os+5, 1, 0);
-    anim.push_back(e);
-    
-    // turn off
+    // show safe text
     {
+        float stSafeT = 1.5;
+        ofApp * app = ofApp::get();
+        e.setBySec(&(app->tbR.base.tpos), "safeText", os+stSafeT+0.1, os+stSafeT+0.3);
+        anim.push_back(e);
+        
+        e.setBySec(&(app->tbR.measure.tpos), "safeText", os+stSafeT+0.2, os+stSafeT+0.5);
+        anim.push_back(e);
+        
+        e.setBySec(&(app->tbR.exp.tpos), "safeText", os+stSafeT+0.3, os+stSafeT+0.6);
+        anim.push_back(e);
+        
+        e.setBySec(&(app->tbR.realNum.tpos), "safeText", os+stSafeT+0.4, os+stSafeT+0.9);
+        anim.push_back(e);
+        
+        e.setBySec(&(app->tbR.unit.tpos), "safeText", os+stSafeT+0.7, os+stSafeT+1.1);
+        anim.push_back(e);
+        
+        e.setBySec(&(app->tbR.a), "safeText", os+4.5, os+5, 1, 0);
+        anim.push_back(e);
+    }
+    
+    
+    if(1){
+        
+        // turn off
+        e.setBySec(&(ind.textAlpha), "ind.textAlpha", os+4.5, os+5, 1, 0);
+        anim.push_back(e);
+        
+        e.setBySec(&(alphaAll), "alphaAll", os+4.5, os+5, 1, 0);
+        anim.push_back(e);
+        
+        e.setBySec(&(ind.textAlpha), "ind.textAlpha", os+4.5, os+5, 1, 0);
+        anim.push_back(e);
+        
         EasingPrm e;
         e.setBySec(&(fake), "fake", os+4.5, os+4.6);
         e.setCb(
@@ -121,7 +158,7 @@ void Age::draw(){
     ofSetColor(255, 255.0f * alphaAll);
     int pos = text.size() * stringPos;
     string show = text.substr(0, pos);
-    ofApp::get()->font_s.drawString(show, 0, 8);
+    ofApp::get()->font["S"].drawString(show, 0, 8);
     ofPopMatrix();
     
     ofPopMatrix();

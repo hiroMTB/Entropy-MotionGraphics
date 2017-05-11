@@ -13,10 +13,10 @@ void ofApp::setup(){
     
     float scale = h/1080.0f;
     hMargin = w * 0.06;
-    vMargin = h * 0.2;
+    vMargin = ofGetWindowHeight() * 0.243;
     
-    canvas.width = w - hMargin*2;
-    canvas.height = h - vMargin*2;
+    canvas.width = w * 0.4;
+    canvas.height = h * 0.633;
     lineW *= scale;
     
     exporter.setup(1920*2, 1080, 60, GL_RGB, 16);
@@ -29,26 +29,50 @@ void ofApp::setup(){
     
     ofTrueTypeFont::setGlobalDpi(72);
     
+    
+    tbL.area.width = ofGetWindowWidth() * 0.2128;
+    tbR.area.width = ofGetWindowWidth() * 0.2128;
+    
+    tbL.area.height = ofGetWindowHeight() * 0.633;
+    tbR.area.height = ofGetWindowHeight() * 0.633;
+    
+    tbL.area.x = ofGetWindowWidth() * 0.1679;
+    tbR.area.x = ofGetWindowWidth() * 0.6184;
+    
+    tbL.area.y = ofGetWindowHeight() * 0.243;
+    tbR.area.y = ofGetWindowHeight() * 0.243;
+    
+    font.insert( make_pair("XL", ofTrueTypeFontCustom() ) );
+    font.insert( make_pair("L", ofTrueTypeFontCustom() ) );
+    font.insert( make_pair("M", ofTrueTypeFontCustom() ) );
+    font.insert( make_pair("S", ofTrueTypeFontCustom() ) );
+
     if(0)
     {
-        font.load("font/Roboto-Thin.ttf", 75.0f*scale);
-        font.setLetterSpacing(1.05);
+        font["XL"].load("font/Roboto-Thin.ttf", 120.0f*scale);
+        font["XL"].setLetterSpacing(1.05);
+
+        font["L"].load("font/Roboto-Thin.ttf", 75.0f*scale);
+        font["L"].setLetterSpacing(1.05);
         
-        font_m.load("font/Roboto-Medium.ttf", 45.0f*scale);
-        font_m.setLetterSpacing(1.05);
+        font["M"].load("font/Roboto-Medium.ttf", 45.0f*scale);
+        font["M"].setLetterSpacing(1.05);
         
-        font_s.load("font/Roboto-Medium.ttf", 28.0f*scale);
-        font_s.setLetterSpacing(1.03);
+        font["S"].load("font/Roboto-Medium.ttf", 28.0f*scale);
+        font["S"].setLetterSpacing(1.03);
         
     }else{
-        font.load("font/KP Bob Light.otf", 75.0f*scale);
-        font.setLetterSpacing(1.05);
+        font["XL"].load("font/KP Bob Bold.otf", 120.0f*scale);
+        font["XL"].setLetterSpacing(1.05);
         
-        font_m.load("font/KP Bob Bold.otf", 45.0f*scale);
-        font_m.setLetterSpacing(1.05);
+        font["L"].load("font/KP Bob Bold.otf", 75.0f*scale);
+        font["L"].setLetterSpacing(1.05);
         
-        font_s.load("font/KP Bob Bold.otf", 24.0f*scale);
-        font_s.setLetterSpacing(1.03);
+        font["M"].load("font/KP Bob Bold.otf", 45.0f*scale);
+        font["M"].setLetterSpacing(1.05);
+        
+        font["S"].load("font/KP Bob Bold.otf", 24.0f*scale);
+        font["S"].setLetterSpacing(1.03);
     }
     
     float fakeRate = 2.5f;
@@ -57,15 +81,15 @@ void ofApp::setup(){
     vector<tuple<float, float, string>> age =
     
     //  age log sec, text
-    {   {   -43.0, -43.0/fakeRate,   "0.0000000000000000000000000000000000000000001 sec"},
-        {   -32.0, -32.0/fakeRate,   "0.0000000000000000000000000000001 sec"},
-        {   -12.0, -12.0/fakeRate,   "0.000000000001 sec"},
-        {    0.0,             0.0,   "1 sec"},
-        {   2.25,   2.25/fakeRate,  "180 sec"},
-        {   12.23,  12.23*fakeRate,  "6000 years"},
-        {   13.10, 13.10*fakeRate,  "400000 years"},
-        {   16.50, 16.50*fakeRate,  "1000000000 years"},
-        {   17.64, 17.64*fakeRate,  "1380000000 years"}
+    {   {   -43.0, -43.0/fakeRate,   "0.0000000000000000000000000000000000000000001"},
+        {   -32.0, -32.0/fakeRate,   "0.0000000000000000000000000000001"},
+        {   -12.0, -12.0/fakeRate,   "0.000000000001"},
+        {    0.0,             0.0,   "1"},
+        {   2.25,   2.25/fakeRate,  "180"},
+        {   12.23,  12.23*fakeRate,  "6000"},
+        {   13.10, 13.10*fakeRate,  "400000"},
+        {   16.50, 16.50*fakeRate,  "1000000000"},
+        {   17.64, 17.64*fakeRate,  "1380000000"}
     };
     
     vector<tuple<float, string>> temperature =
@@ -109,13 +133,8 @@ void ofApp::setup(){
         float duration = 16;
         float ageTurnOffTiming = 4.5;
         float startFrame =   1 + i*duration*fps;
-//        float endFrame   =   startFrame + ageTurnOffTiming*fps;
-//        seq.push_back( Seqfunc(  startFrame, [=](void){ startMotion(i); }) );
-//        seq.push_back( Seqfunc(  endFrame,   [=](void){ stopMotion(i); }) );
-//        cout << "func : " << startFrame << " - " << endFrame << endl;
         
         shared_ptr<Motion> m(new Motion());
-        
         
         {
             //  Age
@@ -163,40 +182,10 @@ void ofApp::setup(){
     }
 }
 
-//void ofApp::startMotion(int i){
-//    
-//    shared_ptr<Motion> m = ms[i];
-//    
-//    for(int j=0; j<=i; j++){
-//        shared_ptr<Motion> m_before = ms[j];
-//        Age & a = m_before->age;
-//        a.turnOn(frame);
-//    }
-//}
-//
-//void ofApp::stopMotion(int i){
-//    
-//    shared_ptr<Motion> m = ms[i];
-//    
-//    for(int j=0; j<=i; j++){
-//        shared_ptr<Motion> m_before = ms[j];
-//        Age & a = m_before->age;
-//        a.turnOff(frame);
-//    }
-//}
-
 void ofApp::update(){
     
     frame++;
     
-//    for (int i=0; i<seq.size(); i++) {
-//        Seqfunc & s = seq[i];
-//        int f = std::get<0>(s);
-//        
-//        if(f==frame){
-//            std::get<1>(s)();
-//        }
-//    }
 }
 
 void ofApp::draw(){
@@ -221,8 +210,12 @@ void ofApp::draw(){
         ind.draw();
         
     }ofPopMatrix();
-    exporter.end();
     
+    // text safe area
+    //tbL.draw();
+    tbR.draw();
+    
+    exporter.end();
     exporter.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight() );
     
 }
