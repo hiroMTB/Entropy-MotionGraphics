@@ -52,7 +52,6 @@
 
 /* Begin PBXFileReference section */
 		456585651EC4BA320028B82B /* TextBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextBox.h; sourceTree = "<group>"; };
-		45D624591EC0D3C6003FCB11 /* EasingPrm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EasingPrm.h; sourceTree = "<group>"; };
 		45D6245B1EC0F466003FCB11 /* Age.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Age.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45D6245E1EC122B2003FCB11 /* Temperature.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Temperature.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45D624611EC123CF003FCB11 /* Measure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Measure.h; sourceTree = "<group>"; };
@@ -60,7 +59,6 @@
 		45D624651EC124F5003FCB11 /* Scale.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Scale.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45D624661EC12957003FCB11 /* Indicator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Indicator.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45FDDFB51EC4CBA300374560 /* TextBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextBox.cpp; sourceTree = "<group>"; };
-		45FDDFB71EC4CD7F00374560 /* AnimationParts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnimationParts.h; sourceTree = "<group>"; };
 		45FDDFBF1EC4D82F00374560 /* ofTrueTypeFontCustom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofTrueTypeFontCustom.cpp; path = ../../common/ofTrueTypeFontCustom.cpp; sourceTree = "<group>"; };
 		45FDDFC01EC4D82F00374560 /* ofTrueTypeFontCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ofTrueTypeFontCustom.h; path = ../../common/ofTrueTypeFontCustom.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4D2E9B3F1EC5FF9500B1993E /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Util.cpp; path = ../../common/Util.cpp; sourceTree = "<group>"; };
@@ -75,6 +73,8 @@
 		4D2E9B761EC5FFF400B1993E /* ofxExportImageSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxExportImageSequence.h; sourceTree = "<group>"; };
 		4D2E9B7C1EC6019A00B1993E /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../addons/ofxExportImageSequence/libs/libtiff/lib/osx/libtiff.a; sourceTree = "<group>"; };
 		4D2E9B7E1EC601A400B1993E /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtiff.a; sourceTree = "<group>"; };
+		4D2E9B811EC6024500B1993E /* AnimationParts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AnimationParts.h; path = ../../common/AnimationParts.h; sourceTree = "<group>"; };
+		4D2E9B821EC602ED00B1993E /* EasingPrm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EasingPrm.h; path = ../../common/EasingPrm.h; sourceTree = "<group>"; };
 		4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = ofApp.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		4D47AFB51EB5F8B800D3F83B /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofApp.h; sourceTree = "<group>"; };
 		4D72C5F91EBE86FD003D039A /* Motion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Motion.h; sourceTree = "<group>"; };
@@ -179,6 +179,19 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		4D2E9B801EC6022300B1993E /* common */ = {
+			isa = PBXGroup;
+			children = (
+				45FDDFBF1EC4D82F00374560 /* ofTrueTypeFontCustom.cpp */,
+				45FDDFC01EC4D82F00374560 /* ofTrueTypeFontCustom.h */,
+				4D2E9B3F1EC5FF9500B1993E /* Util.cpp */,
+				4D2E9B401EC5FF9500B1993E /* Util.h */,
+				4D2E9B811EC6024500B1993E /* AnimationParts.h */,
+				4D2E9B821EC602ED00B1993E /* EasingPrm.h */,
+			);
+			name = common;
+			sourceTree = "<group>";
+		};
 		6948EE371B920CB800B5AC1A /* local_addons */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,9 +233,9 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				4D2E9B801EC6022300B1993E /* common */,
 				4D47AFB51EB5F8B800D3F83B /* ofApp.h */,
 				4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */,
-				45D624591EC0D3C6003FCB11 /* EasingPrm.h */,
 				4D72C5F91EBE86FD003D039A /* Motion.h */,
 				45D624611EC123CF003FCB11 /* Measure.h */,
 				45D6245B1EC0F466003FCB11 /* Age.cpp */,
@@ -232,11 +245,6 @@
 				45D624661EC12957003FCB11 /* Indicator.cpp */,
 				456585651EC4BA320028B82B /* TextBox.h */,
 				45FDDFB51EC4CBA300374560 /* TextBox.cpp */,
-				45FDDFB71EC4CD7F00374560 /* AnimationParts.h */,
-				45FDDFBF1EC4D82F00374560 /* ofTrueTypeFontCustom.cpp */,
-				45FDDFC01EC4D82F00374560 /* ofTrueTypeFontCustom.h */,
-				4D2E9B3F1EC5FF9500B1993E /* Util.cpp */,
-				4D2E9B401EC5FF9500B1993E /* Util.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
