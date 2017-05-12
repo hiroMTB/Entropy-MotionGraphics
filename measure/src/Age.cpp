@@ -1,6 +1,7 @@
 #include "Measure.h"
 #include "Motion.h"
 #include "Util.h"
+#include "FontManager.h"
 
 //
 //      class Age
@@ -158,7 +159,7 @@ void Age::draw(){
     ofSetColor(255, 255.0f * alphaAll);
     int pos = text.size() * stringPos;
     string show = text.substr(0, pos);
-    ofApp::get()->font["S"].drawString(show, 0, 8);
+    FontManager::font["S"].drawString(show, 0, 8);
     ofPopMatrix();
     
     ofPopMatrix();

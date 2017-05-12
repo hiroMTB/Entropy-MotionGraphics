@@ -5,6 +5,7 @@
 #include "Measure.h"
 #include "Motion.h"
 #include "Util.h"
+#include "FontManager.h"
 
 void Temperature::setup(float offsetFrame, const shared_ptr<Motion> _m){
     m = _m;
@@ -137,6 +138,6 @@ void Temperature::draw(){
     
     int pos = text.size() * stringPos;
     string show = text.substr(0, pos);
-    ofApp::get()->font["S"].drawString(show, x+100, m->basey+10);
+    FontManager::font["S"].drawString(show, x+100, m->basey+10);
     ofPopMatrix();
 }

@@ -147,7 +147,7 @@ void Scale::draw(){
     
     // text
     //string show = text.substr(0, pos);
-    //ofApp::get()->font["S"].drawString(show, posx+rectSize+100, posy+100);
+    //FontManager::font["S"].drawString(show, posx+rectSize+100, posy+100);
     
     ofPopMatrix();
 }

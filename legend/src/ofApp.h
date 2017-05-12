@@ -1,11 +1,10 @@
 #pragma once
 
 #include "ofMain.h"
-#include "Measure.h"
 #include "ofxExportImageSequence.h"
 #include "TextBox.h"
+#include "ofTrueTypeFontCustom.h"
 
-class Motion;
 class EasingPrm;
 
 class ofApp : public ofBaseApp{
@@ -22,27 +21,13 @@ public:
     void update();
     void keyPressed(int key);
     
-    void startMotion(int i);
-    void stopMotion(int i);
-    
     float vMargin;
     float hMargin;
 
     ofRectangle canvas;
-    float lineW = 4;
-    vector<shared_ptr<Motion>> ms;
     
     int frame = -1;
-    
-    typedef tuple<int, std::function<void(void)>> Seqfunc;
-    typedef vector<Seqfunc> SeqfuncCnt;
-    SeqfuncCnt seq;
-    
-    Indicator ind;
-
     bool bExport = false;
     ofxExportImageSequence exporter;
-    
-    TextBox tbL, tbR;
 };
 

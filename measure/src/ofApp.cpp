@@ -1,6 +1,7 @@
 #include "ofApp.h"
 #include "Motion.h"
 #include "Util.h"
+#include "FontManager.h"
 
 void ofApp::setup(){
     ofSetBackgroundColor(0);
@@ -19,6 +20,8 @@ void ofApp::setup(){
     canvas.height = h * 0.633;
     lineW *= scale;
     
+    FontManager::setup(scale);
+    
     exporter.setup(1920*2, 1080, 60, GL_RGB, 16);
     exporter.setOutputDir("render2");
     exporter.setAutoExit(true);
@@ -26,8 +29,6 @@ void ofApp::setup(){
     //exporter.setCompression(ofxExportImageSequence::Compression::UNCOMPRESSED);
 
     exporter.startExport();
-    
-    ofTrueTypeFont::setGlobalDpi(72);
     
     
     tbL.area.width = ofGetWindowWidth() * 0.2128;
@@ -41,39 +42,6 @@ void ofApp::setup(){
     
     tbL.area.y = ofGetWindowHeight() * 0.243;
     tbR.area.y = ofGetWindowHeight() * 0.243;
-    
-    font.insert( make_pair("XL", ofTrueTypeFontCustom() ) );
-    font.insert( make_pair("L", ofTrueTypeFontCustom() ) );
-    font.insert( make_pair("M", ofTrueTypeFontCustom() ) );
-    font.insert( make_pair("S", ofTrueTypeFontCustom() ) );
-
-    if(0)
-    {
-        font["XL"].load("font/Roboto-Thin.ttf", 120.0f*scale);
-        font["XL"].setLetterSpacing(1.05);
-
-        font["L"].load("font/Roboto-Thin.ttf", 75.0f*scale);
-        font["L"].setLetterSpacing(1.05);
-        
-        font["M"].load("font/Roboto-Medium.ttf", 45.0f*scale);
-        font["M"].setLetterSpacing(1.05);
-        
-        font["S"].load("font/Roboto-Medium.ttf", 28.0f*scale);
-        font["S"].setLetterSpacing(1.03);
-        
-    }else{
-        font["XL"].load("font/KP Bob Bold.otf", 120.0f*scale);
-        font["XL"].setLetterSpacing(1.05);
-        
-        font["L"].load("font/KP Bob Bold.otf", 75.0f*scale);
-        font["L"].setLetterSpacing(1.05);
-        
-        font["M"].load("font/KP Bob Bold.otf", 45.0f*scale);
-        font["M"].setLetterSpacing(1.05);
-        
-        font["S"].load("font/KP Bob Bold.otf", 24.0f*scale);
-        font["S"].setLetterSpacing(1.03);
-    }
     
     float fakeRate = 2.5f;
     

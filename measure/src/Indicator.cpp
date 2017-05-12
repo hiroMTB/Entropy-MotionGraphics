@@ -6,6 +6,7 @@
 #include "ofApp.h"
 #include "Measure.h"
 #include "Util.h"
+#include "FontManager.h"
 
 void Indicator::setup(){}
 
@@ -16,16 +17,16 @@ void Indicator::draw(){
     ofTranslate(textposx, textposy);
 
     ofSetColor(255, textAlpha*255.0);
-    ofApp::get()->font["L"].drawString(text1, 100, 0);
-    ofApp::get()->font["S"].drawString(text2, 100, 50);
+    FontManager::font["L"].drawString(text1, 100, 0);
+    FontManager::font["S"].drawString(text2, 100, 50);
     
-    float w1 = ofApp::get()->font["L"].stringWidth(text1);
-    float w2 = ofApp::get()->font["L"].stringWidth(textData1);
-    float w3 = ofApp::get()->font["M"].stringWidth(textData2);
+    float w1 = FontManager::font["L"].stringWidth(text1);
+    float w2 = FontManager::font["L"].stringWidth(textData1);
+    float w3 = FontManager::font["M"].stringWidth(textData2);
     
-    ofApp::get()->font["L"].drawString(textData1, w1+200, 50);       // base
-    ofApp::get()->font["M"].drawString(textData2, w1+270, -15);      // exp
-    ofApp::get()->font["L"].drawString(textUnit, w1+w2+w3+200, 50);  // unit
+    FontManager::font["L"].drawString(textData1, w1+200, 50);       // base
+    FontManager::font["M"].drawString(textData2, w1+270, -15);      // exp
+    FontManager::font["L"].drawString(textUnit, w1+w2+w3+200, 50);  // unit
 
     ofPopMatrix();
 
