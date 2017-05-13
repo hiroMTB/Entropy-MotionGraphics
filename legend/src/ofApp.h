@@ -29,5 +29,7 @@ public:
     int frame = -1;
     bool bExport = false;
     ofxExportImageSequence exporter;
+    
+    vector<ofVboMesh> mesh;
 };
 

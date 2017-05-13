@@ -57,3 +57,8 @@ void Util::fitText(string & text, const ofTrueTypeFontCustom& font, float fitWid
         }
     }
 }
+
+
+filesystem::path Util::getResFolder(){
+    return filesystem::path("../../../res/");
+}

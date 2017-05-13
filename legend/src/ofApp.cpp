@@ -35,7 +35,33 @@ void ofApp::setup(){
     vector<string> legend = {
         "aaa","aaa","aaa","aaa"
     };
+    
+    mesh.assign(3, ofVboMesh());
+    
+    ofFloatImage img;
+    filesystem::path imgDir = Util::getResFolder()/"paper"/"1";
+    img.load( (imgDir/"3.png").string() );
+    
+    int skip = 1;
+    float sc = 1.2f;
+    int width = img.getWidth();
+    int height = img.getHeight();
+    for(int y=0; y<height-skip; y+=skip) {
+        for(int x=0; x<width-skip; x+=skip) {
+            float b = img.getColor(x, y).b;
+            float br = img.getColor(x, y).getBrightness();
+            
+            if(br>0.95) continue; // remove white
+            if(b>0.1){
+                ofVec3f v(x, y, 0);
+                v *= sc;
+                mesh[0].addVertex(v);
+                mesh[0].addColor(ofFloatColor(1, b));
+            }
+        }
+    }
 }
+
 
 void ofApp::update(){
     
@@ -45,19 +71,18 @@ void ofApp::update(){
 
 void ofApp::draw(){
     
-    float x = hMargin;
-    float y = vMargin;
-    
 #ifdef EXPORT
     exporter.begin();
 #endif
     
-    ofBackground(0);
     
-    ofPushMatrix();{
-        ofTranslate(x, y);
-        ofSetColor(255);
+    ofBackground(0);
 
+    ofPushMatrix();{
+        ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
+        ofSetColor(255);
+        glPointSize(1.4);
+        mesh[0].draw(OF_MESH_POINTS);
         
     }ofPopMatrix();
     
@@ -83,7 +108,7 @@ int main(){
     s.setGLVersion(4, 1);
     s.multiMonitorFullScreen = false;
     s.windowMode = OF_WINDOW;
-    s.numSamples = 16;
+    s.numSamples = 2;
     s.width = 1920;
     s.height = 1080;
     s.monitor = 1;

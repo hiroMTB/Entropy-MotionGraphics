@@ -1,4 +1,5 @@
 #include "FontManager.h"
+#include "Util.h"
 
 unordered_map<string, ofTrueTypeFontCustom> FontManager::font;
 
@@ -11,8 +12,7 @@ void FontManager::setup(float scale, bool Kontra){
     font.insert( make_pair("M", ofTrueTypeFontCustom() ) );
     font.insert( make_pair("S", ofTrueTypeFontCustom() ) );
     
-    filesystem::path fontDir("../../../res/font");
-    
+    filesystem::path fontDir = Util::getResFolder()/"font";
     if(!Kontra)
     {
         font["XL"].load((fontDir/"Roboto-Thin.ttf").string(), 120.0f*scale);
