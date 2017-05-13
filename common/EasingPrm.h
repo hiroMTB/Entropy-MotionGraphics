@@ -6,7 +6,7 @@
 
 using namespace ofxeasing;
 
-struct EasingPrm{
+class EasingPrm{
 public:
     EasingPrm(){};
     void setBySec(float* t, string n, float startSec, float endSec, float sv=0, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In))
@@ -77,3 +77,53 @@ public:
     
 };
 
+class EasingPrmGroup{
+    
+private:
+    vector<EasingPrm> grp;
+  
+public:
+    
+    void add(const EasingPrm & e){
+        grp.push_back(e);
+    }
+    
+    void update(int frame){
+        for(int i=0; i<grp.size(); i++){
+            grp[i].update(frame);
+        }
+    }
+};
+
+
+class EasingUtil{
+    
+public:
+    
+    
+    static EasingPrmGroup makeBlink(float * target, int startFrame, int endFrame, float startVal, float endVal){
+        
+        EasingPrmGroup grp;
+        
+        for(int i=0; i<50; i++){
+            
+            int dur = 5+5.0*ofNoise(i * i * 0.2);
+            int sf1 = startFrame + i * dur;
+            int ef1 = startFrame + i * dur + dur/2;
+            int ef2 = startFrame + i * dur + dur;
+            
+            if(endFrame<ef2) break;
+            
+            ofxeasing::function e1 = ofxeasing::easing(ofxeasing::Function::Sine, ofxeasing::Type::InOut);
+            ofxeasing::function e2 = ofxeasing::easing(ofxeasing::Function::Bounce, ofxeasing::Type::InOut);
+            
+            EasingPrm a1, a2;
+            a1.setByFrame(target, "up", sf1, ef1, 0, 1, e1);
+            a2.setByFrame(target, "down", ef1, ef2, 1, 0, e2);
+            grp.add(a1);
+            grp.add(a2);
+        }
+        return grp;
+    }
+    
+};
