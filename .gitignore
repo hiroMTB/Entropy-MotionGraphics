@@ -92,7 +92,7 @@ _settings.xml
 
 *.psd
 *.eps
-*.svg
+!*.svg
 *.pdf
 *.ai
 
