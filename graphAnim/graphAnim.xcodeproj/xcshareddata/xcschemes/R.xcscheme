@@ -34,7 +34,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
             BuildableName = "fontDrawTestDebug.app"
-            BlueprintName = "fontDrawTest"
+            BlueprintName = "graphAnim"
             ReferencedContainer = "container:graphAnim.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -57,7 +57,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
             BuildableName = "fontDrawTestDebug.app"
-            BlueprintName = "fontDrawTest"
+            BlueprintName = "graphAnim"
             ReferencedContainer = "container:graphAnim.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
