@@ -107,3 +107,7 @@ _settings.xml
 *.gml
 
 *.xcscmblueprint
+
+!/res/**/*.png
+!/res/**/*.jpg
+!/res/**/*.jpeg
