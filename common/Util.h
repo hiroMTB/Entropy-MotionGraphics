@@ -12,6 +12,6 @@ public:
     static void drawCircle( float x, float y, float rad, float thickness);
 
     static void eraseLineBreak( string & text);
-    static void fitText(string & text, const ofTrueTypeFontCustom& font, float fitWidth);
+    static void stringFit(string & text, const ofTrueTypeFontCustom& font, float fitWidth);
     static filesystem::path getResFolder();
 };

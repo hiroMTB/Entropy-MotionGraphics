@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45AFB3551EC9EC39007FBF38 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45AFB3541EC9EC39007FBF38 /* libtiff.a */; };
+		45AFB35B1EC9EEA6007FBF38 /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AFB3591EC9EEA6007FBF38 /* FontManager.cpp */; };
 		45D6245D1EC0F466003FCB11 /* Age.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D6245B1EC0F466003FCB11 /* Age.cpp */; };
 		45D624601EC122B2003FCB11 /* Temperature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D6245E1EC122B2003FCB11 /* Temperature.cpp */; };
 		45D624671EC12C96003FCB11 /* Velocity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D624641EC124EB003FCB11 /* Velocity.cpp */; };
@@ -16,8 +18,6 @@
 		45FDDFC11EC4D82F00374560 /* ofTrueTypeFontCustom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45FDDFBF1EC4D82F00374560 /* ofTrueTypeFontCustom.cpp */; };
 		4D2E9B411EC5FF9500B1993E /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D2E9B3F1EC5FF9500B1993E /* Util.cpp */; };
 		4D2E9B7B1EC6011100B1993E /* ofxExportImageSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D2E9B751EC5FFF400B1993E /* ofxExportImageSequence.cpp */; };
-		4D2E9B7F1EC601A400B1993E /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2E9B7E1EC601A400B1993E /* libtiff.a */; };
-		4D2E9B891EC60CA300B1993E /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D2E9B881EC60CA300B1993E /* FontManager.cpp */; };
 		4D47AFB61EB5F8B800D3F83B /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 /* End PBXBuildFile section */
@@ -53,6 +53,10 @@
 
 /* Begin PBXFileReference section */
 		456585651EC4BA320028B82B /* TextBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextBox.h; sourceTree = "<group>"; };
+		45AFB3541EC9EC39007FBF38 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = "../../../../../../../../../../../../Downloads/ofxExportImageSequence-master/libs/lib/osx/libtiff.a"; sourceTree = "<group>"; };
+		45AFB3571EC9EC5A007FBF38 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../addons/ofxExportImageSequence/libs/lib/osx/libtiff.a; sourceTree = "<group>"; };
+		45AFB3591EC9EEA6007FBF38 /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FontManager.cpp; path = ../../common/FontManager.cpp; sourceTree = "<group>"; };
+		45AFB35A1EC9EEA6007FBF38 /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontManager.h; path = ../../common/FontManager.h; sourceTree = "<group>"; };
 		45D6245B1EC0F466003FCB11 /* Age.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Age.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45D6245E1EC122B2003FCB11 /* Temperature.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Temperature.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45D624611EC123CF003FCB11 /* Measure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Measure.h; sourceTree = "<group>"; };
@@ -72,11 +76,8 @@
 		4D2E9B701EC5FFF400B1993E /* tiffvers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tiffvers.h; sourceTree = "<group>"; };
 		4D2E9B751EC5FFF400B1993E /* ofxExportImageSequence.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxExportImageSequence.cpp; sourceTree = "<group>"; };
 		4D2E9B761EC5FFF400B1993E /* ofxExportImageSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxExportImageSequence.h; sourceTree = "<group>"; };
-		4D2E9B7C1EC6019A00B1993E /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../addons/ofxExportImageSequence/libs/libtiff/lib/osx/libtiff.a; sourceTree = "<group>"; };
-		4D2E9B7E1EC601A400B1993E /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtiff.a; sourceTree = "<group>"; };
 		4D2E9B811EC6024500B1993E /* AnimationParts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AnimationParts.h; path = ../../common/AnimationParts.h; sourceTree = "<group>"; };
 		4D2E9B821EC602ED00B1993E /* EasingPrm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EasingPrm.h; path = ../../common/EasingPrm.h; sourceTree = "<group>"; };
-		4D2E9B881EC60CA300B1993E /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FontManager.cpp; path = ../../common/FontManager.cpp; sourceTree = "<group>"; };
 		4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = ofApp.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		4D47AFB51EB5F8B800D3F83B /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofApp.h; sourceTree = "<group>"; };
 		4D72C5F91EBE86FD003D039A /* Motion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Motion.h; sourceTree = "<group>"; };
@@ -92,14 +93,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45AFB3551EC9EC39007FBF38 /* libtiff.a in Frameworks */,
 				E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */,
-				4D2E9B7F1EC601A400B1993E /* libtiff.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		45AFB3561EC9EC5A007FBF38 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				45AFB3571EC9EC5A007FBF38 /* libtiff.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4D2E9B421EC5FFEF00B1993E /* ofxEasing */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,7 +176,7 @@
 		4D2E9B721EC5FFF400B1993E /* osx */ = {
 			isa = PBXGroup;
 			children = (
-				4D2E9B7E1EC601A400B1993E /* libtiff.a */,
+				45AFB3541EC9EC39007FBF38 /* libtiff.a */,
 			);
 			path = osx;
 			sourceTree = "<group>";
@@ -184,13 +193,14 @@
 		4D2E9B801EC6022300B1993E /* common */ = {
 			isa = PBXGroup;
 			children = (
-				4D2E9B881EC60CA300B1993E /* FontManager.cpp */,
 				45FDDFBF1EC4D82F00374560 /* ofTrueTypeFontCustom.cpp */,
 				45FDDFC01EC4D82F00374560 /* ofTrueTypeFontCustom.h */,
 				4D2E9B3F1EC5FF9500B1993E /* Util.cpp */,
 				4D2E9B401EC5FF9500B1993E /* Util.h */,
 				4D2E9B811EC6024500B1993E /* AnimationParts.h */,
 				4D2E9B821EC602ED00B1993E /* EasingPrm.h */,
+				45AFB3591EC9EEA6007FBF38 /* FontManager.cpp */,
+				45AFB35A1EC9EEA6007FBF38 /* FontManager.h */,
 			);
 			name = common;
 			sourceTree = "<group>";
@@ -222,7 +232,6 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
-				4D2E9B7C1EC6019A00B1993E /* libtiff.a */,
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
@@ -230,6 +239,7 @@
 				BB4B014C10F69532006C3DED /* addons */,
 				6948EE371B920CB800B5AC1A /* local_addons */,
 				E4B69B5B0A3A1756003C02F2 /* measure.temp_caseinsensitive_renameDebug.app */,
+				45AFB3561EC9EC5A007FBF38 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -350,9 +360,9 @@
 			files = (
 				4D2E9B7B1EC6011100B1993E /* ofxExportImageSequence.cpp in Sources */,
 				45FDDFC11EC4D82F00374560 /* ofTrueTypeFontCustom.cpp in Sources */,
+				45AFB35B1EC9EEA6007FBF38 /* FontManager.cpp in Sources */,
 				45D624691EC143CB003FCB11 /* Indicator.cpp in Sources */,
 				45D624671EC12C96003FCB11 /* Velocity.cpp in Sources */,
-				4D2E9B891EC60CA300B1993E /* FontManager.cpp in Sources */,
 				45D624681EC12C96003FCB11 /* Scale.cpp in Sources */,
 				45D624601EC122B2003FCB11 /* Temperature.cpp in Sources */,
 				45D6245D1EC0F466003FCB11 /* Age.cpp in Sources */,
@@ -471,7 +481,7 @@
 				INSTALL_PATH = /Applications;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					../addons/ofxExportImageSequence/libs/libtiff/lib/osx,
+					../addons/ofxExportImageSequence/libs/lib/osx,
 				);
 				PRODUCT_NAME = measure.temp_caseinsensitive_renameDebug;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -502,7 +512,7 @@
 				INSTALL_PATH = /Applications;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					../addons/ofxExportImageSequence/libs/libtiff/lib/osx,
+					../addons/ofxExportImageSequence/libs/lib/osx,
 				);
 				PRODUCT_NAME = measure.temp_caseinsensitive_renameDebug;
 				USER_HEADER_SEARCH_PATHS = "";

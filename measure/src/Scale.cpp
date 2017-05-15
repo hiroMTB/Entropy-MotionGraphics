@@ -5,6 +5,7 @@
 #include "Measure.h"
 #include "Motion.h"
 #include "Util.h"
+#include "FontManager.h"
 
 void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
     m = _m;
@@ -146,8 +147,8 @@ void Scale::draw(){
    
     
     // text
-    //string show = text.substr(0, pos);
-    //FontManager::font["S"].drawString(show, posx+rectSize+100, posy+100);
+    string show = text.substr(0, pos);
+    FontManager::font["S"].drawString(show, posx+rectSize+100, posy+100);
     
     ofPopMatrix();
 }

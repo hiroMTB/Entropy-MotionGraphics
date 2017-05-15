@@ -26,8 +26,8 @@ void ofApp::fit( string& text, const ofTrueTypeFontCustom& font, float fitWidth 
             width += w;
             //cout << w << ", " << width << endl;
             if(width >= fitWidth){
-                text.insert(i, "\n");
-                i--;
+                text.insert(i+1, "\n");
+                i++;
                 width = 0;
             }
         }
@@ -46,8 +46,9 @@ void ofApp::draw(){
 
     ofTranslate(50, 150);
 	verdana14.drawString(typeStr, 0, 0);
+    
 
-    ofSetColor(225, 255, 0);
+    ofSetColor(225, 0, 0);
     ofNoFill();
     ofDrawLine(0, 0, fitWidth, 0);
     

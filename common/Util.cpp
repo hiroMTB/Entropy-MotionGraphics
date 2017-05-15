@@ -36,7 +36,7 @@ void Util::eraseLineBreak(string &text){
     text.erase( remove_if(text.begin(), text.end(), [](char c){return c=='\n';} ), text.end() );
 }
 
-void Util::fitText(string & text, const ofTrueTypeFontCustom& font, float fitWidth){
+void Util::stringFit(string & text, const ofTrueTypeFontCustom& font, float fitWidth){
     
     if(fitWidth<=0 || text.size()<=1) return;
     
@@ -50,8 +50,8 @@ void Util::fitText(string & text, const ofTrueTypeFontCustom& font, float fitWid
             width += w;
             //cout << w << ", " << width << endl;
             if(width >= fitWidth){
-                text.insert(i, "\n");
-                i--;
+                text.insert(i+1, "\n");
+                i++;
                 width = 0;
             }
         }

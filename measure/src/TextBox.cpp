@@ -42,7 +42,7 @@ void TextBox::draw(){
     
     // prepare text fitting
     y += 120;
-    Util::fitText(realNum.tshow, FontManager::font["L"], area.width);
+    Util::stringFit(realNum.tshow, FontManager::font["L"], area.width);
     FontManager::font["L"].drawString(realNum.tshow, area.x, y+area.y);
     Util::eraseLineBreak(realNum.tshow);
     
