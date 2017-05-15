@@ -18,5 +18,8 @@ public:
     vector<ofPolyline> poly;
     vector<vector<ofPoint>> point;
     ofxSVG svg;
+    
+    ofVboMesh vbo;
+    vector<ofVec3f> verts;
 };
 
