@@ -7,9 +7,9 @@ void ofApp::setup(){
 
     svgId = 1;
     char m[255];
-    sprintf(m, "%02d.svg", svgId);
+    sprintf(m, "eq%02d.svg", svgId);
     
-    filesystem::path filePath = Util::getResFolder()/"paper"/"svg"/"1"/string(m);
+    filesystem::path filePath = Util::getResFolder()/"equation"/"svg-CM"/string(m);
     loadSvg(filePath);
 
 }
@@ -32,7 +32,7 @@ void ofApp::loadSvg(filesystem::path filePath){
         ofPath & p = svg.getPathAt(i);
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
         p.tessellate();
-        //p.setColor(ofColor(255));
+        p.setColor(ofColor(255));
         path.push_back(p);
     }
     
@@ -72,11 +72,11 @@ void ofApp::update(){
 }
 
 void ofApp::draw(){
-    float scale = 1.5;
+    float scale = 12;
     
     ofBackground(0);
     ofSetColor(255);
-    ofTranslate(100, 100);
+    ofTranslate(-100, -100);
 
 //    if(1){
 //        ofPushMatrix();
@@ -133,8 +133,9 @@ void ofApp::keyPressed(int key){
     
     svgId++;
     char m[255];
-    sprintf(m, "%02d.svg", svgId);
+    sprintf(m, "eq%02d.svg", svgId);
     
-    filesystem::path filePath = Util::getResFolder()/"paper"/"svg"/"1"/string(m);
+    filesystem::path filePath = Util::getResFolder()/"equation"/"svg-CM"/string(m);
     loadSvg(filePath);
+    
 }
