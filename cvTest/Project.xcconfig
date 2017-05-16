@@ -10,8 +10,27 @@ ICON_NAME_DEBUG = icon-debug.icns
 ICON_NAME_RELEASE = icon.icns
 ICON_FILE_PATH = $(OF_PATH)/libs/openFrameworksCompiled/project/osx/
 
+
+
+OPENCV3_PATH = "/usr/local/Cellar/opencv3/3.2.0/"
+
+//OpenCV3 Header
+OPENCV3_HEADER = $(OPENCV3_PATH)/include
+
+
+////OpenCV3 Lib
+OPENCV3_LIB = $(OPENCV3_PATH)/lib/libopencv_calib3d.3.2.0.dylib $(OPENCV3_PATH)/lib/libopencv_calib3d.3.2.dylib $(OPENCV3_PATH)/lib/libopencv_calib3d.dylib $(OPENCV3_PATH)/lib/libopencv_core.3.2.0.dylib $(OPENCV3_PATH)/lib/libopencv_core.3.2.dylib $(OPENCV3_PATH)/lib/libopencv_core.dylib $(OPENCV3_PATH)/lib/libopencv_features2d.3.2.0.dylib $(OPENCV3_PATH)/lib/libopencv_features2d.3.2.dylib $(OPENCV3_PATH)/lib/libopencv_features2d.dylib $(OPENCV3_PATH)/lib/libopencv_flann.3.2.0.dylib $(OPENCV3_PATH)/lib/libopencv_flann.3.2.dylib $(OPENCV3_PATH)/lib/libopencv_flann.dylib $(OPENCV3_PATH)/lib/libopencv_highgui.3.2.0.dylib $(OPENCV3_PATH)/lib/libopencv_highgui.3.2.dylib $(OPENCV3_PATH)/lib/libopencv_highgui.dylib $(OPENCV3_PATH)/lib/libopencv_imgcodecs.3.2.0.dylib $(OPENCV3_PATH)/lib/libopencv_imgcodecs.3.2.dylib $(OPENCV3_PATH)/lib/libopencv_imgcodecs.dylib $(OPENCV3_PATH)/lib/libopencv_imgproc.3.2.0.dylib $(OPENCV3_PATH)/lib/libopencv_imgproc.3.2.dylib $(OPENCV3_PATH)/lib/libopencv_imgproc.dylib $(OPENCV3_PATH)/lib/libopencv_ml.3.2.0.dylib $(OPENCV3_PATH)/lib/libopencv_ml.3.2.dylib $(OPENCV3_PATH)/lib/libopencv_ml.dylib $(OPENCV3_PATH)/lib/libopencv_objdetect.3.2.0.dylib $(OPENCV3_PATH)/lib/libopencv_objdetect.3.2.dylib $(OPENCV3_PATH)/lib/libopencv_objdetect.dylib $(OPENCV3_PATH)/lib/libopencv_photo.3.2.0.dylib $(OPENCV3_PATH)/lib/libopencv_photo.3.2.dylib $(OPENCV3_PATH)/lib/libopencv_photo.dylib $(OPENCV3_PATH)/lib/libopencv_shape.3.2.0.dylib $(OPENCV3_PATH)/lib/libopencv_shape.3.2.dylib $(OPENCV3_PATH)/lib/libopencv_shape.dylib $(OPENCV3_PATH)/lib/libopencv_stitching.3.2.0.dylib $(OPENCV3_PATH)/lib/libopencv_stitching.3.2.dylib $(OPENCV3_PATH)/lib/libopencv_stitching.dylib $(OPENCV3_PATH)/lib/libopencv_superres.3.2.0.dylib $(OPENCV3_PATH)/lib/libopencv_superres.3.2.dylib $(OPENCV3_PATH)/lib/libopencv_superres.dylib $(OPENCV3_PATH)/lib/libopencv_video.3.2.0.dylib $(OPENCV3_PATH)/lib/libopencv_video.3.2.dylib $(OPENCV3_PATH)/lib/libopencv_video.dylib $(OPENCV3_PATH)/lib/libopencv_videoio.3.2.0.dylib $(OPENCV3_PATH)/lib/libopencv_videoio.3.2.dylib $(OPENCV3_PATH)/lib/libopencv_videoio.dylib $(OPENCV3_PATH)/lib/libopencv_videostab.3.2.0.dylib $(OPENCV3_PATH)/lib/libopencv_videostab.3.2.dylib $(OPENCV3_PATH)/lib/libopencv_videostab.dylib
+
+//OPENCV3_LIB = "$(OPENCV3_PATH)/lib/libopencv_calib3d.3.2.0.dylib" "$(OPENCV3_PATH)/lib/libopencv_calib3d.3.2.dylib" "$(OPENCV3_PATH)/lib/libopencv_calib3d.dylib" "$(OPENCV3_PATH)/lib/libopencv_core.3.2.0.dylib" "$(OPENCV3_PATH)/lib/libopencv_core.3.2.dylib" "$(OPENCV3_PATH)/lib/libopencv_core.dylib" "$(OPENCV3_PATH)/lib/libopencv_features2d.3.2.0.dylib" "$(OPENCV3_PATH)/lib/libopencv_features2d.3.2.dylib" "$(OPENCV3_PATH)/lib/libopencv_features2d.dylib" "$(OPENCV3_PATH)/lib/libopencv_flann.3.2.0.dylib" "$(OPENCV3_PATH)/lib/libopencv_flann.3.2.dylib" "$(OPENCV3_PATH)/lib/libopencv_flann.dylib" "$(OPENCV3_PATH)/lib/libopencv_highgui.3.2.0.dylib" "$(OPENCV3_PATH)/lib/libopencv_highgui.3.2.dylib" "$(OPENCV3_PATH)/lib/libopencv_highgui.dylib" "$(OPENCV3_PATH)/lib/libopencv_imgcodecs.3.2.0.dylib" "$(OPENCV3_PATH)/lib/libopencv_imgcodecs.3.2.dylib" "$(OPENCV3_PATH)/lib/libopencv_imgcodecs.dylib" "$(OPENCV3_PATH)/lib/libopencv_imgproc.3.2.0.dylib" "$(OPENCV3_PATH)/lib/libopencv_imgproc.3.2.dylib" "$(OPENCV3_PATH)/lib/libopencv_imgproc.dylib" "$(OPENCV3_PATH)/lib/libopencv_ml.3.2.0.dylib" "$(OPENCV3_PATH)/lib/libopencv_ml.3.2.dylib" "$(OPENCV3_PATH)/lib/libopencv_ml.dylib" "$(OPENCV3_PATH)/lib/libopencv_objdetect.3.2.0.dylib" "$(OPENCV3_PATH)/lib/libopencv_objdetect.3.2.dylib" "$(OPENCV3_PATH)/lib/libopencv_objdetect.dylib" "$(OPENCV3_PATH)/lib/libopencv_photo.3.2.0.dylib" "$(OPENCV3_PATH)/lib/libopencv_photo.3.2.dylib" "$(OPENCV3_PATH)/lib/libopencv_photo.dylib" "$(OPENCV3_PATH)/lib/libopencv_shape.3.2.0.dylib" "$(OPENCV3_PATH)/lib/libopencv_shape.3.2.dylib" "$(OPENCV3_PATH)/lib/libopencv_shape.dylib" "$(OPENCV3_PATH)/lib/libopencv_stitching.3.2.0.dylib" "$(OPENCV3_PATH)/lib/libopencv_stitching.3.2.dylib" "$(OPENCV3_PATH)/lib/libopencv_stitching.dylib" "$(OPENCV3_PATH)/lib/libopencv_superres.3.2.0.dylib" "$(OPENCV3_PATH)/lib/libopencv_superres.3.2.dylib" "$(OPENCV3_PATH)/lib/libopencv_superres.dylib" "$(OPENCV3_PATH)/lib/libopencv_video.3.2.0.dylib" "$(OPENCV3_PATH)/lib/libopencv_video.3.2.dylib" "$(OPENCV3_PATH)/lib/libopencv_video.dylib" "$(OPENCV3_PATH)/lib/libopencv_videoio.3.2.0.dylib" "$(OPENCV3_PATH)/lib/libopencv_videoio.3.2.dylib" "$(OPENCV3_PATH)/lib/libopencv_videoio.dylib" "$(OPENCV3_PATH)/lib/libopencv_videostab.3.2.0.dylib" "$(OPENCV3_PATH)/lib/libopencv_videostab.3.2.dylib" "$(OPENCV3_PATH)/lib/libopencv_videostab.dylib"
+
+
+
+
+
 //IF YOU WANT AN APP TO HAVE A CUSTOM ICON - PUT THEM IN YOUR DATA FOLDER AND CHANGE ICON_FILE_PATH to:
 //ICON_FILE_PATH = bin/data/
 
-OTHER_LDFLAGS = $(OF_CORE_LIBS) $(OF_CORE_FRAMEWORKS)
-HEADER_SEARCH_PATHS = $(OF_CORE_HEADERS)
+OTHER_LDFLAGS = $(OF_CORE_LIBS) $(OF_CORE_FRAMEWORKS) $(OPENCV3_LIB)
+HEADER_SEARCH_PATHS = $(OF_CORE_HEADERS) $(OPENCV3_HEADER)
+
+
