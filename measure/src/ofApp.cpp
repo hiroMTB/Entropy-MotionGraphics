@@ -5,7 +5,7 @@
 
 void ofApp::setup(){
     ofSetBackgroundColor(0);
-    ofSetFrameRate(60);
+    ofSetFrameRate(30);
     ofSetCircleResolution(120);
     ofSetFullscreen(true);
     
@@ -22,7 +22,7 @@ void ofApp::setup(){
     
     FontManager::setup(scale);
     
-    exporter.setup(1920*2, 1080, 60, GL_RGB, 16);
+    exporter.setup(1920*2, 1080, 30, GL_RGB, 16);
     exporter.setOutputDir("render2");
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);

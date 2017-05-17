@@ -33,7 +33,7 @@ void Temperature::setup(float offsetFrame, const shared_ptr<Motion> _m){
                     app->tbR.measure.t = "Temperature";
                     app->tbR.base.t = "10";
                     app->tbR.exp.t = ofToString(val);
-                    app->tbR.unit.t = "Celcius";
+                    app->tbR.unit.t = "Celsius";
                     app->tbR.realNum.t = text;
                     app->tbR.a = 1;
                     

@@ -24,7 +24,7 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
         e.setCb(
                 [&](void){
                     ind.text1 = "Scale";
-                    ind.text2 = "Light Year";
+                    ind.text2 = "Light Years";
                     ind.textData1 = "10";
                     ind.textData2 = ofToString(val);
                     ind.textUnit = "LY";
@@ -38,7 +38,7 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
                     app->tbR.measure.t = "Scale";
                     app->tbR.base.t = "10";
                     app->tbR.exp.t = ofToString(val);
-                    app->tbR.unit.t = "Light Year";
+                    app->tbR.unit.t = "Light Years";
                     app->tbR.realNum.t = text;
                     app->tbR.a = 1;
                     

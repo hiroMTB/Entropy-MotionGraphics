@@ -22,7 +22,7 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
                 [&](void){
                     // init indicator
                     ind.text1 = "Age";
-                    ind.text2 = "second";
+                    ind.text2 = "seconds";
                     ind.textData1 = "10";
                     ind.textData2 = ofToString(val);
                     ind.textUnit = "sec";
