@@ -12,13 +12,12 @@ int main( ){
     s.setGLVersion(4, 1);
     s.multiMonitorFullScreen = true;
     s.windowMode = OF_WINDOW;
-    s.numSamples = 8;
-    s.width = 1920*2;
+    s.numSamples = 4;
+    s.width = 2100;
     s.height = 1080;
     s.monitor = 2;
     s.decorated = true;
     ofCreateWindow(s);
     ofRunApp( new ofApp());
-     
-
+    
 }
