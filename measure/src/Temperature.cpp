@@ -21,7 +21,7 @@ void Temperature::setup(float offsetFrame, const shared_ptr<Motion> _m){
         e.setCb(
                 [&](void){
                     ind.text1 = "Temperature";
-                    ind.text2 = "Celcius";
+                    ind.text2 = "Celsius";
                     ind.textData1 = "10";
                     ind.textData2 = ofToString(val);
                     ind.textUnit = "°C";
@@ -48,7 +48,7 @@ void Temperature::setup(float offsetFrame, const shared_ptr<Motion> _m){
     }
     
     EasingPrm e;
-    e.setBySec(&(ind.angle), "ind.angle", os+0.1, os+0.5, 0, 90);
+    e.setBySec(&(ind.angle), "ind.angle", os+0.1, os+0.5, 0, -90);
     anim.push_back(e);
     
     e.setBySec(&alphaAll, "alphaAll", os+0.1, os+0.6, alphaAll, 1);
@@ -127,6 +127,7 @@ void Temperature::setup(float offsetFrame, const shared_ptr<Motion> _m){
 void Temperature::draw(){
     Indicator & ind = ofApp::get()->ind;
     int x = ind.posx;
+    int y = ind.posy;
     
     ofPushMatrix();
     ofTranslate( 0, 0);
@@ -136,8 +137,21 @@ void Temperature::draw(){
     ofSetLineWidth(5);
     Util::drawLineAsRect(x, lineStarty, x, linePosy, 5);
     
+    // Horizontal Line, short
+    ofSetColor(255, alphaAll*255.0f);
+    Util::drawLineAsRect(x-5,y, x+15, y, 4);
+    
+    ofSetColor(255, 255.0f*stringPos*alphaAll);
+    Util::drawLineAsRect(x-5,m->basey, x+15, m->basey, 4);
+    
     int pos = text.size() * stringPos;
     string show = text.substr(0, pos);
-    FontManager::font["S"].drawString(show, x+100, m->basey+10);
+    if(m->motionId == ofApp::get()->currentMotionId ){
+        int h = FontManager::font["M"].getGlyphBBox().height;
+        FontManager::font["M"].drawString(show, x+50, m->basey+h/3);
+    }else{
+        int h = FontManager::font["S"].getGlyphBBox().height;
+        FontManager::font["S"].drawString(show, x+50, m->basey+h/3);
+    }
     ofPopMatrix();
 }

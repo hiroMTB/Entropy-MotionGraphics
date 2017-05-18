@@ -82,6 +82,7 @@ public:
     float lineStarty;
     float lineEndy;
     float linePosy;
+    float targety;
 
     void setup(float offsetFrame, const shared_ptr<Motion> m) override;
     void draw() override;
@@ -93,6 +94,7 @@ public:
     float rectSize;
     float targetRectSize;
     float angle;
+    float arcAngle;
     
     float posx, posy;
     void setup(float offsetFrame, const shared_ptr<Motion> m) override;

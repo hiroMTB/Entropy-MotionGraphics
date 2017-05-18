@@ -20,6 +20,11 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
         e.setBySec(&(fake), "fake", os, os);
         e.setCb(
                 [&](void){
+
+                    // this is beggeining of motion
+                    ofApp * app = ofApp::get();
+                    app->currentMotionId = m->motionId;
+                    
                     // init indicator
                     ind.text1 = "Age";
                     ind.text2 = "seconds";
@@ -33,7 +38,6 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
                     ind.textposy = 0;
                     
                     // init safe text box
-                    ofApp * app = ofApp::get();
                     app->tbR.reset();
                     app->tbR.measure.t = "Age";
                     app->tbR.base.t = "10";
@@ -141,25 +145,32 @@ void Age::draw(){
     
     // Horizontal Line
     ofSetColor(255, alphaAll*255.0f);
-    //ofSetLineWidth(5);
-    //ofDrawLine(lineStartx, 0, linePos, 0);
-    Util::drawLineAsRect(lineStartx, 0, linePos, 0, 5);
+    Util::drawLineAsRect(0, 0, linePos, 0, 5);
     
     // Vertical Line, short
-    ofSetLineWidth(2);
     ofSetColor(255, alphaAll * 255.0f);
-    Util::drawLineAsRect(lineStartx, -5, lineStartx, 5, 4);
-    Util::drawLineAsRect(linePos, -5, linePos, 5, 4);
- 
+    Util::drawLineAsRect(0, 0, 0, 15, 4);
+    Util::drawLineAsRect(linePos, 0, linePos, 15, 4);
+
     // 90 deg text
     ofPushMatrix();
     ofTranslate(lineEndx, 0);
-    ofTranslate(0, 30);
+    
+    ofTranslate(0, 60);
     ofRotate(90);
+    
+    //ofTranslate(0, 100*(m->motionId+1));
     ofSetColor(255, 255.0f * alphaAll);
+    
     int pos = text.size() * stringPos;
     string show = text.substr(0, pos);
-    FontManager::font["S"].drawString(show, 0, 8);
+    if(m->motionId == ofApp::get()->currentMotionId ){
+        Util::stringFit(show, FontManager::font["M"], ofApp::get()->canvas.height);
+        FontManager::font["M"].drawString(show, 0, 8);
+        Util::eraseLineBreak(show);
+    }else{
+        FontManager::font["S"].drawString(show, 0, 8);
+    }
     ofPopMatrix();
     
     ofPopMatrix();

@@ -45,19 +45,27 @@ void ofApp::setup(){
     
     float fakeRate = 2.5f;
     
+    // text
+    // name of measure
+    // big Number(base), smalle number(incase of exponential)
+    // Mid number(in case of exponenctial)
+    // unit
+
+    // value at indicator
+    
     // make data
     vector<tuple<float, float, string>> age =
     
-    //  age log sec, text
-    {   {   -43.0, -43.0/fakeRate,   "0.0000000000000000000000000000000000000000001"},
-        {   -32.0, -32.0/fakeRate,   "0.0000000000000000000000000000001"},
-        {   -12.0, -12.0/fakeRate,   "0.000000000001"},
-        {    0.0,             0.0,   "1"},
-        {   2.25,   2.25/fakeRate,  "180"},
-        {   12.23,  12.23*fakeRate,  "6000"},
-        {   13.10, 13.10*fakeRate,  "400000"},
-        {   16.50, 16.50*fakeRate,  "1000000000"},
-        {   17.64, 17.64*fakeRate,  "1380000000"}
+    //  age log sec, position at measure, text
+    {   {   -43.0, -43.0/fakeRate,   "0.0000000000000000000000000000000000000000001 sec"},
+        {   -32.0, -32.0/fakeRate,   "0.0000000000000000000000000000001 sec"},
+        {   -12.0, -12.0/fakeRate,   "0.000000000001 sec"},
+        {    0.0,             0.0,   "1 sec"},
+        {   2.25,   2.25/fakeRate,  "180 sec"},
+        {   12.23,  12.23*fakeRate,  "6000 years"},
+        {   13.10, 13.10*fakeRate,  "400000 years"},
+        {   16.50, 16.50*fakeRate,  "1000000000 years"},
+        {   17.64, 17.64*fakeRate,  "1380000000 years"}
     };
     
     vector<tuple<float, string>> temperature =
@@ -114,7 +122,7 @@ void ofApp::setup(){
             float max = std::get<1>(age[8])+20;
             
             m->basex = ofMap(fake, min, max, 0, canvas.width);
-            m->age.lineStartx = prevx;
+            m->age.lineStartx = 0; //prevx;
             m->age.lineEndx = m->basex;
         }
         
@@ -189,11 +197,16 @@ void ofApp::draw(){
 }
 
 void ofApp::keyPressed(int key){
-    
-    if(key==' '){
-        frame = -1;
-    }
 }
+
+float ofApp::getExportWidth(){
+    return exporter.getFbo().getWidth();
+}
+
+float ofApp::getExportHeight(){
+    return exporter.getFbo().getHeight();
+}
+
 
 int main(){
     

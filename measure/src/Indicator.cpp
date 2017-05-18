@@ -38,7 +38,7 @@ void Indicator::draw(){
     ofFill();
     
     float distFromBase = 20;
-    ofDrawTriangle(0, -distFromBase, -6, -30-distFromBase, 6, -30-distFromBase);
+    ofDrawTriangle(0, -distFromBase, -10, -30-distFromBase, 0, -30-distFromBase);
 
     ofPopMatrix();
 }

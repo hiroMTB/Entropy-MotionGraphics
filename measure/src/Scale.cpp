@@ -47,6 +47,8 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
                         Scale & s = m_before->scale;
                         s.turnOn(app->frame);
                     }
+                    
+                    arcAngle = 0;
                 }
                 );
         anim.push_back(e);
@@ -54,10 +56,10 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
     
     // show indicator
     EasingPrm e;
-    e.setBySec(&(ind.angle), "ind.angle", os, os+1, 90, 280);
+    e.setBySec(&(ind.angle), "ind.angle", os, os+1.4, -90, -250);
     anim.push_back(e);
     
-    e.setBySec(&alphaAll, "alphaAll", os+0, os+0.5, alphaAll, 1);
+    e.setBySec(&alphaAll, "alphaAll", os+0, os+0.75, alphaAll, 1);
     anim.push_back(e);
     
 //    e.setTo(&(ind.posx), "ind.posx", os+0.5, os+1.2, posx );
@@ -66,15 +68,18 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
 //    anim.push_back(e);
 
     
-    e.setTo(&(ind.triAlpha), "ind.triAlpha", os+0.2, os+0.9, 0);
+    e.setTo(&(ind.triAlpha), "ind.triAlpha", os+0.2, os+1.4, 0);
     anim.push_back(e);
     
     e.setBySec(&(rectSize), "rectSize", os+1.5, os+2.5, 0, targetRectSize,
-               ofxeasing::easing(Function::Exponential, Type::Out));
+               easing(Function::Exponential, Type::Out));
     anim.push_back(e);
     
+    e.setBySec(&(arcAngle), "arcAngle", os+1.5, os+2.3, 0, 360);
+    anim.push_back(e);
+
     e.setTo(&(ind.posx), "ind.posx", os+1.5, os+2.5, m->basex+targetRectSize,
-            ofxeasing::easing(Function::Exponential, Type::Out));
+            easing(Function::Exponential, Type::Out));
     anim.push_back(e);
 
     e.setBySec(&(ind.textAlpha), "ind.textAlpha", os+1.6, os+2.8, 0, 1);
@@ -83,6 +88,8 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
     e.setBySec(&stringPos, "stringPos", os+2, os+3);  //3.5f + text.size()*0.05f);
     anim.push_back(e);
     
+    e.setBySec(&angle, "angle", os+1.6, os+5.5, 0, 15);
+    anim.push_back(e);
     
     // show safe text
     {
@@ -134,6 +141,8 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
 }
 
 void Scale::draw(){
+    bool highlight = m->motionId == ofApp::get()->currentMotionId;
+    
     Indicator & ind = ofApp::get()->ind;
      int x = ind.posx;
     
@@ -143,12 +152,33 @@ void Scale::draw(){
     int pos = text.size() * stringPos;
  
     // Circle
-    Util::drawCircle(posx, posy, rectSize, 9);
-   
+    ofTranslate(posx, posy);
+    if(highlight)
+       ofRotate(angle);
+
+    if(highlight){
+        Util::drawArc(0, 0, rectSize, 9, 0, arcAngle);
+    }else{
+        Util::drawCircle(0, 0, rectSize, 9);
+    }
+    
+    if(rectSize>2 && highlight){
+        ofFill();
+        ofDrawCircle(0, 0, 2);
+        Util::drawLineAsRect(rectSize, 0, rectSize+70, 0, 3);
+    }
+    
     
     // text
     string show = text.substr(0, pos);
-    FontManager::font["S"].drawString(show, posx+rectSize+100, posy+100);
-    
+    if(rectSize<ofApp::get()->getExportHeight()*0.4){
+        if(highlight){
+            float h = FontManager::font["M"].stringHeight(show);
+            FontManager::font["M"].drawString(show, rectSize+100, h/2);
+        }else{
+            float h = FontManager::font["S"].stringHeight(show);
+            FontManager::font["S"].drawString(show, rectSize+100, h/2);
+        }
+    }
     ofPopMatrix();
 }

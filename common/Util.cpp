@@ -32,6 +32,35 @@ void Util::drawCircle( float x, float y, float rad, float thickness){
     }
 }
 
+void Util::drawArc( float x, float y, float rad, float thickness, float startAngle, float endAngle){
+
+    ofNoFill();
+    
+    if(ofGetStyle().color.a>0 && 0<rad){
+        ofPath arc;
+        arc.setColor(ofGetStyle().color);
+        arc.setCircleResolution(120);
+
+        ofPoint outerStartPoint;
+        outerStartPoint.x = x + (rad+thickness/2)*cos(ofDegToRad(startAngle));
+        outerStartPoint.y = y + (rad+thickness/2)*sin(ofDegToRad(startAngle));
+
+        ofPoint innerEndPoint;
+        innerEndPoint.x = x + (rad-thickness/2)*cos(ofDegToRad(endAngle));
+        innerEndPoint.y = y + (rad-thickness/2)*sin(ofDegToRad(endAngle));
+        
+        arc.arc(ofPoint(x,y), rad+thickness/2,rad+thickness/2, startAngle, endAngle, true);
+        arc.lineTo(innerEndPoint);
+        arc.arc( ofPoint(x,y),rad-thickness/2,rad-thickness/2, endAngle, startAngle, false);
+        //arc.lineTo(outerStartPoint);
+        
+        arc.close();
+        
+        arc.draw();
+    }
+}
+
+
 void Util::eraseLineBreak(string &text){
     text.erase( remove_if(text.begin(), text.end(), [](char c){return c=='\n';} ), text.end() );
 }

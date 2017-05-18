@@ -22,8 +22,9 @@ public:
     void update();
     void keyPressed(int key);
     
-    void startMotion(int i);
-    void stopMotion(int i);
+    float getExportWidth();
+    float getExportHeight();
+    
     
     float vMargin;
     float hMargin;
@@ -44,5 +45,7 @@ public:
     ofxExportImageSequence exporter;
     
     TextBox tbL, tbR;
+    
+    int currentMotionId = 0;
 };
 
