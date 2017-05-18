@@ -49,6 +49,7 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
                     }
                     
                     arcAngle = 0;
+                    angle = -15;
                 }
                 );
         anim.push_back(e);
@@ -88,7 +89,7 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
     e.setBySec(&stringPos, "stringPos", os+2, os+3);  //3.5f + text.size()*0.05f);
     anim.push_back(e);
     
-    e.setBySec(&angle, "angle", os+1.6, os+5.5, 0, 15);
+    e.setBySec(&angle, "angle", os+1.2, os+4.1, -15, 0);
     anim.push_back(e);
     
     // show safe text
@@ -170,8 +171,9 @@ void Scale::draw(){
     
     
     // text
-    string show = text.substr(0, pos);
-    if(rectSize<ofApp::get()->getExportHeight()*0.4){
+    if(rectSize < ofApp::get()->getExportHeight()*0.2){
+        string show = text.substr(0, pos);
+
         if(highlight){
             float h = FontManager::font["M"].stringHeight(show);
             FontManager::font["M"].drawString(show, rectSize+100, h/2);

@@ -28,7 +28,7 @@ void ofApp::setup(){
     exporter.setOverwriteSequence(true);
     //exporter.setCompression(ofxExportImageSequence::Compression::UNCOMPRESSED);
 
-    exporter.startExport();
+    //exporter.startExport();
     
     
     tbL.area.width = ofGetWindowWidth() * 0.2128;
