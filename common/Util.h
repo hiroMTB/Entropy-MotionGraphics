@@ -15,4 +15,6 @@ public:
     static void eraseLineBreak( string & text);
     static void stringFit(string & text, const ofTrueTypeFontCustom& font, float fitWidth);
     static filesystem::path getResFolder();
+    
+    static string replaceAll(std::string str, const std::string& from, const std::string& to);
 };

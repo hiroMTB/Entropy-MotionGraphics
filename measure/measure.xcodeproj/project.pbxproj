@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		455F04441ECFB4A50019D628 /* data.xml in CopyFiles */ = {isa = PBXBuildFile; fileRef = 455F04431ECFB4A00019D628 /* data.xml */; };
 		45AFB3551EC9EC39007FBF38 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45AFB3541EC9EC39007FBF38 /* libtiff.a */; };
 		45AFB35B1EC9EEA6007FBF38 /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AFB3591EC9EEA6007FBF38 /* FontManager.cpp */; };
 		45D6245D1EC0F466003FCB11 /* Age.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D6245B1EC0F466003FCB11 /* Age.cpp */; };
@@ -47,12 +48,14 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				455F04441ECFB4A50019D628 /* data.xml in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		455F04431ECFB4A00019D628 /* data.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = data.xml; path = bin/data/data.xml; sourceTree = SOURCE_ROOT; };
 		456585651EC4BA320028B82B /* TextBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextBox.h; sourceTree = "<group>"; };
 		45AFB3541EC9EC39007FBF38 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = "../../../../../../../../../../../../Downloads/ofxExportImageSequence-master/libs/lib/osx/libtiff.a"; sourceTree = "<group>"; };
 		45AFB3571EC9EC5A007FBF38 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../addons/ofxExportImageSequence/libs/lib/osx/libtiff.a; sourceTree = "<group>"; };
@@ -248,6 +251,7 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				455F04431ECFB4A00019D628 /* data.xml */,
 				4D2E9B801EC6022300B1993E /* common */,
 				4D47AFB51EB5F8B800D3F83B /* ofApp.h */,
 				4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */,

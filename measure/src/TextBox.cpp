@@ -49,7 +49,7 @@ void TextBox::update(int frameNow){
 void TextBox::draw(){
     
     // draw rect
-    if(1){
+    if(0){
         ofNoFill();
         ofSetColor(255, 50);
         ofDrawRectangle(area);
