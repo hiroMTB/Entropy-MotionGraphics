@@ -13,7 +13,6 @@ void Temperature::setup(float offsetFrame, const shared_ptr<Motion> _m){
     
     Indicator & ind = ofApp::get()->ind;
     
-    
     // rotate indicator 90 deg
     {
         EasingPrm e;
@@ -43,66 +42,33 @@ void Temperature::setup(float offsetFrame, const shared_ptr<Motion> _m){
         anim.push_back(e);
     }
     
-    EasingPrm e;
-    e.setBySec(&(ind.angle), "ind.angle", os+0.1, os+0.5, 0, -90);
-    anim.push_back(e);
     
-    e.setBySec(&alphaAll, "alphaAll", os+0.1, os+0.6, alphaAll, 1);
-    anim.push_back(e);
-    
-    e.setBySec(&linePosy, "linePosy", os+0.5, os+1.5, lineStarty, lineEndy);
-    anim.push_back(e);
-    
-    e.setBySec(&(ind.posy), "ind.posy", os+1.0, os+1.5, ind.posy, m->basey);
-    anim.push_back(e);
-    
-    e.setTo(&(ind.textposy), "ind.textposy", os+1.0, os+1.8, 160);
-    anim.push_back(e);
-    
-
-    e.setBySec(&(ind.textAlpha), "ind.textAlpha", os+1.2, os+1.7);
-    anim.push_back(e);
-
-    e.setBySec(&textAlpha, "textAlpha", os+1, os+1.5);
-    anim.push_back(e);
-    
-    e.setBySec(&stringPos, "stringPos", os+2, os+3);  //3.5f + text.size()*0.05f);
-    anim.push_back(e);
-    
-
+    addAnimBySec(&(ind.angle), "ind.angle", os+0.1, os+0.5, 0, -90);
+    addAnimBySec(&alphaAll, "alphaAll", os+0.1, os+0.6, alphaAll, 1);
+    addAnimBySec(&linePosy, "linePosy", os+0.5, os+1.5, lineStarty, lineEndy);
+    addAnimBySec(&(ind.posy), "ind.posy", os+1.0, os+1.5, ind.posy, m->basey);
+    addAnimBySecTo(&(ind.textposy), "ind.textposy", os+1.0, os+1.8, 160);
+    addAnimBySec(&(ind.textAlpha), "ind.textAlpha", os+1.2, os+1.7);
+    addAnimBySec(&textAlpha, "textAlpha", os+1, os+1.5);
+    addAnimBySec(&stringPos, "stringPos", os+2, os+3);  //3.5f + text.size()*0.05f);
     
     // show safe text
     {
         float stSafeT = 1.5;
         ofApp * app = ofApp::get();
-        e.setBySec(&(app->tbR.base.tpos), "safeText", os+stSafeT+0.1, os+stSafeT+0.3);
-        anim.push_back(e);
+        addAnimBySec(&(app->tbR.base.tpos), "safeText", os+stSafeT+0.1, os+stSafeT+0.3);
+        addAnimBySec(&(app->tbR.measure.tpos), "safeText", os+stSafeT+0.2, os+stSafeT+0.5);
+        addAnimBySec(&(app->tbR.exp.tpos), "safeText", os+stSafeT+0.3, os+stSafeT+0.6);
+        addAnimBySec(&(app->tbR.realNum.tpos), "safeText", os+stSafeT+0.4, os+stSafeT+0.9);
+        addAnimBySec(&(app->tbR.unit.tpos), "safeText", os+stSafeT+0.7, os+stSafeT+1.1);
+        addAnimBySec(&(app->tbR.a), "safeText", os+4.5, os+5, 1, 0);
         
-        e.setBySec(&(app->tbR.measure.tpos), "safeText", os+stSafeT+0.2, os+stSafeT+0.5);
-        anim.push_back(e);
-        
-        e.setBySec(&(app->tbR.exp.tpos), "safeText", os+stSafeT+0.3, os+stSafeT+0.6);
-        anim.push_back(e);
-        
-        e.setBySec(&(app->tbR.realNum.tpos), "safeText", os+stSafeT+0.4, os+stSafeT+0.9);
-        anim.push_back(e);
-        
-        e.setBySec(&(app->tbR.unit.tpos), "safeText", os+stSafeT+0.7, os+stSafeT+1.1);
-        anim.push_back(e);
-        
-        e.setBySec(&(app->tbR.a), "safeText", os+4.5, os+5, 1, 0);
-        anim.push_back(e);
     }
-    
-    
     
     if(1){
         // turn off
-        e.setBySec(&alphaAll, "alphaAll", os+4.5, os+5, 1.0, 0.0f);
-        anim.push_back(e);
-        
-        e.setBySec(&(ind.textAlpha), "ind.textAlpha", os+4.5, os+5, 1, 0.0f);
-        anim.push_back(e);
+        addAnimBySec(&alphaAll, "alphaAll", os+4.5, os+5, 1.0, 0.0f);
+        addAnimBySec(&(ind.textAlpha), "ind.textAlpha", os+4.5, os+5, 1, 0.0f);
         
         EasingPrm e;
         e.setBySec(&(fake), "fake", os+4.5, os+4.6);

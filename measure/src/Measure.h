@@ -2,6 +2,8 @@
 
 #include "EasingPrm.h"
 #include "ofMain.h"
+#include "ofxEasing.h"
+using namespace ofxeasing;
 
 class Motion;
 
@@ -75,6 +77,28 @@ public:
         unitText = std::get<5>(d);
         indText = std::get<6>(d);
     }
+    
+    /*
+     *      helper functions not to forget push_back to animation container and less code
+     */
+    inline void addAnimBySec(float * v, string name, float st, float et, float sv=0, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In)){
+        EasingPrm prm;
+        prm.setBySec(v, name, st, et, sv, ev, e);
+        anim.push_back(prm);
+    }
+    
+    inline void addAnimByFrame(float * v, string name, int sf, int ef, float sv=0, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In)){
+        EasingPrm prm;
+        prm.setByFrame(v, name, sf, ef, sv, ev, e);
+        anim.push_back(prm);
+    }
+    
+    inline void addAnimBySecTo(float * v, string name, int sf, int ef, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In)){
+        EasingPrm prm;
+        prm.setTo(v, name, sf, ef, ev, e);
+        anim.push_back(prm);
+    }
+    
 };
 
 
