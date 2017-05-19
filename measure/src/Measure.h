@@ -45,6 +45,7 @@ public:
     string  nameOfMeasure;
     string  baseText;
     string  expText;
+    string  shortUnitText;
     string  longNumText;
     string  unitText;
     string  indText;
@@ -75,35 +76,15 @@ public:
     }
     
     
-    void setData( const tuple<float, string, string, string, string, string, string>& d){
+    void setData( const tuple<float, string, string, string, string, string, string, string>& d){
         val = std::get<0>(d);
         nameOfMeasure = std::get<1>(d);
         baseText = std::get<2>(d);
         expText = std::get<3>(d);
-        longNumText = std::get<4>(d);
-        unitText = std::get<5>(d);
-        indText = std::get<6>(d);
-    }
-    
-    /*
-     *      helper functions not to forget push_back to animation container and less code
-     */
-    inline void addAnimBySec(float * v, float st, float et, float sv=0, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In)){
-        EasingPrm prm;
-        prm.setBySec(v, st, et, sv, ev, e);
-        anim.push_back(prm);
-    }
-    
-    inline void addAnimByFrame(float * v, int sf, int ef, float sv=0, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In)){
-        EasingPrm prm;
-        prm.setByFrame(v, sf, ef, sv, ev, e);
-        anim.push_back(prm);
-    }
-    
-    inline void addAnimBySecTo(float * v, int sf, int ef, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In)){
-        EasingPrm prm;
-        prm.setTo(v, sf, ef, ev, e);
-        anim.push_back(prm);
+        shortUnitText = std::get<4>(d);
+        longNumText = std::get<5>(d);
+        unitText = std::get<6>(d);
+        indText = std::get<7>(d);
     }
     
 };

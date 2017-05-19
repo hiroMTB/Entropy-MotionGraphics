@@ -7,6 +7,8 @@
 #include "Util.h"
 #include "FontManager.h"
 
+using namespace EasingUtil;
+
 void Temperature::setup(float offsetFrame, const shared_ptr<Motion> _m){
     m = _m;
     float os = offsetFrame/(float)ofGetTargetFrameRate();
@@ -23,40 +25,22 @@ void Temperature::setup(float offsetFrame, const shared_ptr<Motion> _m){
     }
     
     Indicator & ind = ofApp::get()->ind;
-    addAnimBySec(&(ind.angle),      os+0.1, os+0.5, 0, -90);
-    addAnimBySec(&alphaAll,         os+0.1, os+0.6, alphaAll, 1);
-    addAnimBySec(&linePosy,         os+0.5, os+1.5, lineStarty, lineEndy);
-    addAnimBySec(&(ind.posy),       os+1.0, os+1.5, ind.posy, m->basey);
-    addAnimBySecTo(&(ind.textposy), os+1.0, os+1.8, 160);
-    addAnimBySec(&(ind.textAlpha),  os+1.2, os+1.7);
-    addAnimBySec(&textAlpha,        os+1,   os+1.5);
-    addAnimBySec(&stringPos,        os+2,   os+3);  //3.5f + text.size()*0.05f);
+    addAnimBySec(anim, &(ind.angle),      os+0.1, os+0.5, 0, -90);
+    addAnimBySec(anim, &alphaAll,         os+0.1, os+0.6, alphaAll, 1);
+    addAnimBySec(anim, &linePosy,         os+0.5, os+1.5, lineStarty, lineEndy);
+    addAnimBySec(anim, &(ind.posy),       os+1.0, os+1.5, ind.posy, m->basey);
+    addAnimBySecTo(anim, &(ind.textposy), os+1.0, os+1.8, 160);
+    addAnimBySec(anim, &(ind.textAlpha),  os+1.2, os+1.7);
+    addAnimBySec(anim, &textAlpha,        os+1,   os+1.5);
+    addAnimBySec(anim, &stringPos,        os+1.5,   os+2);  //3.5f + text.size()*0.05f);
     
-    // show safe text
-    {
-        float stSafeT = 1.5;
-        ofApp * app = ofApp::get();
-        TextBox & t = app->tbR;
-        addAnimBySec(&(t.base.tpos),     os+stSafeT+0.1, os+stSafeT+0.3);
-        addAnimBySec(&(t.measure.tpos),  os+stSafeT+0.2, os+stSafeT+0.5);
-        addAnimBySec(&(t.exp.tpos),      os+stSafeT+0.3, os+stSafeT+0.6);
-        addAnimBySec(&(t.realNum.tpos),  os+stSafeT+0.4, os+stSafeT+0.9);
-        addAnimBySec(&(t.unit.tpos),     os+stSafeT+0.7, os+stSafeT+1.1);
-        addAnimBySec(&(t.a),             os+4.5, os+5, 1, 0);
-        
-    }
-    
+    ofApp::get()->tbR.setAnimation(os+1.5);
+
+
     if(1){
-        // turn off
-        addAnimBySec(&alphaAll,         os+4.5, os+5, 1.0, 0.0f);
-        addAnimBySec(&(ind.textAlpha),  os+4.5, os+5, 1, 0.0f);
-        
         EasingPrm e;
         e.setBySec(&(fake),             os+4.5, os+4.6);
-        e.setCb(
-                [&](void){
-                    finished();
-                });
+        e.setCb([&](void){ finished(); });
         anim.push_back(e);
     }
 }

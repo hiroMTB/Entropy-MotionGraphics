@@ -3,27 +3,53 @@
 #include "Util.h"
 #include "FontManager.h"
 
+using namespace EasingUtil;
+
 void TextBox::reset(){
     
     measure.reset();
     base.reset();
     exp.reset();
+    shortUnit.reset();
     realNum.reset();
     unit.reset();
 }
 
-void TextBox::draw(){
+void TextBox::setAnimation( float startSec ){
+    
+    float os = startSec;
+    addAnimBySec(anim, &(base.tpos),     startSec+0.1, startSec+0.3);
+    addAnimBySec(anim, &(measure.tpos),  startSec+0.2, startSec+0.5);
+    addAnimBySec(anim, &(exp.tpos),      startSec+0.3, startSec+0.6);
+    addAnimBySec(anim, &(shortUnit.tpos),      startSec+0.3, startSec+0.6);
+    addAnimBySec(anim, &(realNum.tpos),  startSec+0.4, startSec+0.9);
+    addAnimBySec(anim, &(unit.tpos),     startSec+0.5, startSec+0.95);
+    addAnimBySec(anim, &(a),             startSec+2.7, startSec+3.2, 1, 0);
+    
+    blinkBySec(  anim, &(a),             startSec+2.9, startSec+3.1, 0.1, 0.2);
+    
+}
+
+void TextBox::update(int frameNow){
+
+    for( EasingPrm & p : anim){
+        p.update(frameNow);
+    }
+    
     
     // update tpos
     measure.update();
     base.update();
     exp.update();
+    shortUnit.update();
     realNum.update();
     unit.update();
+}
+
+void TextBox::draw(){
     
-    
-    // draw
-    if(0){
+    // draw rect
+    if(1){
         ofNoFill();
         ofSetColor(255, 50);
         ofDrawRectangle(area);
@@ -35,22 +61,27 @@ void TextBox::draw(){
     ofSetColor(255, a * measure.a*255);
     FontManager::font["L"].drawString(measure.tshow, area.x, y+area.y);
     
-    y += 100;
-    float baseWidth = FontManager::font["XL"].stringWidth(base.tshow);
-    FontManager::font["L"].drawString(exp.tshow, area.x+baseWidth+8, y+area.y);
+    y += 120;
+    float basew  = FontManager::font["XL"].stringWidth(base.t);
+    float expw   = FontManager::font["L"].stringWidth(exp.t);
+    float sunitw = FontManager::font["L"].stringWidth(shortUnit.t);
+    FontManager::font["L"].drawString(exp.tshow, area.x+basew+8, y+area.y);
 
     y += 60;
     FontManager::font["XL"].drawString(base.tshow, area.x, y+area.y);
-  
+    FontManager::font["L"].drawString(shortUnit.tshow, area.x+basew+expw+70, y+area.y);
     
     // prepare text fitting
     y += 120;
-    Util::stringFit(realNum.tshow, FontManager::font["L"], area.width);
+    //Util::stringFit(realNum.tshow, FontManager::font["L"], area.width);
     FontManager::font["L"].drawString(realNum.tshow, area.x, y+area.y);
-    Util::eraseLineBreak(realNum.tshow);
+    //Util::eraseLineBreak(realNum.tshow);
     
-    y += 320;
-    FontManager::font["M"].drawString(unit.tshow, area.x, y+area.y);
+    float unitw = FontManager::font["M"].stringWidth(unit.t);
+    //float unith = FontManager::font["M"].stringHeight(unit.tshow);
+    float unitx = area.x + (area.width - unitw);
+    float unity = area.y + (area.height);
+    FontManager::font["M"].drawString(unit.tshow, unitx, unity);
 
 }
 

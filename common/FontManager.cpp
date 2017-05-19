@@ -18,10 +18,10 @@ void FontManager::setup(float scale, bool Kontra){
         font["XL"].load((fontDir/"Roboto-Thin.ttf").string(), 120.0f*scale);
         font["XL"].setLetterSpacing(1.05);
         
-        font["L"].load((fontDir/"Roboto-Thin.ttf").string(), 75.0f*scale);
+        font["L"].load((fontDir/"Roboto-Thin.ttf").string(), 80.0f*scale);
         font["L"].setLetterSpacing(1.05);
         
-        font["M"].load((fontDir/"Roboto-Medium.ttf").string(), 45.0f*scale);
+        font["M"].load((fontDir/"Roboto-Medium.ttf").string(), 50.0f*scale);
         font["M"].setLetterSpacing(1.05);
         
         font["S"].load((fontDir/"Roboto-Medium.ttf").string(), 28.0f*scale);
@@ -31,7 +31,7 @@ void FontManager::setup(float scale, bool Kontra){
         font["XL"].load((fontDir/"KP Bob Bold.otf").string(), 120.0f*scale);
         font["XL"].setLetterSpacing(1.05);
         
-        font["L"].load((fontDir/"KP Bob Bold.otf").string(), 75.0f*scale);
+        font["L"].load((fontDir/"KP Bob Bold.otf").string(), 80.0f*scale);
         font["L"].setLetterSpacing(1.05);
         
         font["M"].load((fontDir/"KP Bob Bold.otf").string(), 45.0f*scale);

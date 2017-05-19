@@ -75,53 +75,54 @@ public:
     
 };
 
-class EasingPrmGroup{
+
+namespace EasingUtil{
     
-private:
-    vector<EasingPrm> grp;
-  
-public:
-    
-    void add(const EasingPrm & e){
-        grp.push_back(e);
-    }
-    
-    void update(int frame){
-        for(int i=0; i<grp.size(); i++){
-            grp[i].update(frame);
+    static void blinkByFrame(vector<EasingPrm> & anim, float * target, int startFrame, int endFrame, float startVal=0, float endVal=1){
+        
+        int df = endFrame - startFrame;
+        
+        for(int i=0; i<df; i++){
+            
+            float sv, ev;
+            if(ofNoise(i * i * 0.2)>0.5){
+                sv = startVal;
+                ev = endVal;
+            }else{
+                sv = endVal;
+                ev = startVal;
+            }
+            
+            EasingPrm a;
+            a.setByFrame(target, startFrame+i, startFrame+i+1, sv, ev);
+            anim.push_back(a);
         }
     }
-};
-
-
-class EasingUtil{
     
-public:
-    
-    
-    static EasingPrmGroup makeBlink(float * target, int startFrame, int endFrame, float startVal, float endVal){
-        
-        EasingPrmGroup grp;
-        
-        for(int i=0; i<50; i++){
-            
-            int dur = 5+5.0*ofNoise(i * i * 0.2);
-            int sf1 = startFrame + i * dur;
-            int ef1 = startFrame + i * dur + dur/2;
-            int ef2 = startFrame + i * dur + dur;
-            
-            if(endFrame<ef2) break;
-            
-            ofxeasing::function e1 = ofxeasing::easing(ofxeasing::Function::Sine, ofxeasing::Type::InOut);
-            ofxeasing::function e2 = ofxeasing::easing(ofxeasing::Function::Bounce, ofxeasing::Type::InOut);
-            
-            EasingPrm a1, a2;
-            a1.setByFrame(target, sf1, ef1, 0, 1, e1);
-            a2.setByFrame(target, ef1, ef2, 1, 0, e2);
-            grp.add(a1);
-            grp.add(a2);
-        }
-        return grp;
+    static void blinkBySec(vector<EasingPrm> & anim, float * t, float startSec, float endSec, float startVal=0, float endVal=1){
+        float startFrame = startSec * ofGetTargetFrameRate();
+        float endFrame   = endSec   * ofGetTargetFrameRate();
+        blinkByFrame(anim, t, startFrame, endFrame, startVal, endVal);
     }
     
+    /*
+     *      helper functions not to forget push_back to animation container and less code
+     */
+    inline void addAnimBySec(vector<EasingPrm> & anim, float * v, float st, float et, float sv=0, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In)){
+        EasingPrm prm;
+        prm.setBySec(v, st, et, sv, ev, e);
+        anim.push_back(prm);
+    }
+    
+    inline void addAnimByFrame(vector<EasingPrm> & anim, float * v, int sf, int ef, float sv=0, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In)){
+        EasingPrm prm;
+        prm.setByFrame(v, sf, ef, sv, ev, e);
+        anim.push_back(prm);
+    }
+    
+    inline void addAnimBySecTo(vector<EasingPrm> & anim, float * v, int sf, int ef, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In)){
+        EasingPrm prm;
+        prm.setTo(v, sf, ef, ev, e);
+        anim.push_back(prm);
+    }
 };

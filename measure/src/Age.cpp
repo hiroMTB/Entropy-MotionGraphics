@@ -3,9 +3,8 @@
 #include "Util.h"
 #include "FontManager.h"
 
-//
-//      class Age
-//
+using namespace EasingUtil;
+
 void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
     
     m = _m;
@@ -31,42 +30,25 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
     }
 
     
-    addAnimBySec(&(alphaAll),       os+0.0, os+0.3);
-    addAnimBySec(&(ind.angle),      os+0.0, os+0.1, 90, 0);
-    addAnimBySec(&(ind.triAlpha),   os+0.1, os+0.6, 0, 1);
-    addAnimBySec(&linePos,          os+0.5, os+1.5, lineStartx, lineEndx);
-    addAnimBySec(&(ind.posx),       os+1.0, os+1.5, lineStartx, lineEndx);
-    addAnimBySec(&(ind.textAlpha),  os+1.2, os+1.8, 0, 1);
-    addAnimBySec(&textAlpha,        os+1,   os+1.5);
-    addAnimBySec(&stringPos,        os+2,   os+3);  //3.5f + text.size()*0.05f);
+    addAnimBySec(anim, &(alphaAll),       os+0.0, os+0.3);
+    addAnimBySec(anim, &(ind.angle),      os+0.0, os+0.1, 90, 0);
+    addAnimBySec(anim, &(ind.triAlpha),   os+0.1, os+0.6, 0, 1);
+    addAnimBySec(anim, &linePos,          os+0.5, os+1.5, lineStartx, lineEndx);
+    addAnimBySec(anim, &(ind.posx),       os+1.0, os+1.5, lineStartx, lineEndx);
+    addAnimBySec(anim, &(ind.textAlpha),  os+1.2, os+1.8, 0, 1);
+    addAnimBySec(anim, &textAlpha,        os+1,   os+1.5);
+    addAnimBySec(anim, &stringPos,        os+1.5,   os+2);  //3.5f + text.size()*0.05f);
     
-    // show safe text
-    {
-        float stSafeT = 1.5;
-        ofApp * app = ofApp::get();
-        TextBox & t = app->tbR;
-        addAnimBySec(&(t.base.tpos),     os+stSafeT+0.1, os+stSafeT+0.3);
-        addAnimBySec(&(t.measure.tpos),  os+stSafeT+0.2, os+stSafeT+0.5);
-        addAnimBySec(&(t.exp.tpos),      os+stSafeT+0.3, os+stSafeT+0.6);
-        addAnimBySec(&(t.realNum.tpos),  os+stSafeT+0.4, os+stSafeT+0.9);
-        addAnimBySec(&(t.unit.tpos),     os+stSafeT+0.7, os+stSafeT+1.1);
-        addAnimBySec(&(t.a),             os+4.5, os+5, 1, 0);
-    }
-    
+    ofApp::get()->tbR.setAnimation(os+1.5);
     
     if(1){
         
         // turn off
-        addAnimBySec(&(ind.textAlpha),  os+4.5, os+5, 1, 0);
-        addAnimBySec(&(alphaAll),       os+4.5, os+5, 1, 0);
-        addAnimBySec(&(ind.textAlpha),  os+4.5, os+5, 1, 0);
+
+
         EasingPrm e;
-        e.setBySec(&(fake),             os+4.5, os+4.6);
-        e.setCb(
-                [&](void){
-                    finished();
-                }
-                );
+        e.setBySec(&(fake),             os+4.6, os+4.9);
+        e.setCb([&](void){ finished();});
         anim.push_back(e);
     }
     
