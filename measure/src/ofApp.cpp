@@ -7,7 +7,7 @@ void ofApp::setup(){
     ofSetBackgroundColor(0);
     ofSetFrameRate(30);
     ofSetCircleResolution(120);
-    ofSetFullscreen(true);
+    ofSetFullscreen(false);
     
     int w = 1920*2;
     int h = 1080;
@@ -84,16 +84,16 @@ void ofApp::setup(){
     
     vector<tuple<float, string>> scaleData =
     
-    //  temperature log celcius, text
-    {   {  -10,  "0.0000000001 LY"},
-        {  -4,   "0.0001 LY"},
-        {  -2,   "0.01 LY"},
-        {   -1,  "0.1 LY"},
-        {  5,    "100000 LY"},
-        {  10,   "10000000000 LY"},
-        {  20,   "100000000000000000000 LY"},
-        {  30,   "1000000000000000000000000000000 LY"},
-        {  40,   "10000000000000000000000000000000000000000 LY"},
+    //  Size of universe
+    {   {  -100,         "~ 0."},
+        {  -97,         "500 cm"},
+        {  -1,          "0.1 Lyr"},
+        {  1,           "10 Lyr"},
+        {  2,           "100 Lyr"},
+        {  7,           "10,000,000 Lyr"},
+        {  7.5,         "40,000,000 Lyr"},
+        {  10.5,        "40,000,000,000 Lyr"},
+        {  10.8,        "50,000,000,000 Lyr"}
     };
     
     int prevx = 0;
@@ -143,9 +143,9 @@ void ofApp::setup(){
             m->scale.val  = std::get<0>(scaleData[i]);
             m->scale.text = std::get<1>(scaleData[i]);
             
-            float min = std::get<0>(scaleData[0])-1;
-            float max = std::get<0>(scaleData[8])+20;
-            m->scale.targetRectSize = ofMap(m->scale.val, min, max, 0, canvas.height*2);
+            float min = std::get<0>(scaleData[0])-0.2;
+            float max = std::get<0>(scaleData[8])+5;
+            m->scale.targetRectSize = ofMap(m->scale.val, min, max, 0, canvas.height*0.5);
         }
         
         int motionId = i;
@@ -214,7 +214,7 @@ int main(){
     s.setPosition( ofVec2f(0,0));
     s.title = "Entropy Motion Graphics::Measure";
     s.setGLVersion(4, 1);
-    s.multiMonitorFullScreen = true;
+    s.multiMonitorFullScreen = false;
     s.windowMode = OF_WINDOW;
     s.numSamples = 16;
     s.width = 3840;

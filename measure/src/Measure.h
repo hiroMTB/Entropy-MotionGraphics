@@ -95,6 +95,7 @@ public:
     float targetRectSize;
     float angle;
     float arcAngle;
+    float lineLen;
     
     float posx, posy;
     void setup(float offsetFrame, const shared_ptr<Motion> m) override;

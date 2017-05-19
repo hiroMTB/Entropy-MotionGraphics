@@ -23,7 +23,7 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
         e.setBySec(&(fake), "fake", os, os);
         e.setCb(
                 [&](void){
-                    ind.text1 = "Scale";
+                    ind.text1 = "Size";
                     ind.text2 = "Light Years";
                     ind.textData1 = "10";
                     ind.textData2 = ofToString(val);
@@ -35,7 +35,7 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
                     // init safe text box
                     ofApp * app = ofApp::get();
                     app->tbR.reset();
-                    app->tbR.measure.t = "Scale";
+                    app->tbR.measure.t = "Size";
                     app->tbR.base.t = "10";
                     app->tbR.exp.t = ofToString(val);
                     app->tbR.unit.t = "Light Years";
@@ -50,6 +50,7 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
                     
                     arcAngle = 0;
                     angle = -15;
+                    lineLen = 0;
                 }
                 );
         anim.push_back(e);
@@ -63,24 +64,19 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
     e.setBySec(&alphaAll, "alphaAll", os+0, os+0.75, alphaAll, 1);
     anim.push_back(e);
     
-//    e.setTo(&(ind.posx), "ind.posx", os+0.5, os+1.2, posx );
-//    anim.push_back(e);
-//    e.setTo(&(ind.posy), "ind.posy", os+1.2, os+1.5, posy );
-//    anim.push_back(e);
-
-    
     e.setTo(&(ind.triAlpha), "ind.triAlpha", os+0.2, os+1.4, 0);
     anim.push_back(e);
     
-    e.setBySec(&(rectSize), "rectSize", os+1.5, os+2.5, 0, targetRectSize,
-               easing(Function::Exponential, Type::Out));
+    e.setBySec(&(rectSize), "rectSize", os+1.5, os+2.5, 0, targetRectSize, easing(Function::Exponential, Type::Out));
     anim.push_back(e);
     
     e.setBySec(&(arcAngle), "arcAngle", os+1.5, os+2.3, 0, 360);
     anim.push_back(e);
 
-    e.setTo(&(ind.posx), "ind.posx", os+1.5, os+2.5, m->basex+targetRectSize,
-            easing(Function::Exponential, Type::Out));
+    e.setBySec(&(lineLen), "lineLen", os+2.3, os+2.9);
+    anim.push_back(e);
+    
+    e.setTo(&(ind.posx), "ind.posx", os+1.5, os+2.5, m->basex+targetRectSize, easing(Function::Exponential, Type::Out));
     anim.push_back(e);
 
     e.setBySec(&(ind.textAlpha), "ind.textAlpha", os+1.6, os+2.8, 0, 1);
@@ -142,7 +138,8 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
 }
 
 void Scale::draw(){
-    bool highlight = m->motionId == ofApp::get()->currentMotionId;
+    int currentMotionId = ofApp::get()->currentMotionId;
+    bool highlight = m->motionId == currentMotionId;
     
     Indicator & ind = ofApp::get()->ind;
      int x = ind.posx;
@@ -166,12 +163,14 @@ void Scale::draw(){
     if(rectSize>2 && highlight){
         ofFill();
         ofDrawCircle(0, 0, 2);
-        Util::drawLineAsRect(rectSize, 0, rectSize+70, 0, 3);
+        if(currentMotionId<6){
+            Util::drawLineAsRect(rectSize, 0, rectSize+lineLen*70, 0, 3);
+        }
     }
     
     
     // text
-    if(rectSize < ofApp::get()->getExportHeight()*0.2){
+    if(currentMotionId<6){
         string show = text.substr(0, pos);
 
         if(highlight){
@@ -179,7 +178,7 @@ void Scale::draw(){
             FontManager::font["M"].drawString(show, rectSize+100, h/2);
         }else{
             float h = FontManager::font["S"].stringHeight(show);
-            FontManager::font["S"].drawString(show, rectSize+100, h/2);
+            FontManager::font["S"].drawString(show, rectSize+50, h/2);
         }
     }
     ofPopMatrix();
