@@ -10,68 +10,49 @@
 void Temperature::setup(float offsetFrame, const shared_ptr<Motion> _m){
     m = _m;
     float os = offsetFrame/(float)ofGetTargetFrameRate();
-    
-    Indicator & ind = ofApp::get()->ind;
-    
+        
     // rotate indicator 90 deg
     {
         EasingPrm e;
-        e.setBySec(&(fake), "fake", os, os);
+        e.setBySec(&(fake), os, os);
         e.setCb(
                 [&](void){
-                    ind.text = indText;
-
-                    ofApp * app = ofApp::get();
-                    
-                    // init safe text box
-                    app->tbR.reset();
-                    app->tbR.measure.t = nameOfMeasure;
-                    app->tbR.base.t = baseText;
-                    app->tbR.exp.t = expText;
-                    app->tbR.unit.t = unitText;
-                    app->tbR.realNum.t = longNumText;
-                    app->tbR.a = 1;
-                    
-                    for(int j=0; j<m->motionId; j++){
-                        shared_ptr<Motion> m_before = app->ms[j];
-                        Temperature & t = m_before->tmprt;
-                        t.turnOn(app->frame);
-                    }
-                }
-                );
+                    launched();
+                });
         anim.push_back(e);
     }
     
-    
-    addAnimBySec(&(ind.angle), "ind.angle", os+0.1, os+0.5, 0, -90);
-    addAnimBySec(&alphaAll, "alphaAll", os+0.1, os+0.6, alphaAll, 1);
-    addAnimBySec(&linePosy, "linePosy", os+0.5, os+1.5, lineStarty, lineEndy);
-    addAnimBySec(&(ind.posy), "ind.posy", os+1.0, os+1.5, ind.posy, m->basey);
-    addAnimBySecTo(&(ind.textposy), "ind.textposy", os+1.0, os+1.8, 160);
-    addAnimBySec(&(ind.textAlpha), "ind.textAlpha", os+1.2, os+1.7);
-    addAnimBySec(&textAlpha, "textAlpha", os+1, os+1.5);
-    addAnimBySec(&stringPos, "stringPos", os+2, os+3);  //3.5f + text.size()*0.05f);
+    Indicator & ind = ofApp::get()->ind;
+    addAnimBySec(&(ind.angle),      os+0.1, os+0.5, 0, -90);
+    addAnimBySec(&alphaAll,         os+0.1, os+0.6, alphaAll, 1);
+    addAnimBySec(&linePosy,         os+0.5, os+1.5, lineStarty, lineEndy);
+    addAnimBySec(&(ind.posy),       os+1.0, os+1.5, ind.posy, m->basey);
+    addAnimBySecTo(&(ind.textposy), os+1.0, os+1.8, 160);
+    addAnimBySec(&(ind.textAlpha),  os+1.2, os+1.7);
+    addAnimBySec(&textAlpha,        os+1,   os+1.5);
+    addAnimBySec(&stringPos,        os+2,   os+3);  //3.5f + text.size()*0.05f);
     
     // show safe text
     {
         float stSafeT = 1.5;
         ofApp * app = ofApp::get();
-        addAnimBySec(&(app->tbR.base.tpos), "safeText", os+stSafeT+0.1, os+stSafeT+0.3);
-        addAnimBySec(&(app->tbR.measure.tpos), "safeText", os+stSafeT+0.2, os+stSafeT+0.5);
-        addAnimBySec(&(app->tbR.exp.tpos), "safeText", os+stSafeT+0.3, os+stSafeT+0.6);
-        addAnimBySec(&(app->tbR.realNum.tpos), "safeText", os+stSafeT+0.4, os+stSafeT+0.9);
-        addAnimBySec(&(app->tbR.unit.tpos), "safeText", os+stSafeT+0.7, os+stSafeT+1.1);
-        addAnimBySec(&(app->tbR.a), "safeText", os+4.5, os+5, 1, 0);
+        TextBox & t = app->tbR;
+        addAnimBySec(&(t.base.tpos),     os+stSafeT+0.1, os+stSafeT+0.3);
+        addAnimBySec(&(t.measure.tpos),  os+stSafeT+0.2, os+stSafeT+0.5);
+        addAnimBySec(&(t.exp.tpos),      os+stSafeT+0.3, os+stSafeT+0.6);
+        addAnimBySec(&(t.realNum.tpos),  os+stSafeT+0.4, os+stSafeT+0.9);
+        addAnimBySec(&(t.unit.tpos),     os+stSafeT+0.7, os+stSafeT+1.1);
+        addAnimBySec(&(t.a),             os+4.5, os+5, 1, 0);
         
     }
     
     if(1){
         // turn off
-        addAnimBySec(&alphaAll, "alphaAll", os+4.5, os+5, 1.0, 0.0f);
-        addAnimBySec(&(ind.textAlpha), "ind.textAlpha", os+4.5, os+5, 1, 0.0f);
+        addAnimBySec(&alphaAll,         os+4.5, os+5, 1.0, 0.0f);
+        addAnimBySec(&(ind.textAlpha),  os+4.5, os+5, 1, 0.0f);
         
         EasingPrm e;
-        e.setBySec(&(fake), "fake", os+4.5, os+4.6);
+        e.setBySec(&(fake),             os+4.5, os+4.6);
         e.setCb(
                 [&](void){
                     ofApp * app = ofApp::get();

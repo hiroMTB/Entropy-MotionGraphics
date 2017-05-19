@@ -23,9 +23,11 @@ void TextBox::draw(){
     
     
     // draw
-    ofNoFill();
-    ofSetColor(255, 50);
-    //ofDrawRectangle(area);
+    if(0){
+        ofNoFill();
+        ofSetColor(255, 50);
+        ofDrawRectangle(area);
+    }
     
     ofApp * app = ofApp::get();
     float y = FontManager::font["L"].stringHeight(measure.t);

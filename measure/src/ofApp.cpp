@@ -172,9 +172,8 @@ void ofApp::draw(){
         ofSetLineWidth(lineW);
         
         for( int i=0; i<ms.size(); i++){
-            shared_ptr<Motion> m = ms[i];
-            m->update(frame);
-            m->draw();
+            ms[i].update(frame);
+            ms[i].draw();
         }
         
         ind.draw();

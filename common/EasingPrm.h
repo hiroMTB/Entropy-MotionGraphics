@@ -9,18 +9,17 @@ using namespace ofxeasing;
 class EasingPrm{
 public:
     EasingPrm(){};
-    void setBySec(float* t, string n, float startSec, float endSec, float sv=0, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In))
+    void setBySec(float* t, float startSec, float endSec, float sv=0, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In))
     {
         startFrame = startSec * ofGetTargetFrameRate();
         endFrame   = endSec   * ofGetTargetFrameRate();
-        setByFrame(t, n, startFrame, endFrame, sv, ev, e);
+        setByFrame(t, startFrame, endFrame, sv, ev, e);
     }
     
-    void setByFrame(float * t, string n, int sf, int ef, float sv=0, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In))
+    void setByFrame(float * t, int sf, int ef, float sv=0, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In))
     {
         if(sf==ef) ef++;
         target = t;
-        name = n;
         startVal = sv;
         endVal = ev;
         easing = e;
@@ -32,12 +31,12 @@ public:
     //  set easing without start value.
     //  start value will be set on start time.
     //
-    void setTo(float * t, string n, float startSec, float endSec, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In))
+    void setTo(float * t, float startSec, float endSec, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In))
     {
         bNoSV = true;
         startFrame = startSec * ofGetTargetFrameRate();
         endFrame   = endSec   * ofGetTargetFrameRate();
-        setByFrame(t, n, startFrame, endFrame, NULL, ev, e);
+        setByFrame(t, startFrame, endFrame, NULL, ev, e);
     }
     
     bool bNoSV = false;
@@ -46,7 +45,6 @@ public:
     int endFrame;
     float startVal;
     float endVal;
-    string name;
     float * target;
     ofxeasing::function easing;
     std::function<void(void)> callback;
@@ -118,8 +116,8 @@ public:
             ofxeasing::function e2 = ofxeasing::easing(ofxeasing::Function::Bounce, ofxeasing::Type::InOut);
             
             EasingPrm a1, a2;
-            a1.setByFrame(target, "up", sf1, ef1, 0, 1, e1);
-            a2.setByFrame(target, "down", ef1, ef2, 1, 0, e2);
+            a1.setByFrame(target, sf1, ef1, 0, 1, e1);
+            a2.setByFrame(target, ef1, ef2, 1, 0, e2);
             grp.add(a1);
             grp.add(a2);
         }

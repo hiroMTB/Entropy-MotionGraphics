@@ -28,7 +28,17 @@ public:
 class Measure{
     
 public:
-    shared_ptr<Motion> m;
+    
+    enum TYPE{
+        NONE = 0,
+        AGE,
+        TEMPERATURE,
+        SIZE,
+        OTHER
+    };
+    
+    TYPE type = Measure::TYPE::NONE;
+    Motion * m;
     vector<EasingPrm> anim;
 
     float   val;
@@ -44,9 +54,19 @@ public:
     float fake;
     float stringPos;
     
+    Measure()=default;
+    Measure(Measure& x)=default;
+    template<class T> Measure(T& x)=delete;
+    
+    Measure & operator=(Measure const &)=default;
+    template<class T> Measure & operator=(T const &)=delete;
+    
     virtual ~Measure(){};
     virtual void setup(float offsetFrame, const shared_ptr<Motion> m){};
     virtual void draw(){};
+    
+    void launched();
+    void finished();
     
     void update(int frame){
         for( EasingPrm & p : anim){
@@ -57,14 +77,14 @@ public:
     void turnOn(int frame){
         float fps = ofGetTargetFrameRate();
         EasingPrm e;
-        e.setByFrame(&alphaAll, "alphaAll", frame, frame+fps, 0, 0.3);
+        e.setByFrame(&alphaAll, frame, frame+fps, 0, 0.3);
         anim.push_back(e);
     }
     
     void turnOff(int frame){
         float fps = ofGetTargetFrameRate();
         EasingPrm e;
-        e.setByFrame(&alphaAll, "alphaAll", frame, (frame+fps), 0.3, 0.0f);
+        e.setByFrame(&alphaAll, frame, (frame+fps), 0.3, 0.0f);
         anim.push_back(e);
     }
     
@@ -81,21 +101,21 @@ public:
     /*
      *      helper functions not to forget push_back to animation container and less code
      */
-    inline void addAnimBySec(float * v, string name, float st, float et, float sv=0, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In)){
+    inline void addAnimBySec(float * v, float st, float et, float sv=0, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In)){
         EasingPrm prm;
-        prm.setBySec(v, name, st, et, sv, ev, e);
+        prm.setBySec(v, st, et, sv, ev, e);
         anim.push_back(prm);
     }
     
-    inline void addAnimByFrame(float * v, string name, int sf, int ef, float sv=0, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In)){
+    inline void addAnimByFrame(float * v, int sf, int ef, float sv=0, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In)){
         EasingPrm prm;
-        prm.setByFrame(v, name, sf, ef, sv, ev, e);
+        prm.setByFrame(v, sf, ef, sv, ev, e);
         anim.push_back(prm);
     }
     
-    inline void addAnimBySecTo(float * v, string name, int sf, int ef, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In)){
+    inline void addAnimBySecTo(float * v, int sf, int ef, float ev=1, ofxeasing::function e=ofxeasing::easing(Function::Linear, Type::In)){
         EasingPrm prm;
-        prm.setTo(v, name, sf, ef, ev, e);
+        prm.setTo(v, sf, ef, ev, e);
         anim.push_back(prm);
     }
     
@@ -105,6 +125,8 @@ public:
 class Age : public Measure{
     
 public:
+    
+    Age(){ type = AGE; }
     float lineStartx;
     float lineEndx;
     
@@ -117,6 +139,8 @@ public:
 class Temperature : public Measure{
     
 public:
+    Temperature(){ type = TEMPERATURE; }
+
     float lineStarty;
     float lineEndy;
     float linePosy;
@@ -129,6 +153,8 @@ public:
 class Scale : public Measure{
 
 public:
+    Scale(){ type = SIZE; }
+
     float rectSize;
     float targetRectSize;
     float angle;
