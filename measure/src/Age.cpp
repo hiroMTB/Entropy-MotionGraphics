@@ -26,11 +26,7 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
                     app->currentMotionId = m->motionId;
                     
                     // init indicator
-                    ind.text1 = "Age";
-                    ind.text2 = "seconds";
-                    ind.textData1 = "10";
-                    ind.textData2 = ofToString(val);
-                    ind.textUnit = "sec";
+                    ind.text = indText;
 
                     ind.posx = lineStartx;
                     ind.posy = 0;
@@ -39,11 +35,11 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
                     
                     // init safe text box
                     app->tbR.reset();
-                    app->tbR.measure.t = "Age";
-                    app->tbR.base.t = "10";
-                    app->tbR.exp.t = ofToString(val);
-                    app->tbR.unit.t = "seconds";
-                    app->tbR.realNum.t = text;
+                    app->tbR.measure.t = nameOfMeasure;
+                    app->tbR.base.t = baseText;
+                    app->tbR.exp.t = expText;
+                    app->tbR.unit.t = unitText;
+                    app->tbR.realNum.t = longNumText;
                     app->tbR.a = 1;
 
                     for(int j=0; j<m->motionId; j++){
@@ -162,10 +158,11 @@ void Age::draw(){
     //ofTranslate(0, 100*(m->motionId+1));
     ofSetColor(255, 255.0f * alphaAll);
     
-    int pos = text.size() * stringPos;
-    string show = text.substr(0, pos);
+    int pos = indText.size() * stringPos;
+    string show = indText.substr(0, pos);
+    
     if(m->motionId == ofApp::get()->currentMotionId ){
-        Util::stringFit(show, FontManager::font["M"], ofApp::get()->canvas.height);
+        Util::stringFit(show, FontManager::font["M"], ofApp::get()->canvas.height*0.9);
         FontManager::font["M"].drawString(show, 0, 8);
         Util::eraseLineBreak(show);
     }else{

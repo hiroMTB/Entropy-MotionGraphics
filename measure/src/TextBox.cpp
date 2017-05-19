@@ -34,7 +34,8 @@ void TextBox::draw(){
     FontManager::font["L"].drawString(measure.tshow, area.x, y+area.y);
     
     y += 100;
-    FontManager::font["L"].drawString(exp.tshow, area.x+150, y+area.y);
+    float baseWidth = FontManager::font["XL"].stringWidth(base.tshow);
+    FontManager::font["L"].drawString(exp.tshow, area.x+baseWidth+8, y+area.y);
 
     y += 60;
     FontManager::font["XL"].drawString(base.tshow, area.x, y+area.y);

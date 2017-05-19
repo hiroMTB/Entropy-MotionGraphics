@@ -1,15 +1,14 @@
 #pragma once
 
 #include "EasingPrm.h"
+#include "ofMain.h"
 
 class Motion;
 
 class Indicator{
     
 public:
-    string text1, text2;
-    string textData1, textData2;
-    string textUnit;
+    string text;
     float posx = 0;
     float posy = 0;
     
@@ -31,7 +30,12 @@ public:
     vector<EasingPrm> anim;
 
     float   val;
-    string  text;
+    string  nameOfMeasure;
+    string  baseText;
+    string  expText;
+    string  longNumText;
+    string  unitText;
+    string  indText;
     
     float alphaAll;
     float textAlpha;
@@ -60,6 +64,16 @@ public:
         EasingPrm e;
         e.setByFrame(&alphaAll, "alphaAll", frame, (frame+fps), 0.3, 0.0f);
         anim.push_back(e);
+    }
+    
+    void setData( const tuple<float, string, string, string, string, string, string>& d){
+        val = std::get<0>(d);
+        nameOfMeasure = std::get<1>(d);
+        baseText = std::get<2>(d);
+        expText = std::get<3>(d);
+        longNumText = std::get<4>(d);
+        unitText = std::get<5>(d);
+        indText = std::get<6>(d);
     }
 };
 

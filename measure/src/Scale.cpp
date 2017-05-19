@@ -23,23 +23,21 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
         e.setBySec(&(fake), "fake", os, os);
         e.setCb(
                 [&](void){
-                    ind.text1 = "Size";
-                    ind.text2 = "Light Years";
-                    ind.textData1 = "10";
-                    ind.textData2 = ofToString(val);
-                    ind.textUnit = "LY";
+                    ofApp * app = ofApp::get();
+                    
+                    // init indicator
+                    ind.text = indText;
 
                     ind.textposx = 0;
                     ind.textposy = 0;
                     
                     // init safe text box
-                    ofApp * app = ofApp::get();
                     app->tbR.reset();
-                    app->tbR.measure.t = "Size";
-                    app->tbR.base.t = "10";
-                    app->tbR.exp.t = ofToString(val);
-                    app->tbR.unit.t = "Light Years";
-                    app->tbR.realNum.t = text;
+                    app->tbR.measure.t = nameOfMeasure;
+                    app->tbR.base.t = baseText;
+                    app->tbR.exp.t = expText;
+                    app->tbR.unit.t = unitText;
+                    app->tbR.realNum.t = longNumText;
                     app->tbR.a = 1;
                     
                     for(int j=0; j<m->motionId; j++){
@@ -85,7 +83,7 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
     e.setBySec(&stringPos, "stringPos", os+2, os+3);  //3.5f + text.size()*0.05f);
     anim.push_back(e);
     
-    e.setBySec(&angle, "angle", os+1.2, os+4.1, -15, 0);
+    e.setBySec(&angle, "angle", os+1.2, os+6, -25, 7);
     anim.push_back(e);
     
     // show safe text
@@ -139,15 +137,13 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
 
 void Scale::draw(){
     int currentMotionId = ofApp::get()->currentMotionId;
-    bool highlight = m->motionId == currentMotionId;
+    bool highlight = (m->motionId == currentMotionId);
     
     Indicator & ind = ofApp::get()->ind;
      int x = ind.posx;
     
     ofPushMatrix();
     ofSetColor(255, alphaAll*255.0f);
-    
-    int pos = text.size() * stringPos;
  
     // Circle
     ofTranslate(posx, posy);
@@ -171,8 +167,8 @@ void Scale::draw(){
     
     // text
     if(currentMotionId<6){
-        string show = text.substr(0, pos);
-
+        int pos = indText.size() * stringPos;
+        string show = indText.substr(0, pos);
         if(highlight){
             float h = FontManager::font["M"].stringHeight(show);
             FontManager::font["M"].drawString(show, rectSize+100, h/2);

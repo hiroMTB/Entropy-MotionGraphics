@@ -45,55 +45,54 @@ void ofApp::setup(){
     
     float fakeRate = 2.5f;
     
-    // text
+    // data
+    // logaristic value : used for graphical position
     // name of measure
     // big Number(base), smalle number(incase of exponential)
     // Mid number(in case of exponenctial)
     // unit
+    // text for indicator (right screen)
 
-    // value at indicator
-    
-    // make data
-    vector<tuple<float, float, string>> age =
+    vector<tuple<float, string, string, string, string, string, string>> ageData =
     
     //  age log sec, position at measure, text
-    {   {   -43.0, -43.0/fakeRate,   "0.0000000000000000000000000000000000000000001 sec"},
-        {   -32.0, -32.0/fakeRate,   "0.0000000000000000000000000000001 sec"},
-        {   -12.0, -12.0/fakeRate,   "0.000000000001 sec"},
-        {    0.0,             0.0,   "1 sec"},
-        {   2.25,   2.25/fakeRate,  "180 sec"},
-        {   12.23,  12.23*fakeRate,  "6000 years"},
-        {   13.10, 13.10*fakeRate,  "400000 years"},
-        {   16.50, 16.50*fakeRate,  "1000000000 years"},
-        {   17.64, 17.64*fakeRate,  "1380000000 years"}
+    {   {   -43.0/fakeRate,  "Age", "10", "-43", "0.0000000000000000000000000000000000000000001 sec", "Seconds", "0.0000000000000000000000000000000000000000001 sec"},
+        {   -32.0/fakeRate,  "Age", "10", "-32", "0.0000000000000000000000000000001 sec", "Seconds", "0.0000000000000000000000000000001 sec"},
+        {   -12.0/fakeRate,  "Age", "10", "-12", "0.000000000001 sec", "Seconds", "0.000000000001 sec"},
+        {   0.0,             "Age", "1 sec", "", "", "Seconds", "1 sec"},
+        {   2.25/fakeRate,   "Age", "180 sec", "", "", "Seconds", "180 sec"},
+        {   12.23*fakeRate,  "Age", "6,000 years", "", "", "Years", "6000 years"},
+        {   13.10*fakeRate,  "Age", "400,000 years", "", "", "Years", "400000 years"},
+        {   16.50*fakeRate,  "Age", "1,000,000,000 years", "", "", "Years", "1000000000 years"},
+        {   17.64*fakeRate,  "Age", "1,380,000,000 years", "", "", "Years", "1380000000 years"}
     };
     
-    vector<tuple<float, string>> temperature =
+    vector<tuple<float, string, string, string, string, string, string>> temperatureData =
     
     //  temperature log celcius, text
-    {   {  32,   "100000000000000000000000000000000 °C"},
-        {  22,   "10000000000000000000000 °C"},
-        {  12,   "1000000000000 °C"},
-        {  10,   "10000000000　°C"},
-        {  9,    "1000000000　°C"},
-        {  4,    "10000 °C"},
-        {  3,    "1000 °C"},
-        {  -2,   "-260 °C"},
-        {  -2.5, "−270.4 °C"}
+    {   {  32,   "Temperature", "10", "32", "100000000000000000000000000000000 °C", "°Celsius", "100000000000000000000000000000000 °C"},
+        {  22,   "Temperature", "10", "22", "10000000000000000000000 °C", "°Celsius", "10000000000000000000000 °C"},
+        {  12,   "Temperature", "10", "12", "1000000000000 °C", "°Celsius", "1000000000000 °C"},
+        {  10,   "Temperature", "10", "10", "10000000000 °C", "°Celsius", "10000000000 °C"},
+        {  9,    "Temperature", "10", "9", "1000000000　°C", "°Celsius", "1000000000 °C"},
+        {  4,    "Temperature", "10,000 °C", "", "", "°Celsius", "10000 °C"},
+        {  3,    "Temperature", "1,000 °C", "", "", "°Celsius", "1000 °C"},
+        {  -2,   "Temperature", "-260 °C", "", "", "°Celsius", "-260 °C"},
+        {  -2.5, "Temperature", "−270.4 °C", "", "", "°Celsius", "−270.4 °C"}
     };
     
-    vector<tuple<float, string>> scaleData =
+    vector<tuple<float, string, string, string, string, string, string>> sizeData =
     
     //  Size of universe
-    {   {  -100,         "~ 0."},
-        {  -97,         "500 cm"},
-        {  -1,          "0.1 Lyr"},
-        {  1,           "10 Lyr"},
-        {  2,           "100 Lyr"},
-        {  7,           "10,000,000 Lyr"},
-        {  7.5,         "40,000,000 Lyr"},
-        {  10.5,        "40,000,000,000 Lyr"},
-        {  10.8,        "50,000,000,000 Lyr"}
+    {   {  -100,"Size", "~ 0.", "", "", "", "~ 0."},
+        {  -97, "Size", "500 cm", "", "", "", "500 cm"},
+        {  -1,  "Size", "0.1 Lyr", "", "", "Light Years", "0.1 Lyr"},
+        {  1,   "Size", "10 Lyr", "", "", "Light Years", "10 Lyr"},
+        {  2,   "Size", "100 Lyr", "", "","Light Years", "100 Lyr"},
+        {  7,   "Size", "10", "7", "10,000,000 Lyr", "Light Years", "10000000 Lyr"},
+        {  7.5, "Size", "4 * 10", "7", "40,000,000 Lyr", "Light Years", "40000000 Lyr"},
+        {  10.5,"Size", "4 * 10", "10", "40,000,000,000 Lyr", "Light Years", "40000000000 Lyr"},
+        {  10.8,"Size", "5 * 10", "10", "50,000,000,000 Lyr", "Light Years", "50000000000 Lyr"}
     };
     
     int prevx = 0;
@@ -101,7 +100,7 @@ void ofApp::setup(){
     
     // Sequence
     float fps = ofGetTargetFrameRate();
-    for(int i=0; i<age.size(); i++){
+    for(int i=0; i<ageData.size(); i++){
         
         //
         //  Global timeline, trigger each motion group
@@ -114,25 +113,21 @@ void ofApp::setup(){
         
         {
             //  Age
-            m->age.val = std::get<0>(age[i]);
-            float fake = std::get<1>(age[i]);
-            m->age.text = std::get<2>(age[i]);
-            
-            float min = std::get<1>(age[0])-5;
-            float max = std::get<1>(age[8])+20;
-            
-            m->basex = ofMap(fake, min, max, 0, canvas.width);
+            m->age.setData(ageData[i]);
+            float val = m->age.val;
+            float min = std::get<0>(ageData[0])-5;
+            float max = std::get<0>(ageData[8])+20;
+            m->basex = ofMap(val, min, max, 0, canvas.width);
             m->age.lineStartx = 0; //prevx;
             m->age.lineEndx = m->basex;
         }
         
         {
             //  Temprature
-            m->tmprt.val  = std::get<0>(temperature[i]);
-            m->tmprt.text = std::get<1>(temperature[i]);
+            m->tmprt.setData( temperatureData[i] );
             
-            float min = std::get<0>(temperature[8])-0.5;
-            float max = std::get<0>(temperature[0])+2;
+            float min = std::get<0>(temperatureData[8])-0.5;
+            float max = std::get<0>(temperatureData[0])+2;
             m->basey = ofMap(m->tmprt.val, min, max, canvas.height, 0);
             m->tmprt.lineStarty = 0;
             m->tmprt.lineEndy = canvas.height;
@@ -140,11 +135,10 @@ void ofApp::setup(){
         
         {
             //  Scale
-            m->scale.val  = std::get<0>(scaleData[i]);
-            m->scale.text = std::get<1>(scaleData[i]);
+            m->scale.setData(sizeData[i]);
             
-            float min = std::get<0>(scaleData[0])-0.2;
-            float max = std::get<0>(scaleData[8])+5;
+            float min = std::get<0>(sizeData[0])-0.2;
+            float max = std::get<0>(sizeData[8])+5;
             m->scale.targetRectSize = ofMap(m->scale.val, min, max, 0, canvas.height*0.5);
         }
         

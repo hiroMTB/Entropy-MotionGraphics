@@ -20,21 +20,17 @@ void Temperature::setup(float offsetFrame, const shared_ptr<Motion> _m){
         e.setBySec(&(fake), "fake", os, os);
         e.setCb(
                 [&](void){
-                    ind.text1 = "Temperature";
-                    ind.text2 = "Celsius";
-                    ind.textData1 = "10";
-                    ind.textData2 = ofToString(val);
-                    ind.textUnit = "°C";
+                    ind.text = indText;
 
+                    ofApp * app = ofApp::get();
                     
                     // init safe text box
-                    ofApp * app = ofApp::get();
                     app->tbR.reset();
-                    app->tbR.measure.t = "Temperature";
-                    app->tbR.base.t = "10";
-                    app->tbR.exp.t = ofToString(val);
-                    app->tbR.unit.t = "Celsius";
-                    app->tbR.realNum.t = text;
+                    app->tbR.measure.t = nameOfMeasure;
+                    app->tbR.base.t = baseText;
+                    app->tbR.exp.t = expText;
+                    app->tbR.unit.t = unitText;
+                    app->tbR.realNum.t = longNumText;
                     app->tbR.a = 1;
                     
                     for(int j=0; j<m->motionId; j++){
@@ -144,8 +140,8 @@ void Temperature::draw(){
     ofSetColor(255, 255.0f*stringPos*alphaAll);
     Util::drawLineAsRect(x-5,m->basey, x+15, m->basey, 4);
     
-    int pos = text.size() * stringPos;
-    string show = text.substr(0, pos);
+    int pos = indText.size() * stringPos;
+    string show = indText.substr(0, pos);
     if(m->motionId == ofApp::get()->currentMotionId ){
         int h = FontManager::font["M"].getGlyphBBox().height;
         FontManager::font["M"].drawString(show, x+50, m->basey+h/3);
