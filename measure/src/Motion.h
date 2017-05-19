@@ -12,6 +12,17 @@ public:
     float basex  = 0;
     float basey  = 0;
 
+    Measure * getMeasure( Measure::TYPE t){
+        Measure * ret = nullptr;
+        switch(t){
+            case Measure::TYPE::AGE :           ret = &age; break;
+            case Measure::TYPE::TEMPERATURE :   ret = &tmprt; break;
+            case Measure::TYPE::SIZE :          ret = &scale; break;
+        }
+        
+        return ret;
+    }
+    
     Age age;
     Temperature tmprt;
     Scale scale;

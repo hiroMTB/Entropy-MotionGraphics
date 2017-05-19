@@ -64,11 +64,7 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
         e.setBySec(&(fake),             os+4.5, os+4.6);
         e.setCb(
                 [&](void){
-                    ofApp * app = ofApp::get();
-                    for(int j=0; j<m->motionId; j++){
-                        Motion & m_before = app->ms[j];
-                        m_before.measure[type]->turnOff(app->frame);
-                    }
+                    finished();
                 }
                 );
         anim.push_back(e);

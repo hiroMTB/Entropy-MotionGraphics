@@ -66,14 +66,8 @@ void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
         e.setBySec(&(fake),             os+4.5, os+4.6);
         e.setCb(
                 [&](void){
-                    ofApp * app = ofApp::get();
-                    for(int j=0; j<m->motionId; j++){
-                        shared_ptr<Motion> m_before = app->ms[j];
-                        Scale & s = m_before->scale;
-                        s.turnOff(app->frame);
-                    }
-                }
-                );
+                    finished();
+                });
         anim.push_back(e);
     }
     

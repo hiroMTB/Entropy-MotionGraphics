@@ -23,10 +23,31 @@ void Measure::launched(){
     app->tbR.a = 1;
     
     for(int j=0; j<m->motionId; j++){
-        Motion & m_before = app->ms[j];
-        int now = app->frame;
+        shared_ptr<Motion> m_before = app->ms[j];
+        float frame = app->frame;
         float fps = ofGetTargetFrameRate();
-        m_before.measure[type]->addAnimByFrame(&alphaAll, now, now+fps);
+
+        Measure * target = m_before->getMeasure(type);
+        EasingPrm e;
+        e.setByFrame(&(target->alphaAll), frame, frame+fps, 0, 0.3);
+        target->anim.push_back(e);
+    }
+    
+}
+
+void Measure::finished(){
+    
+    ofApp * app = ofApp::get();
+    for(int j=0; j<m->motionId; j++){
+        shared_ptr<Motion> m_before = app->ms[j];
+        Scale & s = m_before->scale;
+        float frame = app->frame;
+        float fps = ofGetTargetFrameRate();
+
+        Measure * target = m_before->getMeasure(type);
+        EasingPrm e;
+        e.setByFrame(&(target->alphaAll), frame, frame+fps, 0.3, 0);
+        target->anim.push_back(e);
     }
 }
 

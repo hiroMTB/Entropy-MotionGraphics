@@ -172,8 +172,8 @@ void ofApp::draw(){
         ofSetLineWidth(lineW);
         
         for( int i=0; i<ms.size(); i++){
-            ms[i].update(frame);
-            ms[i].draw();
+            ms[i]->update(frame);
+            ms[i]->draw();
         }
         
         ind.draw();

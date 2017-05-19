@@ -38,7 +38,7 @@ public:
     };
     
     TYPE type = Measure::TYPE::NONE;
-    Motion * m;
+    shared_ptr<Motion> m;
     vector<EasingPrm> anim;
 
     float   val;
@@ -74,19 +74,6 @@ public:
         }
     }
     
-    void turnOn(int frame){
-        float fps = ofGetTargetFrameRate();
-        EasingPrm e;
-        e.setByFrame(&alphaAll, frame, frame+fps, 0, 0.3);
-        anim.push_back(e);
-    }
-    
-    void turnOff(int frame){
-        float fps = ofGetTargetFrameRate();
-        EasingPrm e;
-        e.setByFrame(&alphaAll, frame, (frame+fps), 0.3, 0.0f);
-        anim.push_back(e);
-    }
     
     void setData( const tuple<float, string, string, string, string, string, string>& d){
         val = std::get<0>(d);
