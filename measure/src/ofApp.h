@@ -4,7 +4,6 @@
 #include "Measure.h"
 #include "ofxExportImageSequence.h"
 #include "TextBox.h"
-#include "Motion.h"
 
 class EasingPrm;
 
@@ -27,27 +26,24 @@ public:
     float getExportWidth();
     float getExportHeight();
     
+    void setCurrentMotionId(int mid){ currentMotionId = mid; };
+    int getCurrentMotionId(){ return currentMotionId; }
     
+private:
     float vMargin;
     float hMargin;
-
-    ofRectangle canvas;
     float lineW = 4;
-    vector<Motion> ms;
-    
-    int frame = -1;
-    
-    typedef tuple<int, std::function<void(void)>> Seqfunc;
-    typedef vector<Seqfunc> SeqfuncCnt;
-    SeqfuncCnt seq;
-    
-    Indicator ind;
-
+    int currentMotionId = 0;
     bool bExport = false;
     ofxExportImageSequence exporter;
     
-    TextBox tbL, tbR;
+public:
     
-    int currentMotionId = 0;
+    ofRectangle canvas;
+    vector<shared_ptr<Motion>> ms;
+    int frame = -1;
+
+    Indicator ind;
+    TextBox tbL, tbR;
 };
 

@@ -10,7 +10,7 @@
 
 using namespace EasingUtil;
 
-void Temperature::setup(float offsetFrame, Motion * _m){
+void Temperature::setup(float offsetFrame, weak_ptr<Motion> _m){
     m = _m;
     float os = offsetFrame/(float)ofGetTargetFrameRate();
         
@@ -25,11 +25,13 @@ void Temperature::setup(float offsetFrame, Motion * _m){
         anim.push_back(e);
     }
     
+    shared_ptr<Motion> ms(m);
+    
     Indicator & ind = ofApp::get()->ind;
     addAnimBySec(anim, &(ind.angle),      os+0.1, os+0.5, 0, -90);
     addAnimBySec(anim, &alphaAll,         os+0.1, os+0.6, alphaAll, 1);
     addAnimBySec(anim, &linePosy,         os+0.5, os+1.5, lineStarty, lineEndy);
-    addAnimBySec(anim, &(ind.posy),       os+1.0, os+1.5, ind.posy, m->basey);
+    addAnimBySec(anim, &(ind.posy),       os+1.0, os+1.5, ind.posy, ms->basey);
     addAnimBySecTo(anim, &(ind.textposy), os+1.0, os+1.8, 160);
     addAnimBySec(anim, &(ind.textAlpha),  os+1.2, os+1.7);
     addAnimBySec(anim, &textAlpha,        os+1,   os+1.5);
@@ -47,6 +49,8 @@ void Temperature::setup(float offsetFrame, Motion * _m){
 }
 
 void Temperature::draw(){
+    shared_ptr<Motion> ms(m);
+    
     Indicator & ind = ofApp::get()->ind;
     int x = ind.posx;
     int y = ind.posy;
@@ -64,16 +68,16 @@ void Temperature::draw(){
     Util::drawLineAsRect(x-5,y, x+15, y, 4);
     
     ofSetColor(255, 255.0f*stringPos*alphaAll);
-    Util::drawLineAsRect(x-5,m->basey, x+15, m->basey, 4);
+    Util::drawLineAsRect(x-5,ms->basey, x+15, ms->basey, 4);
     
     int pos = indText.size() * stringPos;
     string show = indText.substr(0, pos);
-    if(m->motionId == ofApp::get()->currentMotionId ){
+    if(ms->motionId == ofApp::get()->getCurrentMotionId() ){
         int h = FontManager::font["M"].getGlyphBBox().height;
-        FontManager::font["M"].drawString(show, x+50, m->basey+h/3);
+        FontManager::font["M"].drawString(show, x+50, ms->basey+h/3);
     }else{
         int h = FontManager::font["S"].getGlyphBBox().height;
-        FontManager::font["S"].drawString(show, x+50, m->basey+h/3);
+        FontManager::font["S"].drawString(show, x+50, ms->basey+h/3);
     }
     ofPopMatrix();
 }

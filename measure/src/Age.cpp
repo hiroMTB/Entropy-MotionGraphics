@@ -6,7 +6,7 @@
 
 using namespace EasingUtil;
 
-void Age::setup(float offsetFrame, Motion * _m){
+void Age::setup(float offsetFrame, weak_ptr<Motion> _m){
     
     m = _m;
     float fps = (float)ofGetTargetFrameRate();
@@ -51,9 +51,9 @@ void Age::setup(float offsetFrame, Motion * _m){
 
 
 void Age::draw(){
-    
-    int currentMotionId = ofApp::get()->currentMotionId;
-    bool highlight = (m->motionId == currentMotionId);
+     shared_ptr<Motion> ms(m);
+    int currentMotionId = ofApp::get()->getCurrentMotionId();
+    bool highlight = (ms->motionId == currentMotionId);
     float a = alphaAll*255.0f;
     
     ofPushMatrix(); {

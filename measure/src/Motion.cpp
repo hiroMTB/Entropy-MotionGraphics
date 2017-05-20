@@ -10,17 +10,21 @@ Motion::Motion(){
 
 void Motion::setup(int _offsetFrame, int mid){
     motionId = mid;
+    
+    if( mid<0 || 8<mid){
+        cout << "strange" << endl;
+    }
     offsetFrame = _offsetFrame;
     float fps = ofGetTargetFrameRate();
 
-    msr[Measure::TYPE::AGE]->setup(offsetFrame, this );
-    msr[Measure::TYPE::TEMPERATURE]->setup(offsetFrame +  5.0*fps, this );
-    msr[Measure::TYPE::SIZE]->setup(offsetFrame + 10.0*fps, this );
+    msr[Measure::TYPE::AGE]->setup(offsetFrame, shared_from_this() );
+    msr[Measure::TYPE::TEMPERATURE]->setup(offsetFrame +  5.0*fps, shared_from_this() );
+    msr[Measure::TYPE::SIZE]->setup(offsetFrame + 10.0*fps, shared_from_this() );
 }
 
 void Motion::update(int frame){
 
-    Msr::iterator itr = msr.begin();    
+    Msr::iterator itr = msr.begin();
     for(; itr!=msr.end(); itr++){
         (itr->second)->update(frame);
     }

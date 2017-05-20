@@ -10,13 +10,14 @@
 
 using namespace EasingUtil;
 
-void Scale::setup(float offsetFrame, Motion * _m){
+void Scale::setup(float offsetFrame, weak_ptr<Motion> _m){
     m = _m;
+    
     float os = offsetFrame/(float)ofGetTargetFrameRate();
     Indicator & ind = ofApp::get()->ind;
-    
-    posx = m->basex;
-    posy = m->basey;
+     shared_ptr<Motion> ms(m);
+    posx = ms->basex;
+    posy = ms->basey;
     
     {
         EasingPrm e;
@@ -41,7 +42,7 @@ void Scale::setup(float offsetFrame, Motion * _m){
     addAnimBySec(anim, &(rectSize),       os+0.1,   os+0.5, 0, targetRectSize, expout);
     addAnimBySec(anim, &(arcAngle),       os+0.4,   os+1.1, 0, 360);
     addAnimBySec(anim, &(lineLen),        os+1.1,   os+1.4);
-    addAnimBySecTo(anim, &(ind.posx),     os+1.5,   os+2.5, m->basex+targetRectSize, expout);
+    addAnimBySecTo(anim, &(ind.posx),     os+1.5,   os+2.5, ms->basex+targetRectSize, expout);
     addAnimBySec(anim, &(ind.textAlpha),  os+1.6,   os+2.8, 0, 1);
     addAnimBySec(anim, &stringPos,        os+1.5,   os+2);  //3.5f + text.size()*0.05f);
     addAnimBySec(anim, &angle,            os+1.2,   os+6, -25, 7);
@@ -59,8 +60,11 @@ void Scale::setup(float offsetFrame, Motion * _m){
 }
 
 void Scale::draw(){
-    int currentMotionId = ofApp::get()->currentMotionId;
-    bool highlight = (m->motionId == currentMotionId);
+    
+     shared_ptr<Motion> ms(m);
+    
+    int currentMotionId = ofApp::get()->getCurrentMotionId();
+    bool highlight = (ms->motionId == currentMotionId);
     
     Indicator & ind = ofApp::get()->ind;
      int x = ind.posx;

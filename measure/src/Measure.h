@@ -38,7 +38,7 @@ public:
     };
     
     TYPE type = Measure::TYPE::NONE;
-    Motion * m;
+    weak_ptr<Motion> m;
     vector<EasingPrm> anim;
 
     float   val;
@@ -58,12 +58,11 @@ public:
     Measure()=default;
     Measure(Measure& x)=default;
     template<class T> Measure(T& x)=delete;
-    
     Measure & operator=(Measure const &)=default;
     template<class T> Measure & operator=(T const &)=delete;
     
-    virtual ~Measure(){};
-    virtual void setup(float offsetFrame, Motion * m){};
+    virtual ~Measure(){ cout << "  -> Measure destloyed" << endl; };
+    virtual void setup(float offsetFrame, weak_ptr<Motion> m){};
     virtual void draw(){};
     
     void launched();
@@ -96,12 +95,13 @@ class Age : public Measure{
 public:
     
     Age(){ type = AGE; }
+    virtual ~Age(){ cout << "Age destloyed" << endl; }
     float lineStartx;
     float lineEndx;
     
     float linePos;
     
-    void setup(float offsetFrame, Motion * m) override;
+    void setup(float offsetFrame, weak_ptr<Motion> m) override;
     void draw() override;
 };
 
@@ -109,13 +109,13 @@ class Temperature : public Measure{
     
 public:
     Temperature(){ type = TEMPERATURE; }
-
+    virtual ~Temperature(){ cout << "Temperature destroyed" << endl;}
     float lineStarty;
     float lineEndy;
     float linePosy;
     float targety;
 
-    void setup(float offsetFrame, Motion * m) override;
+    void setup(float offsetFrame, weak_ptr<Motion> m) override;
     void draw() override;
 };
 
@@ -123,7 +123,7 @@ class Scale : public Measure{
 
 public:
     Scale(){ type = SIZE; }
-
+    virtual ~Scale(){ cout << "Scale destroyed" << endl; }
     float rectSize;
     float targetRectSize;
     float angle;
@@ -131,14 +131,14 @@ public:
     float lineLen;
     
     float posx, posy;
-    void setup(float offsetFrame, Motion * m) override;
+    void setup(float offsetFrame, weak_ptr<Motion> m) override;
     void draw() override;
 };
 
 class Velocity : public Measure{
     
 public:
-    void setup(float offsetFrame, Motion * m) override;
+    void setup(float offsetFrame, weak_ptr<Motion> m) override;
     void draw() override;
 };
 
