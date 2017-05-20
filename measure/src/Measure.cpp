@@ -52,8 +52,8 @@ void Measure::finished(){
         target->anim.push_back(e);
     }
     
-    addAnimByFrame(anim, &alphaAll,         frame, frame+fps*0.5, 1, 0);
-    addAnimByFrame(anim, &(ind.textAlpha),  frame, frame+fps*0.5, 1, 0);
-
+    addAnimByFrame( anim, &alphaAll,         frame, frame+fps*(alphaAll*0.5), alphaAll, 0);
+    addAnimByFrame( anim, &(ind.textAlpha),  frame, frame+fps*0.2, 1, 0);
+   
 }
 

@@ -30,7 +30,7 @@ void ofApp::setup(){
     exporter.setOverwriteSequence(true);
     //exporter.setCompression(ofxExportImageSequence::Compression::UNCOMPRESSED);
 
-    //exporter.startExport();
+   // exporter.startExport();
     
     
     tbL.area.width = ofGetWindowWidth() * 0.2128;
@@ -197,8 +197,8 @@ void ofApp::loadXml(){
             //  Scale
             m->scale.setData(sizeData[i]);
             
-            float min = std::get<0>(sizeData[0])-0.2;
-            float max = std::get<0>(sizeData[8])+5;
+            float min = std::get<0>(sizeData[0])-4;
+            float max = std::get<0>(sizeData[8])+2;
             m->scale.targetRectSize = ofMap(m->scale.val, min, max, 0, canvas.height*0.5);
         }
         

@@ -34,20 +34,16 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
     addAnimBySec(anim, &(ind.angle),      os+0.0, os+0.1, 90, 0);
     addAnimBySec(anim, &(ind.triAlpha),   os+0.1, os+0.6, 0, 1);
     addAnimBySec(anim, &linePos,          os+0.5, os+1.5, lineStartx, lineEndx);
-    addAnimBySec(anim, &(ind.posx),       os+1.0, os+1.5, lineStartx, lineEndx);
+    addAnimBySec(anim, &(ind.posx),       os+0.6, os+1.5, lineStartx, lineEndx);
     addAnimBySec(anim, &(ind.textAlpha),  os+1.2, os+1.8, 0, 1);
     addAnimBySec(anim, &textAlpha,        os+1,   os+1.5);
     addAnimBySec(anim, &stringPos,        os+1.5,   os+2);  //3.5f + text.size()*0.05f);
     
     ofApp::get()->tbR.setAnimation(os+1.5);
     
-    if(1){
-        
-        // turn off
-
-
+    {
         EasingPrm e;
-        e.setBySec(&(fake),             os+4.6, os+4.9);
+        e.setBySec(&(fake),             os+4.5, os+4.6);
         e.setCb([&](void){ finished();});
         anim.push_back(e);
     }
