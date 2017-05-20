@@ -4,8 +4,8 @@
 #include "Measure.h"
 #include "ofxExportImageSequence.h"
 #include "TextBox.h"
+#include "Motion.h"
 
-class Motion;
 class EasingPrm;
 
 class ofApp : public ofBaseApp{
@@ -33,7 +33,7 @@ public:
 
     ofRectangle canvas;
     float lineW = 4;
-    vector<shared_ptr<Motion>> ms;
+    vector<Motion> ms;
     
     int frame = -1;
     

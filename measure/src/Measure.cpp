@@ -28,8 +28,8 @@ void Measure::launched(){
     app->tbR.a = 1;
     
     for(int j=0; j<m->motionId; j++){
-        shared_ptr<Motion> m_before = app->ms[j];
-        Measure * target = m_before->getMeasure(type);
+        Motion & m_before = app->ms[j];
+        shared_ptr<Measure> target = m_before.getMeasure(type);
         EasingPrm e;
         e.setByFrame(&(target->alphaAll), frame, frame+fps, 0, 0.3);
         target->anim.push_back(e);
@@ -45,8 +45,8 @@ void Measure::finished(){
     float fps = ofGetTargetFrameRate();
     
     for(int j=0; j<m->motionId; j++){
-        shared_ptr<Motion> m_before = app->ms[j];
-        Measure * target = m_before->getMeasure(type);
+        Motion & m_before = app->ms[j];
+        shared_ptr<Measure> target = m_before.getMeasure(type);
         EasingPrm e;
         e.setByFrame(&(target->alphaAll), frame, frame+fps, 0.3, 0);
         target->anim.push_back(e);
@@ -57,3 +57,11 @@ void Measure::finished(){
    
 }
 
+void Measure::printSettings(){
+    
+    printf("%12s, ", nameOfMeasure.c_str());
+    printf("mId %d, ", m->motionId);
+    printf("of %5d, ", m->offsetFrame);
+    printf("indT %35s\n", indText.c_str());
+    
+}

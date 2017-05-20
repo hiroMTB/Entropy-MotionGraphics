@@ -6,11 +6,11 @@
 #include "Motion.h"
 #include "Util.h"
 #include "FontManager.h"
-
+#include "ofApp.h"
 
 using namespace EasingUtil;
 
-void Scale::setup(float offsetFrame, const shared_ptr<Motion> _m){
+void Scale::setup(float offsetFrame, Motion * _m){
     m = _m;
     float os = offsetFrame/(float)ofGetTargetFrameRate();
     Indicator & ind = ofApp::get()->ind;

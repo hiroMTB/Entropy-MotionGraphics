@@ -31,14 +31,14 @@ public:
     
     enum TYPE{
         NONE = 0,
-        AGE,
-        TEMPERATURE,
-        SIZE,
-        OTHER
+        AGE = 1,
+        TEMPERATURE = 2,
+        SIZE = 3,
+        OTHER =4
     };
     
     TYPE type = Measure::TYPE::NONE;
-    shared_ptr<Motion> m;
+    Motion * m;
     vector<EasingPrm> anim;
 
     float   val;
@@ -63,7 +63,7 @@ public:
     template<class T> Measure & operator=(T const &)=delete;
     
     virtual ~Measure(){};
-    virtual void setup(float offsetFrame, const shared_ptr<Motion> m){};
+    virtual void setup(float offsetFrame, Motion * m){};
     virtual void draw(){};
     
     void launched();
@@ -87,6 +87,7 @@ public:
         indText = std::get<7>(d);
     }
     
+    void printSettings();
 };
 
 
@@ -100,7 +101,7 @@ public:
     
     float linePos;
     
-    void setup(float offsetFrame, const shared_ptr<Motion> m) override;
+    void setup(float offsetFrame, Motion * m) override;
     void draw() override;
 };
 
@@ -114,7 +115,7 @@ public:
     float linePosy;
     float targety;
 
-    void setup(float offsetFrame, const shared_ptr<Motion> m) override;
+    void setup(float offsetFrame, Motion * m) override;
     void draw() override;
 };
 
@@ -130,14 +131,14 @@ public:
     float lineLen;
     
     float posx, posy;
-    void setup(float offsetFrame, const shared_ptr<Motion> m) override;
+    void setup(float offsetFrame, Motion * m) override;
     void draw() override;
 };
 
 class Velocity : public Measure{
     
 public:
-    void setup(float offsetFrame, const shared_ptr<Motion> m) override;
+    void setup(float offsetFrame, Motion * m) override;
     void draw() override;
 };
 

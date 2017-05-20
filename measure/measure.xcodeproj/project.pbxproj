@@ -18,6 +18,7 @@
 		45F1568A1ECF457E00DE35F5 /* Measure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F156891ECF457E00DE35F5 /* Measure.cpp */; };
 		45FDDFB61EC4CBA300374560 /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45FDDFB51EC4CBA300374560 /* TextBox.cpp */; };
 		45FDDFC11EC4D82F00374560 /* ofTrueTypeFontCustom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45FDDFBF1EC4D82F00374560 /* ofTrueTypeFontCustom.cpp */; };
+		45FDE23C1ED09EB9000FCE78 /* Motion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45FDE23B1ED09EB9000FCE78 /* Motion.cpp */; };
 		4D2E9B411EC5FF9500B1993E /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D2E9B3F1EC5FF9500B1993E /* Util.cpp */; };
 		4D2E9B7B1EC6011100B1993E /* ofxExportImageSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D2E9B751EC5FFF400B1993E /* ofxExportImageSequence.cpp */; };
 		4D47AFB61EB5F8B800D3F83B /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */; };
@@ -71,6 +72,7 @@
 		45FDDFB51EC4CBA300374560 /* TextBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextBox.cpp; sourceTree = "<group>"; };
 		45FDDFBF1EC4D82F00374560 /* ofTrueTypeFontCustom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofTrueTypeFontCustom.cpp; path = ../../common/ofTrueTypeFontCustom.cpp; sourceTree = "<group>"; };
 		45FDDFC01EC4D82F00374560 /* ofTrueTypeFontCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ofTrueTypeFontCustom.h; path = ../../common/ofTrueTypeFontCustom.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		45FDE23B1ED09EB9000FCE78 /* Motion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Motion.cpp; sourceTree = "<group>"; };
 		4D2E9B3F1EC5FF9500B1993E /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Util.cpp; path = ../../common/Util.cpp; sourceTree = "<group>"; };
 		4D2E9B401EC5FF9500B1993E /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Util.h; path = ../../common/Util.h; sourceTree = "<group>"; };
 		4D2E9B5B1EC5FFEF00B1993E /* ofxEasing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxEasing.h; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 				4D47AFB51EB5F8B800D3F83B /* ofApp.h */,
 				4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */,
 				4D72C5F91EBE86FD003D039A /* Motion.h */,
+				45FDE23B1ED09EB9000FCE78 /* Motion.cpp */,
 				45D624611EC123CF003FCB11 /* Measure.h */,
 				45F156891ECF457E00DE35F5 /* Measure.cpp */,
 				45D6245B1EC0F466003FCB11 /* Age.cpp */,
@@ -377,6 +380,7 @@
 				45FDDFB61EC4CBA300374560 /* TextBox.cpp in Sources */,
 				4D47AFB61EB5F8B800D3F83B /* ofApp.cpp in Sources */,
 				4D2E9B411EC5FF9500B1993E /* Util.cpp in Sources */,
+				45FDE23C1ED09EB9000FCE78 /* Motion.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

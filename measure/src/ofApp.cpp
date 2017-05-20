@@ -1,9 +1,6 @@
 #include "ofApp.h"
-#include "Motion.h"
 #include "Util.h"
 #include "FontManager.h"
-
-#include <algorithm>
 
 void ofApp::setup(){
     ofSetBackgroundColor(0);
@@ -46,14 +43,19 @@ void ofApp::setup(){
     tbR.area.y = ofGetWindowHeight() * 0.243;
     
     loadXml();
+    
+    // check settings
+    for(int i=0; i<ms.size(); i++){
+        ms[i].printSettings();
+    }
 }
 
 void ofApp::update(){
-    
+
     frame++;
     
     for( int i=0; i<ms.size(); i++){
-        ms[i]->update(frame);
+        ms[i].update(frame);
         tbR.update(frame);
     }
     
@@ -73,7 +75,7 @@ void ofApp::draw(){
         ofSetLineWidth(lineW);
         
         for( int i=0; i<ms.size(); i++){
-            ms[i]->draw();
+            ms[i].draw();
         }
         
         ind.draw();
@@ -167,46 +169,51 @@ void ofApp::loadXml(){
         
         float duration = 16;
         float startFrame =   1 + i*duration*fps;
-        
-        shared_ptr<Motion> m(new Motion());
+    
+        ms.push_back(Motion());
+        Motion & m = ms[ms.size()-1];
         
         {
             //  Age
             //float fakeRate = 2.5f;
-            m->age.setData(ageData[i]);
-            float val = m->age.val;
+            shared_ptr<Age> age = static_pointer_cast<Age>(m.msr[Measure::TYPE::AGE]);
+            
+            age->setData(ageData[i]);
+            float val = age->val;
             float min = std::get<0>(ageData[0])-5;
             float max = std::get<0>(ageData[8])+20;
-            m->basex = ofMap(val, min, max, 0, canvas.width);
-            m->age.lineStartx = 0;
-            m->age.lineEndx = m->basex;
+            m.basex = ofMap(val, min, max, 0, canvas.width);
+            age->lineStartx = 0;
+            age->lineEndx = m.basex;
         }
         
         {
             //  Temprature
-            m->tmprt.setData( temperatureData[i] );
+            shared_ptr<Temperature> tmprt = static_pointer_cast<Temperature>(m.msr[Measure::TYPE::TEMPERATURE]);
+
+            tmprt->setData( temperatureData[i] );
             
             float min = std::get<0>(temperatureData[8])-0.5;
             float max = std::get<0>(temperatureData[0])+2;
-            m->basey = ofMap(m->tmprt.val, min, max, canvas.height, 0);
-            m->tmprt.lineStarty = 0;
-            m->tmprt.lineEndy = canvas.height;
+            m.basey = ofMap(tmprt->val, min, max, canvas.height, 0);
+            tmprt->lineStarty = 0;
+            tmprt->lineEndy = canvas.height;
         }
         
         {
-            //  Scale
-            m->scale.setData(sizeData[i]);
+            //  Size
+            shared_ptr<Scale> sz = static_pointer_cast<Scale>(m.msr[Measure::TYPE::SIZE]);
+            
+            sz->setData(sizeData[i]);
             
             float min = std::get<0>(sizeData[0])-4;
             float max = std::get<0>(sizeData[8])+2;
-            m->scale.targetRectSize = ofMap(m->scale.val, min, max, 0, canvas.height*0.5);
+            sz->targetRectSize = ofMap(sz->val, min, max, 0, canvas.height*0.5);
         }
         
         int motionId = i;
-        m->setup(startFrame, motionId);
-        ms.push_back(m);
+        m.setup(startFrame, motionId);
     }
-    
 }
 
 void ofApp::writeXml(){

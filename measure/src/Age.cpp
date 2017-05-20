@@ -2,10 +2,11 @@
 #include "Motion.h"
 #include "Util.h"
 #include "FontManager.h"
+#include "ofApp.h"
 
 using namespace EasingUtil;
 
-void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
+void Age::setup(float offsetFrame, Motion * _m){
     
     m = _m;
     float fps = (float)ofGetTargetFrameRate();
@@ -28,7 +29,6 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
                 );
         anim.push_back(e);
     }
-
     
     addAnimBySec(anim, &(alphaAll),       os+0.0, os+0.3);
     addAnimBySec(anim, &(ind.angle),      os+0.0, os+0.1, 90, 0);
@@ -47,7 +47,6 @@ void Age::setup(float offsetFrame, const shared_ptr<Motion> _m){
         e.setCb([&](void){ finished();});
         anim.push_back(e);
     }
-    
 }
 
 
