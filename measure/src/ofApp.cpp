@@ -166,14 +166,12 @@ void ofApp::loadXml(){
     // Sequence
     float fps = ofGetTargetFrameRate();
     
-    
     for(int i=0; i<ageData.size(); i++){
         
         float duration = 16;
         float startFrame =   1 + i*duration*fps;
     
         shared_ptr<Motion> m = shared_ptr<Motion>(new Motion());
-        
         
         {
             //  Age
@@ -185,8 +183,6 @@ void ofApp::loadXml(){
             float min = std::get<0>(ageData[0])-5;
             float max = std::get<0>(ageData[8])+20;
             m->basex = ofMap(val, min, max, 0, canvas.width);
-            age->lineStartx = 0;
-            age->lineEndx = m->basex;
         }
         
         {
@@ -198,8 +194,7 @@ void ofApp::loadXml(){
             float min = std::get<0>(temperatureData[8])-0.5;
             float max = std::get<0>(temperatureData[0])+2;
             m->basey = ofMap(tmprt->val, min, max, canvas.height, 0);
-            tmprt->lineStarty = 0;
-            tmprt->lineEndy = canvas.height;
+
         }
         
         {

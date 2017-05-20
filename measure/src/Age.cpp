@@ -9,10 +9,17 @@ using namespace EasingUtil;
 void Age::setup(float offsetFrame, weak_ptr<Motion> _m){
     
     m = _m;
+    shared_ptr<Motion> ms(m);
+    
     float fps = (float)ofGetTargetFrameRate();
     float os = offsetFrame/fps;
     Indicator & ind = ofApp::get()->ind;
     linePos = lineStartx;
+    
+    lineStartx = 0;
+    lineEndx = ms->basex;
+    alphaAll = 0;
+    stringPos = 0;
     
     {
         EasingPrm e;

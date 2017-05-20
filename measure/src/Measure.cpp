@@ -22,7 +22,6 @@ void Measure::launched(){
     // init indicator
     ind.text = indText;
     
-    
     // init safe text box
     app->tbR.reset();
     app->tbR.measure.t = nameOfMeasure;

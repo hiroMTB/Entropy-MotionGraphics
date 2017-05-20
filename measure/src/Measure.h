@@ -61,7 +61,7 @@ public:
     Measure & operator=(Measure const &)=default;
     template<class T> Measure & operator=(T const &)=delete;
     
-    virtual ~Measure(){ cout << "  -> Measure destloyed" << endl; };
+    virtual ~Measure(){ cout << "->  Measure destloyed" << endl; };
     virtual void setup(float offsetFrame, weak_ptr<Motion> m){};
     virtual void draw(){};
     
@@ -95,10 +95,9 @@ class Age : public Measure{
 public:
     
     Age(){ type = AGE; }
-    virtual ~Age(){ cout << "Age destloyed" << endl; }
+    virtual ~Age(){ cout << "Age destloyed  "; }
     float lineStartx;
     float lineEndx;
-    
     float linePos;
     
     void setup(float offsetFrame, weak_ptr<Motion> m) override;
@@ -109,7 +108,7 @@ class Temperature : public Measure{
     
 public:
     Temperature(){ type = TEMPERATURE; }
-    virtual ~Temperature(){ cout << "Temperature destroyed" << endl;}
+    virtual ~Temperature(){ cout << "Tmp destroyed  ";}
     float lineStarty;
     float lineEndy;
     float linePosy;
@@ -123,14 +122,13 @@ class Scale : public Measure{
 
 public:
     Scale(){ type = SIZE; }
-    virtual ~Scale(){ cout << "Scale destroyed" << endl; }
+    virtual ~Scale(){ cout << "Scl destroyed  "; }
     float rectSize;
     float targetRectSize;
     float angle;
     float arcAngle;
     float lineLen;
     
-    float posx, posy;
     void setup(float offsetFrame, weak_ptr<Motion> m) override;
     void draw() override;
 };

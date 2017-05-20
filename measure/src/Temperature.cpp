@@ -13,21 +13,26 @@ using namespace EasingUtil;
 void Temperature::setup(float offsetFrame, weak_ptr<Motion> _m){
     m = _m;
     float os = offsetFrame/(float)ofGetTargetFrameRate();
-        
-    // rotate indicator 90 deg
+    shared_ptr<Motion> ms(m);
+    Indicator & ind = ofApp::get()->ind;
+    
+    alphaAll = 0;
+    stringPos = 0;
+    lineStarty = 0;
+    lineEndy = ofApp::get()->canvas.height;
+    
     {
         EasingPrm e;
         e.setBySec(&(fake), os, os);
         e.setCb(
                 [&](void){
                     launched();
+                    linePosy = ind.posy;
                 });
         anim.push_back(e);
     }
     
-    shared_ptr<Motion> ms(m);
     
-    Indicator & ind = ofApp::get()->ind;
     addAnimBySec(anim, &(ind.angle),      os+0.1, os+0.5, 0, -90);
     addAnimBySec(anim, &alphaAll,         os+0.1, os+0.6, alphaAll, 1);
     addAnimBySec(anim, &linePosy,         os+0.5, os+1.5, lineStarty, lineEndy);

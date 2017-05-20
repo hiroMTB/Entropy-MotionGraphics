@@ -15,9 +15,11 @@ void Scale::setup(float offsetFrame, weak_ptr<Motion> _m){
     
     float os = offsetFrame/(float)ofGetTargetFrameRate();
     Indicator & ind = ofApp::get()->ind;
-     shared_ptr<Motion> ms(m);
-    posx = ms->basex;
-    posy = ms->basey;
+    shared_ptr<Motion> ms(m);
+
+    alphaAll = 0;
+    stringPos = 0;
+    rectSize = 0;
     
     {
         EasingPrm e;
@@ -73,7 +75,7 @@ void Scale::draw(){
     ofSetColor(255, alphaAll*255.0f);
  
     // Circle
-    ofTranslate(posx, posy);
+    ofTranslate(ms->basex, ms->basey);
     if(highlight)
        ofRotate(angle);
 
