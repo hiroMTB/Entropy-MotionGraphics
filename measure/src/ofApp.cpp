@@ -45,116 +45,7 @@ void ofApp::setup(){
     tbL.area.y = ofGetWindowHeight() * 0.243;
     tbR.area.y = ofGetWindowHeight() * 0.243;
     
-    float fakeRate = 2.5f;
-    
-    // data
-    // logaristic value : used for graphical position
-    // name of measure
-    // big Number(base), smalle number(incase of exponential)
-    // Mid number(in case of exponenctial)
-    // unit
-    // text for indicator (right screen)
-    typedef tuple<float, string, string, string, string, string, string, string> SceneData;
-    typedef vector<SceneData> DataSet;
-    int prevx = 0;
-    int prevy = 0;
-
-    vector<DataSet> dataSet;
-
-    bool loadXml = true;
-    if(loadXml){
-        
-        ofXml xml;
-        string p = "data.xml";
-        bool loadOk = xml.load(p);
-        if(!loadOk) return;
-        
-        xml.setTo("data");
-
-        int mn = xml.getNumChildren("Measure");
-        for(int j=0; j<mn; j++){
-            
-            DataSet d;
-            
-            xml.setToChild(j);
-            
-            int sn = xml.getNumChildren("scene");
-            SceneData s;
-            for(int i=0; i<sn; i++){
-                xml.setToChild(i);
-                float logVal = xml.getFloatValue("logVal");
-                string name = xml.getValue("name");
-                string base = xml.getValue("base");
-                string exp = xml.getValue("exp");
-                string sUnit = xml.getValue("sUnit");
-                string longNum = xml.getValue("longNum");
-                longNum = Util::replaceAll(longNum, "\\n", "\n");
-                string unit = xml.getValue("unit");
-                string ind = xml.getValue("ind");
-                s = {logVal, name, base, exp, sUnit, longNum, unit, ind};
-                d.push_back(s);
-                xml.setToParent();
-            }
-            xml.setToParent();
-            
-            dataSet.push_back(d);
-        }
-    }
-    
-    DataSet & ageData = dataSet[0];
-    DataSet & temperatureData = dataSet[1];
-    DataSet & sizeData = dataSet[2];
-    
-    // Sequence
-    float fps = ofGetTargetFrameRate();
-
-    
-    for(int i=0; i<ageData.size(); i++){
-        
-        float duration = 16;
-        float startFrame =   1 + i*duration*fps;
-        
-        shared_ptr<Motion> m(new Motion());
-        
-        {
-            //  Age
-            m->age.setData(ageData[i]);
-            float val = m->age.val;
-            float min = std::get<0>(ageData[0])-5;
-            float max = std::get<0>(ageData[8])+20;
-            m->basex = ofMap(val, min, max, 0, canvas.width);
-            m->age.lineStartx = 0; //prevx;
-            m->age.lineEndx = m->basex;
-        }
-        
-        {
-            //  Temprature
-            m->tmprt.setData( temperatureData[i] );
-            
-            float min = std::get<0>(temperatureData[8])-0.5;
-            float max = std::get<0>(temperatureData[0])+2;
-            m->basey = ofMap(m->tmprt.val, min, max, canvas.height, 0);
-            m->tmprt.lineStarty = 0;
-            m->tmprt.lineEndy = canvas.height;
-        }
-        
-        {
-            //  Scale
-            m->scale.setData(sizeData[i]);
-            
-            float min = std::get<0>(sizeData[0])-0.2;
-            float max = std::get<0>(sizeData[8])+5;
-            m->scale.targetRectSize = ofMap(m->scale.val, min, max, 0, canvas.height*0.5);
-        }
-        
-        int motionId = i;
-        m->setup(startFrame, motionId);
-        ms.push_back(m);
-        
-        prevx = m->basex;
-        prevy = m->basey;
-        
-    }
+    loadXml();
 }
 
 void ofApp::update(){
@@ -209,6 +100,114 @@ float ofApp::getExportHeight(){
     return exporter.getFbo().getHeight();
 }
 
+void ofApp::loadXml(){
+
+    // SceneData format
+    // 0 : logVal   : log value : used for graphical position
+    // 1 : name     : name of measure, to be shown on top right, e.g. Age
+    // 2 : base     : base of exponantial number, e.g. 10
+    // 3 : exp      : exp of exponantial number, e.g. 43
+    // 4 : sUnit    : short unit, e.g. sec
+    // 5 : longNum  : long number, e.g. 0.0000000000000001
+    // 6 : unit     : unit name, e.g. Seconds
+    // 7 : ind      : text for indicator (left screen)
+    typedef tuple<float, string, string, string, string, string, string, string> SceneData;
+    typedef vector<SceneData> DataSet;
+    
+    vector<DataSet> dataSet;
+    
+    bool loadXml = true;
+    if(loadXml){
+        
+        ofXml xml;
+        string p = "data.xml";
+        bool loadOk = xml.load(p);
+        if(!loadOk) return;
+        
+        xml.setTo("data");
+        
+        int mn = xml.getNumChildren("Measure");
+        for(int j=0; j<mn; j++){
+            
+            DataSet d;
+            xml.setToChild(j);
+            
+            int sn = xml.getNumChildren("scene");
+            SceneData s;
+            for(int i=0; i<sn; i++){
+                xml.setToChild(i);
+                float logVal = xml.getFloatValue("logVal");
+                string name = xml.getValue("name");
+                string base = xml.getValue("base");
+                string exp = xml.getValue("exp");
+                string sUnit = xml.getValue("sUnit");
+                string longNum = xml.getValue("longNum");
+                longNum = Util::replaceAll(longNum, "\\n", "\n");
+                string unit = xml.getValue("unit");
+                string ind = xml.getValue("ind");
+                s = {logVal, name, base, exp, sUnit, longNum, unit, ind};
+                d.push_back(s);
+                xml.setToParent();
+            }
+            xml.setToParent();
+            
+            dataSet.push_back(d);
+        }
+    }
+    
+    DataSet & ageData = dataSet[0];
+    DataSet & temperatureData = dataSet[1];
+    DataSet & sizeData = dataSet[2];
+    
+    // Sequence
+    float fps = ofGetTargetFrameRate();
+    
+    
+    for(int i=0; i<ageData.size(); i++){
+        
+        float duration = 16;
+        float startFrame =   1 + i*duration*fps;
+        
+        shared_ptr<Motion> m(new Motion());
+        
+        {
+            //  Age
+            //float fakeRate = 2.5f;
+            m->age.setData(ageData[i]);
+            float val = m->age.val;
+            float min = std::get<0>(ageData[0])-5;
+            float max = std::get<0>(ageData[8])+20;
+            m->basex = ofMap(val, min, max, 0, canvas.width);
+            m->age.lineStartx = 0;
+            m->age.lineEndx = m->basex;
+        }
+        
+        {
+            //  Temprature
+            m->tmprt.setData( temperatureData[i] );
+            
+            float min = std::get<0>(temperatureData[8])-0.5;
+            float max = std::get<0>(temperatureData[0])+2;
+            m->basey = ofMap(m->tmprt.val, min, max, canvas.height, 0);
+            m->tmprt.lineStarty = 0;
+            m->tmprt.lineEndy = canvas.height;
+        }
+        
+        {
+            //  Scale
+            m->scale.setData(sizeData[i]);
+            
+            float min = std::get<0>(sizeData[0])-0.2;
+            float max = std::get<0>(sizeData[8])+5;
+            m->scale.targetRectSize = ofMap(m->scale.val, min, max, 0, canvas.height*0.5);
+        }
+        
+        int motionId = i;
+        m->setup(startFrame, motionId);
+        ms.push_back(m);
+    }
+    
+}
 
 void ofApp::writeXml(){
     //   DataSet ageData =

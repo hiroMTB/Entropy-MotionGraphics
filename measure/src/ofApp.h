@@ -21,6 +21,7 @@ public:
     void draw();
     void update();
     void keyPressed(int key);
+    void loadXml();
     void writeXml();
     
     float getExportWidth();
