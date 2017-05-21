@@ -17,16 +17,18 @@ void TextBox::reset(){
 
 void TextBox::setAnimation( float startSec ){
     
-    float os = startSec;
-    addAnimBySec(anim, &(base.tpos),     startSec+0.1, startSec+0.3);
-    addAnimBySec(anim, &(measure.tpos),  startSec+0.2, startSec+0.5);
-    addAnimBySec(anim, &(exp.tpos),      startSec+0.3, startSec+0.6);
-    addAnimBySec(anim, &(shortUnit.tpos),      startSec+0.3, startSec+0.6);
-    addAnimBySec(anim, &(realNum.tpos),  startSec+0.4, startSec+0.9);
-    addAnimBySec(anim, &(unit.tpos),     startSec+0.5, startSec+0.95);
-    addAnimBySec(anim, &(a),             startSec+2.7, startSec+3.2, 1, 0);
+    float s = ofApp::get()->animSpdFactor;
     
-    blinkBySec(  anim, &(a),             startSec+2.9, startSec+3.1, 0.1, 0.2);
+    float os = startSec;
+    addAnimBySec(anim, &(base.tpos),     startSec+0.1*s, startSec+0.3*s);
+    addAnimBySec(anim, &(measure.tpos),  startSec+0.2*s, startSec+0.5*s);
+    addAnimBySec(anim, &(exp.tpos),      startSec+0.3*s, startSec+0.6*s);
+    addAnimBySec(anim, &(shortUnit.tpos),startSec+0.3*s, startSec+0.6*s);
+    addAnimBySec(anim, &(realNum.tpos),  startSec+0.4*s, startSec+0.9*s);
+    addAnimBySec(anim, &(unit.tpos),     startSec+0.5*s, startSec+0.95*s);
+    addAnimBySec(anim, &(a),             startSec+2.7*s, startSec+3.2*s, 1, 0);
+    
+    blinkBySec(  anim, &(a),             startSec+2.9*s, startSec+3.1*s, 0.1, 0.2);
     
 }
 
@@ -57,7 +59,7 @@ void TextBox::draw(){
     
     ofApp * app = ofApp::get();
     float y = FontManager::font["L"].stringHeight(measure.t);
-
+    
     ofSetColor(255, a * measure.a*255);
     FontManager::font["L"].drawString(measure.tshow, area.x, y+area.y);
     

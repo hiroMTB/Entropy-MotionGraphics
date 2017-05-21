@@ -10,12 +10,12 @@ void Age::setup(float offsetFrame, weak_ptr<Motion> _m){
     
     m = _m;
     shared_ptr<Motion> ms(m);
-    
     float fps = (float)ofGetTargetFrameRate();
     float os = offsetFrame/fps;
+    float s = ofApp::get()->animSpdFactor;
     Indicator & ind = ofApp::get()->ind;
+
     linePos = lineStartx;
-    
     lineStartx = 0;
     lineEndx = ms->basex;
     alphaAll = 0;
@@ -37,20 +37,20 @@ void Age::setup(float offsetFrame, weak_ptr<Motion> _m){
         anim.push_back(e);
     }
     
-    addAnimBySec(anim, &(alphaAll),       os+0.0, os+0.3);
-    addAnimBySec(anim, &(ind.angle),      os+0.0, os+0.1, 90, 0);
-    addAnimBySec(anim, &(ind.triAlpha),   os+0.1, os+0.6, 0, 1);
-    addAnimBySec(anim, &linePos,          os+0.5, os+1.5, lineStartx, lineEndx);
-    addAnimBySec(anim, &(ind.posx),       os+0.6, os+1.5, lineStartx, lineEndx);
-    addAnimBySec(anim, &(ind.textAlpha),  os+1.2, os+1.8, 0, 1);
-    addAnimBySec(anim, &textAlpha,        os+1,   os+1.5);
-    addAnimBySec(anim, &stringPos,        os+1.5,   os+2);  //3.5f + text.size()*0.05f);
+    addAnimBySec(anim, &(alphaAll),       os+0.0*s, os+0.3*s);
+    addAnimBySec(anim, &(ind.angle),      os+0.0*s, os+0.1*s, 90, 0);
+    addAnimBySec(anim, &(ind.triAlpha),   os+0.1*s, os+0.6*s, 0, 1);
+    addAnimBySec(anim, &linePos,          os+0.5*s, os+1.5*s, lineStartx, lineEndx);
+    addAnimBySec(anim, &(ind.posx),       os+0.6*s, os+1.5*s, lineStartx, lineEndx);
+    addAnimBySec(anim, &(ind.textAlpha),  os+1.2*s, os+1.8*s, 0, 1);
+    addAnimBySec(anim, &textAlpha,        os+1.0*s,   os+1.5*s);
+    addAnimBySec(anim, &stringPos,        os+1.5*s,   os+2*s);  //3.5f + text.size()*0.05f);
     
-    ofApp::get()->tbR.setAnimation(os+1.5);
+    ofApp::get()->tbR.setAnimation(os+1.5*s);
     
     {
         EasingPrm e;
-        e.setBySec(&(fake),             os+4.5, os+4.6);
+        e.setBySec(&(fake),             os+4.5*s, os+4.6*s);
         e.setCb([&](void){ finished();});
         anim.push_back(e);
     }
@@ -58,8 +58,8 @@ void Age::setup(float offsetFrame, weak_ptr<Motion> _m){
 
 
 void Age::draw(){
-     shared_ptr<Motion> ms(m);
-    int currentMotionId = ofApp::get()->getCurrentMotionId();
+    shared_ptr<Motion> ms(m);
+    int currentMotionId = ofApp::get()->currentMotionId;
     bool highlight = (ms->motionId == currentMotionId);
     float a = alphaAll*255.0f;
     

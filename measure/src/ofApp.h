@@ -26,23 +26,24 @@ public:
     float getExportWidth();
     float getExportHeight();
     
-    void setCurrentMotionId(int mid){ currentMotionId = mid; };
-    int getCurrentMotionId(){ return currentMotionId; }
     
 private:
-    float vMargin;
-    float hMargin;
-    float lineW = 4;
-    int currentMotionId = 0;
+    
+    
     bool bExport = false;
     ofxExportImageSequence exporter;
     
 public:
+    bool bStart;
+    float vMargin;
+    float hMargin;
+    int currentMotionId = 0;
+    float animSpdFactor;
     
     ofRectangle canvas;
     vector<shared_ptr<Motion>> ms;
     int frame = -1;
-
+    
     Indicator ind;
     TextBox tbL, tbR;
 };

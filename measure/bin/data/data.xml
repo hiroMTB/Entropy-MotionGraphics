@@ -145,12 +145,12 @@
 		<scene>
 			<logVal>4</logVal>
 			<name>Temperature</name>
-			<base>10,000</base>
+			<base>11,000</base>
 			<exp/>
 			<sUnit>°C</sUnit>
 			<longNum/>
 			<unit>°Celsius</unit>
-			<ind>10000 °C</ind>
+			<ind>11000 °C</ind>
 		</scene>
 		<scene>
 			<logVal>3</logVal>

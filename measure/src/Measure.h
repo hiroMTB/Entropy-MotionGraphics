@@ -40,7 +40,7 @@ public:
     TYPE type = Measure::TYPE::NONE;
     weak_ptr<Motion> m;
     vector<EasingPrm> anim;
-
+    
     float   val;
     string  nameOfMeasure;
     string  baseText;
@@ -113,13 +113,13 @@ public:
     float lineEndy;
     float linePosy;
     float targety;
-
+    
     void setup(float offsetFrame, weak_ptr<Motion> m) override;
     void draw() override;
 };
 
 class Scale : public Measure{
-
+    
 public:
     Scale(){ type = SIZE; }
     virtual ~Scale(){ cout << "Scl destroyed  "; }
@@ -128,6 +128,7 @@ public:
     float angle;
     float arcAngle;
     float lineLen;
+    float posy;
     
     void setup(float offsetFrame, weak_ptr<Motion> m) override;
     void draw() override;

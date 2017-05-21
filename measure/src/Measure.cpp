@@ -8,16 +8,17 @@ void Measure::launched(){
     cout << "Launched" << endl;
     
     ofApp * app = ofApp::get();
+    shared_ptr<Motion> ms(m);
+    float fps = (float)ofGetTargetFrameRate();
+    float s = ofApp::get()->animSpdFactor;
     Indicator & ind = ofApp::get()->ind;
     float frame = app->frame;
-    float fps = ofGetTargetFrameRate();
-
-    shared_ptr<Motion> ms(m);
+    
     if(ms->motionId>=9){
         cout << "strange motionId Value" << endl;
     }
     
-    app->setCurrentMotionId(ms->motionId);
+    app->currentMotionId = ms->motionId;
     
     // init indicator
     ind.text = indText;
@@ -36,7 +37,7 @@ void Measure::launched(){
         shared_ptr<Motion> m_before = app->ms[j];
         shared_ptr<Measure> target = m_before->getMeasure(type);
         EasingPrm e;
-        e.setByFrame(&(target->alphaAll), frame, frame+fps, 0, 0.3);
+        e.setByFrame(&(target->alphaAll), frame, frame+fps*s, 0, 0.3);
         target->anim.push_back(e);
     }
     
@@ -49,23 +50,25 @@ void Measure::finished(){
     Indicator & ind = ofApp::get()->ind;
     float frame = app->frame;
     float fps = ofGetTargetFrameRate();
+    float s = ofApp::get()->animSpdFactor;
+    
     shared_ptr<Motion> ms(m);
     
     for(int j=0; j<ms->motionId; j++){
         shared_ptr<Motion> m_before = app->ms[j];
         shared_ptr<Measure> target = m_before->getMeasure(type);
         EasingPrm e;
-        e.setByFrame(&(target->alphaAll), frame, frame+fps, 0.3, 0);
+        e.setByFrame(&(target->alphaAll), frame, frame+fps*s, 0.3, 0);
         target->anim.push_back(e);
     }
     
-    addAnimByFrame( anim, &alphaAll,         frame, frame+fps*(alphaAll*0.5), alphaAll, 0);
-    addAnimByFrame( anim, &(ind.textAlpha),  frame, frame+fps*0.2, 1, 0);
-   
+    addAnimByFrame( anim, &alphaAll,         frame, frame+fps*(alphaAll*0.5)*s, alphaAll, 0);
+    addAnimByFrame( anim, &(ind.textAlpha),  frame, frame+fps*0.2*s, 1, 0);
+    
 }
 
 void Measure::printSettings(){
-     shared_ptr<Motion> ms(m);
+    shared_ptr<Motion> ms(m);
     printf("%12s, ", nameOfMeasure.c_str());
     printf("mId %d, ", ms->motionId);
     printf("of %5d, ", ms->offsetFrame);
