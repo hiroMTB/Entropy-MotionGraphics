@@ -4,7 +4,7 @@
 
 void ofApp::setup(){
     ofSetBackgroundColor(0);
-    ofSetFrameRate(30);
+    ofSetFrameRate(60);
     ofSetCircleResolution(120);
     ofSetFullscreen(false);
     ofSetLogLevel(OF_LOG_NOTICE);

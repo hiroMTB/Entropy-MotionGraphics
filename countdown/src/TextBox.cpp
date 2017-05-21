@@ -59,7 +59,23 @@ void TextBox::draw(){
     float sunitw = FontManager::font["L"].stringWidth(shortUnit.t);
 
     y += 60;
-    FontManager::font["XL"].drawString(base.tshow, area.x+area.width-basew-60-sunitw, y+area.y);
+    
+    {
+        float letterspacing = FontManager::font["XL"].getLetterSpacing();
+        float textWidth = FontManager::font["XL"].stringWidth("9");
+        //textWidth *= letterspacing; // buggy??
+        textWidth += 12;
+        string st = base.tshow;
+        float len = base.tshow.size() * textWidth;
+        for(int i=0; i<st.size(); i++){
+            float posx = textWidth * i;
+            char c = st[i];
+            string s(&c);
+            FontManager::font["XL"].drawString( s, area.x+area.width-len+posx-60-sunitw, y+area.y);
+        }
+    }
+    
+    
     FontManager::font["L"].drawString(shortUnit.tshow, area.x+area.width-sunitw, y+area.y);
     
     // prepare text fitting
