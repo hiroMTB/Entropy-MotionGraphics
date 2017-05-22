@@ -3,7 +3,7 @@
 
 unordered_map<string, ofTrueTypeFontCustom> FontManager::font;
 
-void FontManager::setup(float scale, bool Kontra){
+void FontManager::setup(float scale){
     
     ofTrueTypeFont::setGlobalDpi(72);
     

@@ -9,6 +9,6 @@ public:
 
     static unordered_map<string, ofTrueTypeFontCustom> font;
 
-    static void setup(float scale, bool Kontra=1);
+    static void setup(float scale);
     
 };

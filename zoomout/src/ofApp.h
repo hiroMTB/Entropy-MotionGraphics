@@ -22,6 +22,9 @@ public:
     float getExportWidth();
     float getExportHeight();
     
+    void drawLinearScale();
+    void drawLogScale(float base);
+    void drawTick(float pos, string s);
 private:
     
     ofxExportImageSequence exporter;
@@ -32,5 +35,14 @@ public:
     float hMargin;
     float animSpdFactor;
     int frame = -1;
+
+    float scalaLen;
+    
+    // linear
+    float scaleMax;
+    int expMin = -15;
+    int expMax = 5;
+    
+    
 };
 
