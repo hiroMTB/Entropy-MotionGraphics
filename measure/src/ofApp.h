@@ -4,6 +4,7 @@
 #include "UMeasure.h"
 #include "ofxExportImageSequence.h"
 #include "TextBox.h"
+#include "Motion.h"
 
 class EasingPrm;
 
@@ -25,6 +26,9 @@ public:
     
     float getExportWidth();
     float getExportHeight();
+    Motion & getCurrentMotion(){ return ms[currentMotionId]; }
+    Motion & getMotion(int motionId){ return ms[motionId]; }
+    
         
 private:
     
@@ -39,7 +43,7 @@ public:
     float animSpdFactor;
     
     ofRectangle canvas;
-    vector<shared_ptr<Motion>> ms;
+    vector<Motion> ms;
     int frame = -1;
     
     Indicator ind;

@@ -6,10 +6,11 @@
 
 using namespace EasingUtil;
 
-void USize::setup(float offsetFrame, weak_ptr<Motion> _m){
+void USize::setup(float offsetFrame, int motionId){
    
-    m = _m;
-    shared_ptr<Motion> ms(m);
+    parentMotionId = motionId;
+    Motion & ms = ofApp::get()->getMotion(parentMotionId);
+    
     float fps = (float)ofGetTargetFrameRate();
     float os = offsetFrame/fps;
     float s = ofApp::get()->animSpdFactor;
@@ -48,7 +49,7 @@ void USize::setup(float offsetFrame, weak_ptr<Motion> _m){
     addAnimBySec(anim, &aArc2.angle,    os+0.0*s, os+6*s,   0, -360);
 
     addAnimBySec(anim, &aLine1.p2.x,    os+1.1*s, os+1.4*s, 0, 70);
-    addAnimBySecTo(anim,&ind.posx,      os+1.5*s,  os+2.5*s, ms->basex+targetRadSize, expout);
+    addAnimBySecTo(anim,&ind.posx,      os+1.5*s,  os+2.5*s, ms.basex+targetRadSize, expout);
     addAnimBySec(anim, &indText.a,      os+1.6*s,  os+2.8*s, 0, 1);
     addAnimBySec(anim, &indText.tpos,   os+1.5*s,  os+2*s);  //3.5f + text.size()*0.05f);
     addAnimBySec(anim, &aArc1.angle,    os+1.2*s, os+6*s, -25, 7);
@@ -68,10 +69,10 @@ void USize::setup(float offsetFrame, weak_ptr<Motion> _m){
 
 void USize::draw(){
     
-    shared_ptr<Motion> ms(m);
+    Motion & ms = ofApp::get()->getMotion(parentMotionId);
     
     int currentMotionId = ofApp::get()->currentMotionId;
-    bool highlight = (ms->motionId == currentMotionId);
+    bool highlight = (ms.motionId == currentMotionId);
     
     Indicator & ind = ofApp::get()->ind;
     int x = ind.posx;
@@ -85,7 +86,7 @@ void USize::draw(){
         
         // Circle
         float posy = ofApp::get()->getExportHeight()/2 - ofApp::get()->vMargin;
-        ofTranslate(ms->basex, posy);
+        ofTranslate(ms.basex, posy);
         
         if(highlight){
             ofRotate(aArc1.angle);

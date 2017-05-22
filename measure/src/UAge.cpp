@@ -6,10 +6,11 @@
 
 using namespace EasingUtil;
 
-void UAge::setup(float offsetFrame, weak_ptr<Motion> _m){
+void UAge::setup(float offsetFrame, int motionId){
     
-    m = _m;
-    shared_ptr<Motion> ms(m);
+    parentMotionId = motionId;
+    Motion & ms = ofApp::get()->getMotion(parentMotionId);
+
     float fps = (float)ofGetTargetFrameRate();
     float os = offsetFrame/fps;
     float s = ofApp::get()->animSpdFactor;
@@ -37,11 +38,11 @@ void UAge::setup(float offsetFrame, weak_ptr<Motion> _m){
     addAnimBySec(anim, &alphaAll,       os+0.0*s, os+0.3*s);
     addAnimBySec(anim, &ind.angle,      os+0.0*s, os+0.1*s, 90, 0);
     addAnimBySec(anim, &ind.triAlpha,   os+0.1*s, os+0.6*s, 0, 1);
-    addAnimBySec(anim, &aLine1.p2.x,    os+0.5*s, os+1.5*s, 0, ms->basex);
-    addAnimBySec(anim, &ind.posx,       os+0.6*s, os+1.5*s, 0, ms->basex);
-    addAnimBySec(anim, &indText.a,  os+1.2*s, os+1.8*s, 0, 1);
-    addAnimBySec(anim, &textAlpha,        os+1.0*s,   os+1.5*s);
-    addAnimBySec(anim, &indText.tpos,        os+1.5*s,   os+2*s);  //3.5f + text.size()*0.05f);
+    addAnimBySec(anim, &aLine1.p2.x,    os+0.5*s, os+1.5*s, 0, ms.basex);
+    addAnimBySec(anim, &ind.posx,       os+0.6*s, os+1.5*s, 0, ms.basex);
+    addAnimBySec(anim, &indText.a,      os+1.2*s, os+1.8*s, 0, 1);
+    addAnimBySec(anim, &textAlpha,      os+1.0*s,   os+1.5*s);
+    addAnimBySec(anim, &indText.tpos,   os+1.5*s,   os+2*s);  //3.5f + text.size()*0.05f);
     
     ofApp::get()->tbR.setAnimation(os+1.5*s);
     
@@ -55,9 +56,11 @@ void UAge::setup(float offsetFrame, weak_ptr<Motion> _m){
 
 
 void UAge::draw(){
-    shared_ptr<Motion> ms(m);
+
+    Motion & ms = ofApp::get()->getMotion(parentMotionId);
+
     int currentMotionId = ofApp::get()->currentMotionId;
-    bool highlight = (ms->motionId == currentMotionId);
+    bool highlight = (ms.motionId == currentMotionId);
     float a = alphaAll*255.0f;
     Indicator & ind = ofApp::get()->ind;
 
@@ -74,7 +77,7 @@ void UAge::draw(){
         
         // 90 deg text
         ofPushMatrix();{
-            ofTranslate(ms->basex, 0);
+            ofTranslate(ms.basex, 0);
             ofTranslate(0, 80);
             ofRotate(90);
             ofSetColor(255, a);

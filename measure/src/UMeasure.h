@@ -36,9 +36,9 @@ public:
     };
     
     TYPE type = UMeasure::TYPE::NONE;
-    weak_ptr<Motion> m;
     vector<EasingPrm> anim;
     
+    int parentMotionId;
     float   val;
     string  nameOfMeasure;
     string  baseText;
@@ -59,7 +59,7 @@ public:
     template<class T> UMeasure & operator=(T const &)=delete;
     
     virtual ~UMeasure(){ cout << "->  UMeasure destloyed" << endl; };
-    virtual void setup(float offsetFrame, weak_ptr<Motion> m){};
+    virtual void setup(float offsetFrame, int motionId){};
     virtual void draw(){};
     
     void launched();
@@ -93,10 +93,10 @@ class UAge : public UMeasure{
 public:
     
     UAge(){ type = AGE; }
-    virtual ~UAge(){ cout << "Age destloyed  "; }
+    virtual ~UAge(){ cout << "UAge destloyed  "; }
 
     AnimLine aLine1;
-    void setup(float offsetFrame, weak_ptr<Motion> m) override;
+    void setup(float offsetFrame, int motionId) override;
     void draw() override;
 };
 
@@ -104,11 +104,11 @@ class UTemp : public UMeasure{
     
 public:
     UTemp(){ type = TEMPERATURE; }
-    virtual ~UTemp(){ cout << "Tmp destroyed  ";}
+    virtual ~UTemp(){ cout << "UTemp destroyed  ";}
 
     AnimLine aLine1;
 
-    void setup(float offsetFrame, weak_ptr<Motion> m) override;
+    void setup(float offsetFrame, int motionId) override;
     void draw() override;
 };
 
@@ -116,21 +116,21 @@ class USize : public UMeasure{
     
 public:
     USize(){ type = SIZE; }
-    virtual ~USize(){ cout << "Scl destroyed  "; }
+    virtual ~USize(){ cout << "USize destroyed  "; }
 
     AnimArc aArc1, aArc2;
     AnimLine aLine1;
     
     float targetRadSize;
     
-    void setup(float offsetFrame, weak_ptr<Motion> m) override;
+    void setup(float offsetFrame, int motionId) override;
     void draw() override;
 };
 
 class Velocity : public UMeasure{
     
 public:
-    void setup(float offsetFrame, weak_ptr<Motion> m) override;
+    void setup(float offsetFrame, int motionId) override;
     void draw() override;
 };
 

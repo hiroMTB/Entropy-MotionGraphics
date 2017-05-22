@@ -5,16 +5,16 @@
 
 #include <unordered_map>
 
-class Motion : public enable_shared_from_this<Motion>{
+class Motion{
     
 public:
 
     Motion();
-    void setup(int _offsetFrame, int mid);
+    void setup(int offsetFrame, int mid);
     void update(int frame);
     void draw();
     void printSettings();
-    shared_ptr<UMeasure> getMeasure( UMeasure::TYPE t);
+    shared_ptr<UMeasure> getMeasure(UMeasure::TYPE t);
 
     int motionId;
     int offsetFrame = 0;

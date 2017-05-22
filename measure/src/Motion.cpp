@@ -6,15 +6,14 @@ Motion::Motion(){
 
 void Motion::setup(int _offsetFrame, int mid){
     motionId = mid;
+    offsetFrame = _offsetFrame;
     
     float s = ofApp::get()->animSpdFactor;
-    
-    offsetFrame = _offsetFrame;
     float fps = ofGetTargetFrameRate();
 
-    msr[UMeasure::TYPE::AGE]->setup(offsetFrame, shared_from_this() );
-    msr[UMeasure::TYPE::TEMPERATURE]->setup(offsetFrame +  5.0*fps*s, shared_from_this() );
-    msr[UMeasure::TYPE::SIZE]->setup(offsetFrame + 10.0*fps*s, shared_from_this() );
+    msr[UMeasure::TYPE::AGE]->setup(offsetFrame, motionId);
+    msr[UMeasure::TYPE::TEMPERATURE]->setup(offsetFrame +  5.0*fps*s, motionId);
+    msr[UMeasure::TYPE::SIZE]->setup(offsetFrame + 10.0*fps*s, motionId);
 }
 
 void Motion::update(int frame){

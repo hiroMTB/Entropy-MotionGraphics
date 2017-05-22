@@ -1,7 +1,6 @@
 #include "ofApp.h"
 #include "Util.h"
 #include "FontManager.h"
-#include "Motion.h"
 
 void ofApp::setup(){
     ofSetBackgroundColor(0);
@@ -45,7 +44,7 @@ void ofApp::setup(){
     
     // check settings
     for(int i=0; i<ms.size(); i++){
-        ms[i]->printSettings();
+        ms[i].printSettings();
     }
 }
 
@@ -54,7 +53,7 @@ void ofApp::update(){
     if(bStart) frame++;
     
     for( int i=0; i<ms.size(); i++){
-        ms[i]->update(frame);
+        ms[i].update(frame);
         tbR.update(frame);
     }    
 }
@@ -72,7 +71,7 @@ void ofApp::draw(){
         ofSetColor(255);
         
         for( int i=0; i<ms.size(); i++){
-            ms[i]->draw();
+            ms[i].draw();
         }
         
         ind.draw();
@@ -99,7 +98,7 @@ void ofApp::keyPressed(int key){
     
     if( 49<=key && key<=48+9){
         int n = key - 48;
-        frame = ms[n]->offsetFrame;
+        frame = ms[n].offsetFrame;
     }
 }
 
@@ -174,50 +173,49 @@ void ofApp::loadXml(){
     // Sequence
     float fps = ofGetTargetFrameRate();
     
+    ms.assign(dataSet[0].size(), Motion());
+    
     for(int i=0; i<ageData.size(); i++){
         
         float durationSec = 16 * animSpdFactor;
         float startFrame =   1 + i*durationSec*fps;
         
-        shared_ptr<Motion> m = shared_ptr<Motion>(new Motion());
-
+        Motion & m = ms[i];
+        
         {
             //  Age
             shared_ptr<UAge> age = shared_ptr<UAge>(new UAge());
-            m->msr[UMeasure::TYPE::AGE] = age;
+            m.msr[UMeasure::TYPE::AGE] = age;
             age->setData(ageData[i]);
             float val = age->val;
             float min = std::get<0>(ageData[0])-5;
             float max = std::get<0>(ageData[8])+20;
-            m->basex = ofMap(val, min, max, 0, canvas.width);
+            m.basex = ofMap(val, min, max, 0, canvas.width);
         }
         
         {
             //  Temprature
             shared_ptr<UTemp> temp = shared_ptr<UTemp>(new UTemp());
-            m->msr[UMeasure::TYPE::TEMPERATURE] = temp;
+            m.msr[UMeasure::TYPE::TEMPERATURE] = temp;
             temp->setData( temperatureData[i] );
             float min = std::get<0>(temperatureData[8])-0.5;
             float max = std::get<0>(temperatureData[0])+2;
-            m->basey = ofMap(temp->val, min, max, canvas.height, 0);
+            m.basey = ofMap(temp->val, min, max, canvas.height, 0);
             
         }
         
         {
             //  Size
             shared_ptr<USize> sz = shared_ptr<USize>(new USize());
-            m->msr[UMeasure::TYPE::SIZE] = sz;
+            m.msr[UMeasure::TYPE::SIZE] = sz;
             sz->setData(sizeData[i]);
             float min = std::get<0>(sizeData[0])-4;
             float max = std::get<0>(sizeData[8])+2;
             sz->targetRadSize = ofMap(sz->val, min, max, 0, canvas.height*0.35);
         }
-        
-        
+                
         int motionId = i;
-        
-        m->setup(startFrame, motionId);
-        ms.push_back( m );
+        m.setup(startFrame, motionId);
     }
 }
 
