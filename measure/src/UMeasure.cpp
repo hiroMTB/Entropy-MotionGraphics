@@ -33,10 +33,8 @@ void UMeasure::launched(){
     for(int j=0; j<parentMotionId; j++){
         Motion & m_before = app->ms[j];
         shared_ptr<UMeasure> target = m_before.getMeasure(type);
-        EasingPrm e;
-        e.setByFrame(&(target->alphaAll), frame, frame+fps*s, 0, 0.3);
-        target->anim.push_back(e);
-    }    
+        target->alphaAll = 1;
+    }
 }
 
 void UMeasure::finished(){    
@@ -52,12 +50,12 @@ void UMeasure::finished(){
         Motion & m_before = app->ms[j];
         shared_ptr<UMeasure> target = m_before.getMeasure(type);
         EasingPrm e;
-        e.setByFrame(&(target->alphaAll), frame, frame+fps*s, 0.3, 0);
+        e.setByFrame(&(target->alphaAll), frame, frame+fps*0.7*s, 0.3, 0);
         target->anim.push_back(e);
     }
     
     addAnimByFrame( anim, &alphaAll,      frame, frame+fps*(alphaAll*0.5)*s, alphaAll, 0);
-    addAnimByFrame( anim, &indText.a,     frame, frame+fps*0.2*s, 1, 0);
+    addAnimByFrame( anim, &indText.a,     frame, frame+fps*0.3*s, 1, 0);
     
 }
 

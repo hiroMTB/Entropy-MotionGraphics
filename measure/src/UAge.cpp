@@ -61,7 +61,7 @@ void UAge::draw(){
 
     int currentMotionId = ofApp::get()->currentMotionId;
     bool highlight = (ms.motionId == currentMotionId);
-    float a = alphaAll*255.0f;
+    float a = alphaAll*255.0f * (highlight?1.0:0.3);
     Indicator & ind = ofApp::get()->ind;
 
     ofPushMatrix(); {
@@ -84,7 +84,7 @@ void UAge::draw(){
             
             string show = indText.tshow;
             
-            if(highlight ){
+            if(highlight){
                 Util::stringFit(show, FontManager::font["M"], ofApp::get()->canvas.height*0.9);
                 FontManager::font["M"].drawString(show, 0, 8);
                 Util::eraseLineBreak(show);

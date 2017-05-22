@@ -73,11 +73,11 @@ void USize::draw(){
     
     int currentMotionId = ofApp::get()->currentMotionId;
     bool highlight = (ms.motionId == currentMotionId);
-    
+    float a = alphaAll*255.0f * (highlight?1.0:0.3);
+
     Indicator & ind = ofApp::get()->ind;
     int x = ind.posx;
     
-    float a = alphaAll*255.0f;
     aArc1.a = aArc2.a = a;
     aArc2.rad = aArc1.rad+15;
     

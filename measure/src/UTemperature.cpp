@@ -64,8 +64,8 @@ void UTemp::draw(){
 
     int currentMotionId = ofApp::get()->currentMotionId;
     bool highlight = (ms.motionId == currentMotionId);
-    float a = alphaAll*255.0f;
-    
+    float a = alphaAll*255.0f * (highlight?1.0:0.3);
+
     Indicator & ind = ofApp::get()->ind;
     int x = ofApp::get()->getCurrentMotion().basex;
     int y = ind.posy;
@@ -84,7 +84,7 @@ void UTemp::draw(){
     Util::drawLineAsRect(x-5,ms.basey, x+15, ms.basey, 4);
     
     string show = indText.tshow;
-    if(ms.motionId == currentMotionId ){
+    if(highlight){
         int h = FontManager::font["M"].getGlyphBBox().height;
         FontManager::font["M"].drawString(show, x+50, ms.basey+h/3);
     }else{
