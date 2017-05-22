@@ -57,7 +57,7 @@ void ofApp::update(){
     if(bStart) frame++;
     
     if(scaleMax < expMax)
-        scaleMax += 0.05;
+        scaleMax += 0.02;
 
 }
 
@@ -72,17 +72,18 @@ void ofApp::draw(){
     ofPushMatrix();{
         ofTranslate(getExportWidth()/2, 0);
 
-        ofTranslate(0, 200);
-        drawLinearScale();
+        int gap = 230;
+        ofTranslate(0, gap);
+        drawLogScale();         // log scale power of 10
 
-        ofTranslate(0, 200);
-        drawLogScale(2);
+        ofTranslate(0, gap);
+        drawExpScale(2);        // exponential scale, power of 2
 
-        ofTranslate(0, 200);
-        drawLogScale(5);
+        ofTranslate(0, gap);
+        drawExpScale(4);        // exponential scale, power of 4
 
-        ofTranslate(0, 200);
-        drawLogScale(10);
+        ofTranslate(0, gap);    // exponential scale, power of 10 -> linear scale because data is already log10
+        drawExpScale(10);
 
     }ofPopMatrix();
     
@@ -93,7 +94,7 @@ void ofApp::draw(){
     
 }
 
-void ofApp::drawLogScale( float base ){
+void ofApp::drawExpScale( float base ){
     Util::drawLineAsRect(-scalaLen, 0, scalaLen, 0, 2);
     Util::drawLineAsRect(0, 0, 0, 40, 2);
     
@@ -102,19 +103,19 @@ void ofApp::drawLogScale( float base ){
         double val = pow(base, i);
         double max = pow(base, scaleMax);
 
-        //if(val<max){
+        if(val<max){
             pos = myMap(val, 0, max, 0, scalaLen);
-            if(pos>30){
+            if(pos>50){
                 Util::drawLineAsRect(  pos, 0, pos, 10, 2);
                 Util::drawLineAsRect( -pos,0, -pos, 10, 2);
                 string s = ofToString(i);
                 drawTick(pos, s);
             }
-        //}
+        }
     }
 }
 
-void ofApp::drawLinearScale(){
+void ofApp::drawLogScale(){
     Util::drawLineAsRect(-scalaLen, 0, scalaLen, 0, 2);
     Util::drawLineAsRect(0, 0, 0, 40, 2);
 
@@ -131,12 +132,19 @@ void ofApp::drawLinearScale(){
 }
 
 void ofApp::drawTick(float pos, string s){
+    
+    ofRectangle r = FontManager::font["S"].getStringBoundingBox(s, 0, 0);
+    float w = r.width;
+    float h = r.height;
+    
     Util::drawLineAsRect(  pos, 0, pos, 10, 2);
     Util::drawLineAsRect( -pos,0, -pos, 10, 2);
     
-    
-    FontManager::font["S"].drawString(s,  pos, 60);
-    FontManager::font["S"].drawString(s, -pos, 60);
+    FontManager::font["M"].drawString("10", -pos-w*1.2,  h*3);
+    FontManager::font["S"].drawString(s,    -pos+w*1.2,  h*2);
+
+    FontManager::font["M"].drawString("10", pos-w*1.2,  h*3);
+    FontManager::font["S"].drawString(s,    pos+w*1.2,  h*2);
 }
 
 void ofApp::keyPressed(int key){

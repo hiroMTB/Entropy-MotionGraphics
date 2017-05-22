@@ -22,8 +22,8 @@ public:
     float getExportWidth();
     float getExportHeight();
     
-    void drawLinearScale();
-    void drawLogScale(float base);
+    void drawExpScale(float base);
+    void drawLogScale();
     void drawTick(float pos, string s);
 private:
     
