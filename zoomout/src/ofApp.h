@@ -22,8 +22,8 @@ public:
     float getExportWidth();
     float getExportHeight();
     
-    void drawExpScale(float base);
-    void drawLogScale();
+    void drawExpScale(float base, float min, float max, float length);
+    void drawLinearScale(float min, float max, float length);
     void drawTick(float pos, string s);
 private:
     
@@ -36,13 +36,10 @@ public:
     float animSpdFactor;
     int frame = -1;
 
-    float scalaLen;
+    float scaleLen;
     
     // linear
-    float scaleMax;
-    int expMin = -15;
-    int expMax = 5;
-    
+    float scaleMax;    
     
 };
 

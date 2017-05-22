@@ -2,12 +2,12 @@
 #include "Util.h"
 #include "FontManager.h"
 
-float myMap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp=false) {
+double myMap(double value, double inputMin, double inputMax, double outputMin, double outputMax, bool clamp=false) {
     
     //    if (fabs(inputMin - inputMax) < FLT_EPSILON){
     //        return outputMin;
     //    } else {
-    float outVal = ((value - inputMin) / (inputMax - inputMin) * (outputMax - outputMin) + outputMin);
+    double outVal = ((value - inputMin) / (inputMax - inputMin) * (outputMax - outputMin) + outputMin);
     
     if( clamp ){
         if(outputMax < outputMin){
@@ -47,8 +47,8 @@ void ofApp::setup(){
     
     //exporter.startExport();
     
-    scaleMax = expMin - 2;
-    scalaLen = (getExportWidth()-vMargin)/2;
+    scaleMax = -15;
+    scaleLen = (getExportWidth()-vMargin)/2;
     
 }
 
@@ -56,13 +56,13 @@ void ofApp::update(){
     
     if(bStart) frame++;
     
-    if(scaleMax < expMax)
-        scaleMax += 0.02;
-
+    scaleMax += 0.05;
 }
 
 void ofApp::draw(){
-    
+
+    int expMin = -15;
+
     exporter.begin();
  
     ofBackground(0);
@@ -73,17 +73,22 @@ void ofApp::draw(){
         ofTranslate(getExportWidth()/2, 0);
 
         int gap = 230;
+        
+        // log scale power of 10
         ofTranslate(0, gap);
-        drawLogScale();         // log scale power of 10
+        drawLinearScale(expMin, scaleMax, scaleLen);
 
+        // exponential scale, power of 2
         ofTranslate(0, gap);
-        drawExpScale(2);        // exponential scale, power of 2
-
+        drawExpScale(2, expMin, scaleMax, scaleLen);
+        
+        // exponential scale, power of 4
         ofTranslate(0, gap);
-        drawExpScale(4);        // exponential scale, power of 4
+        drawExpScale(4, expMin, scaleMax, scaleLen);
 
-        ofTranslate(0, gap);    // exponential scale, power of 10 -> linear scale because data is already log10
-        drawExpScale(10);
+        // exponential scale, power of 10 -> linear scale because data is already log10
+        ofTranslate(0, gap);
+        drawExpScale(10, expMin, scaleMax, scaleLen);
 
     }ofPopMatrix();
     
@@ -94,46 +99,37 @@ void ofApp::draw(){
     
 }
 
-void ofApp::drawExpScale( float base ){
-    Util::drawLineAsRect(-scalaLen, 0, scalaLen, 0, 2);
+void ofApp::drawExpScale(float base, float min, float smax, float length){
+    Util::drawLineAsRect(-length, 0, length, 0, 2);
     Util::drawLineAsRect(0, 0, 0, 40, 2);
     
-    for(int i=expMin; i<expMax; i++){
-        float pos;
-        double val = pow(base, i);
-        double max = pow(base, scaleMax);
-
-        if(val<max){
-            pos = myMap(val, 0, max, 0, scalaLen);
-            if(pos>50){
-                Util::drawLineAsRect(  pos, 0, pos, 10, 2);
-                Util::drawLineAsRect( -pos,0, -pos, 10, 2);
-                string s = ofToString(i);
-                drawTick(pos, s);
-            }
-        }
-    }
-}
-
-void ofApp::drawLogScale(){
-    Util::drawLineAsRect(-scalaLen, 0, scalaLen, 0, 2);
-    Util::drawLineAsRect(0, 0, 0, 40, 2);
-
-    
-    for(int i=expMin; i<expMax; i++){
-        float pos;
-        // tick is in range
-        if(i<scaleMax){
-            pos = ofMap(i+abs(expMin), 0, scaleMax+abs(expMin), 0, scalaLen);
+    for(int i=min; i<smax; i++){
+        double val = pow((double)base, (double)i);
+        double max = pow((double)base, (double)smax);
+        
+        float pos = myMap(val, 0, max, 0, length);
+        if(pos>50){
+            Util::drawLineAsRect(  pos, 0, pos, 10, 2);
+            Util::drawLineAsRect( -pos,0, -pos, 10, 2);
             string s = ofToString(i);
             drawTick(pos, s);
         }
     }
 }
 
+void ofApp::drawLinearScale(float min, float max, float length){
+    Util::drawLineAsRect(-length, 0, length, 0, 2);
+    Util::drawLineAsRect(0, 0, 0, 40, 2);
+    
+    for(int i=min; i<max; i++){
+        float pos = myMap(i+abs(min), 0, max+abs(min), 0, length);
+        drawTick(pos, ofToString(i));
+    }
+}
+
 void ofApp::drawTick(float pos, string s){
     
-    ofRectangle r = FontManager::font["S"].getStringBoundingBox(s, 0, 0);
+    ofRectangle r = FontManager::font["M"].getStringBoundingBox("10", 0, 0);
     float w = r.width;
     float h = r.height;
     
@@ -141,10 +137,10 @@ void ofApp::drawTick(float pos, string s){
     Util::drawLineAsRect( -pos,0, -pos, 10, 2);
     
     FontManager::font["M"].drawString("10", -pos-w*1.2,  h*3);
-    FontManager::font["S"].drawString(s,    -pos+w*1.2,  h*2);
+    FontManager::font["S"].drawString(s,    -pos,  h*2);
 
     FontManager::font["M"].drawString("10", pos-w*1.2,  h*3);
-    FontManager::font["S"].drawString(s,    pos+w*1.2,  h*2);
+    FontManager::font["S"].drawString(s,    pos,  h*2);
 }
 
 void ofApp::keyPressed(int key){
