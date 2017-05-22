@@ -2,10 +2,6 @@
 #include "ofApp.h"
 
 Motion::Motion(){
-
-    msr[Measure::TYPE::AGE] = shared_ptr<Age>(new Age());
-    msr[Measure::TYPE::TEMPERATURE] = shared_ptr<Temperature>(new Temperature());
-    msr[Measure::TYPE::SIZE] = shared_ptr<Scale>(new Scale());
 }
 
 void Motion::setup(int _offsetFrame, int mid){
@@ -16,9 +12,9 @@ void Motion::setup(int _offsetFrame, int mid){
     offsetFrame = _offsetFrame;
     float fps = ofGetTargetFrameRate();
 
-    msr[Measure::TYPE::AGE]->setup(offsetFrame, shared_from_this() );
-    msr[Measure::TYPE::TEMPERATURE]->setup(offsetFrame +  5.0*fps*s, shared_from_this() );
-    msr[Measure::TYPE::SIZE]->setup(offsetFrame + 10.0*fps*s, shared_from_this() );
+    msr[UMeasure::TYPE::AGE]->setup(offsetFrame, shared_from_this() );
+    msr[UMeasure::TYPE::TEMPERATURE]->setup(offsetFrame +  5.0*fps*s, shared_from_this() );
+    msr[UMeasure::TYPE::SIZE]->setup(offsetFrame + 10.0*fps*s, shared_from_this() );
 }
 
 void Motion::update(int frame){
@@ -36,7 +32,7 @@ void Motion::draw(){
     }
 }
 
-shared_ptr<Measure> Motion::getMeasure( Measure::TYPE t){
+shared_ptr<UMeasure> Motion::getMeasure( UMeasure::TYPE t){
     return msr[t];
 }
 

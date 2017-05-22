@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "Measure.h"
+#include "UMeasure.h"
 #include "ofxExportImageSequence.h"
 #include "TextBox.h"
 
@@ -25,12 +25,9 @@ public:
     
     float getExportWidth();
     float getExportHeight();
-    
-    
+        
 private:
     
-    
-    bool bExport = false;
     ofxExportImageSequence exporter;
     
 public:
@@ -38,6 +35,7 @@ public:
     float vMargin;
     float hMargin;
     int currentMotionId = 0;
+
     float animSpdFactor;
     
     ofRectangle canvas;

@@ -3,29 +3,27 @@
 #include "EasingPrm.h"
 #include "ofMain.h"
 #include "ofxEasing.h"
+#include "AnimationParts.h"
 using namespace ofxeasing;
 
 class Motion;
 
+
+/*
+ *      Triangle Indicator on the left side
+ */
 class Indicator{
     
 public:
-    string text;
     float posx = 0;
     float posy = 0;
-    
-    float textposx = 0;
-    float textposy = 0;
-    
     float angle = 0;
     float triAlpha = 0;
-    float textAlpha = 0;
-    void setup();
     void draw();
 };
 
 
-class Measure{
+class UMeasure{
     
 public:
     
@@ -37,7 +35,7 @@ public:
         OTHER =4
     };
     
-    TYPE type = Measure::TYPE::NONE;
+    TYPE type = UMeasure::TYPE::NONE;
     weak_ptr<Motion> m;
     vector<EasingPrm> anim;
     
@@ -48,20 +46,19 @@ public:
     string  shortUnitText;
     string  longNumText;
     string  unitText;
-    string  indText;
+    AnimText  indText;
     
     float alphaAll;
     float textAlpha;
     float fake;
-    float stringPos;
     
-    Measure()=default;
-    Measure(Measure& x)=default;
-    template<class T> Measure(T& x)=delete;
-    Measure & operator=(Measure const &)=default;
-    template<class T> Measure & operator=(T const &)=delete;
+    UMeasure()=default;
+    UMeasure(UMeasure& x)=default;
+    template<class T> UMeasure(T& x)=delete;
+    UMeasure & operator=(UMeasure const &)=default;
+    template<class T> UMeasure & operator=(T const &)=delete;
     
-    virtual ~Measure(){ cout << "->  Measure destloyed" << endl; };
+    virtual ~UMeasure(){ cout << "->  UMeasure destloyed" << endl; };
     virtual void setup(float offsetFrame, weak_ptr<Motion> m){};
     virtual void draw(){};
     
@@ -72,6 +69,7 @@ public:
         for( EasingPrm & p : anim){
             p.update(frame);
         }
+        indText.update();
     }
     
     
@@ -83,58 +81,53 @@ public:
         shortUnitText = std::get<4>(d);
         longNumText = std::get<5>(d);
         unitText = std::get<6>(d);
-        indText = std::get<7>(d);
+        indText.t = std::get<7>(d);
     }
     
     void printSettings();
 };
 
 
-class Age : public Measure{
+class UAge : public UMeasure{
     
 public:
     
-    Age(){ type = AGE; }
-    virtual ~Age(){ cout << "Age destloyed  "; }
-    float lineStartx;
-    float lineEndx;
-    float linePos;
+    UAge(){ type = AGE; }
+    virtual ~UAge(){ cout << "Age destloyed  "; }
+
+    AnimLine aLine1;
+    void setup(float offsetFrame, weak_ptr<Motion> m) override;
+    void draw() override;
+};
+
+class UTemp : public UMeasure{
+    
+public:
+    UTemp(){ type = TEMPERATURE; }
+    virtual ~UTemp(){ cout << "Tmp destroyed  ";}
+
+    AnimLine aLine1;
+
+    void setup(float offsetFrame, weak_ptr<Motion> m) override;
+    void draw() override;
+};
+
+class USize : public UMeasure{
+    
+public:
+    USize(){ type = SIZE; }
+    virtual ~USize(){ cout << "Scl destroyed  "; }
+
+    AnimArc aArc1, aArc2;
+    AnimLine aLine1;
+    
+    float targetRadSize;
     
     void setup(float offsetFrame, weak_ptr<Motion> m) override;
     void draw() override;
 };
 
-class Temperature : public Measure{
-    
-public:
-    Temperature(){ type = TEMPERATURE; }
-    virtual ~Temperature(){ cout << "Tmp destroyed  ";}
-    float lineStarty;
-    float lineEndy;
-    float linePosy;
-    float targety;
-    
-    void setup(float offsetFrame, weak_ptr<Motion> m) override;
-    void draw() override;
-};
-
-class Scale : public Measure{
-    
-public:
-    Scale(){ type = SIZE; }
-    virtual ~Scale(){ cout << "Scl destroyed  "; }
-    float rectSize;
-    float targetRectSize;
-    float angle;
-    float arcAngle;
-    float lineLen;
-    float posy;
-    
-    void setup(float offsetFrame, weak_ptr<Motion> m) override;
-    void draw() override;
-};
-
-class Velocity : public Measure{
+class Velocity : public UMeasure{
     
 public:
     void setup(float offsetFrame, weak_ptr<Motion> m) override;

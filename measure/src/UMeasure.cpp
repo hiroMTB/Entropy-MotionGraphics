@@ -1,10 +1,10 @@
-#include "Measure.h"
+#include "UMeasure.h"
 #include "ofApp.h"
 #include "Motion.h"
 
 using namespace EasingUtil;
 
-void Measure::launched(){
+void UMeasure::launched(){
     cout << "Launched" << endl;
     
     ofApp * app = ofApp::get();
@@ -20,9 +20,6 @@ void Measure::launched(){
     
     app->currentMotionId = ms->motionId;
     
-    // init indicator
-    ind.text = indText;
-    
     // init safe text box
     app->tbR.reset();
     app->tbR.measure.t = nameOfMeasure;
@@ -35,15 +32,14 @@ void Measure::launched(){
     
     for(int j=0; j<ms->motionId; j++){
         shared_ptr<Motion> m_before = app->ms[j];
-        shared_ptr<Measure> target = m_before->getMeasure(type);
+        shared_ptr<UMeasure> target = m_before->getMeasure(type);
         EasingPrm e;
         e.setByFrame(&(target->alphaAll), frame, frame+fps*s, 0, 0.3);
         target->anim.push_back(e);
-    }
-    
+    }    
 }
 
-void Measure::finished(){
+void UMeasure::finished(){
     cout << "Finished" << endl;
     
     ofApp * app = ofApp::get();
@@ -56,22 +52,21 @@ void Measure::finished(){
     
     for(int j=0; j<ms->motionId; j++){
         shared_ptr<Motion> m_before = app->ms[j];
-        shared_ptr<Measure> target = m_before->getMeasure(type);
+        shared_ptr<UMeasure> target = m_before->getMeasure(type);
         EasingPrm e;
         e.setByFrame(&(target->alphaAll), frame, frame+fps*s, 0.3, 0);
         target->anim.push_back(e);
     }
     
-    addAnimByFrame( anim, &alphaAll,         frame, frame+fps*(alphaAll*0.5)*s, alphaAll, 0);
-    addAnimByFrame( anim, &(ind.textAlpha),  frame, frame+fps*0.2*s, 1, 0);
+    addAnimByFrame( anim, &alphaAll,      frame, frame+fps*(alphaAll*0.5)*s, alphaAll, 0);
+    addAnimByFrame( anim, &indText.a,     frame, frame+fps*0.2*s, 1, 0);
     
 }
 
-void Measure::printSettings(){
+void UMeasure::printSettings(){
     shared_ptr<Motion> ms(m);
     printf("%12s, ", nameOfMeasure.c_str());
     printf("mId %d, ", ms->motionId);
     printf("of %5d, ", ms->offsetFrame);
-    printf("indT %35s\n", indText.c_str());
-    
+    printf("indT %35s\n", indText.t.c_str());
 }

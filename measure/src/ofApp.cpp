@@ -11,7 +11,7 @@ void ofApp::setup(){
     ofSetLogLevel(OF_LOG_NOTICE);
     
     bStart = true;
-    animSpdFactor = 0.1;
+    animSpdFactor = 0.5;
     int w = 1920*2;
     int h = 1080;
     
@@ -28,7 +28,6 @@ void ofApp::setup(){
     exporter.setOutputDir("render2");
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
-    //exporter.setCompression(ofxExportImageSequence::Compression::UNCOMPRESSED);
     
     //exporter.startExport();
     
@@ -57,8 +56,7 @@ void ofApp::update(){
     for( int i=0; i<ms.size(); i++){
         ms[i]->update(frame);
         tbR.update(frame);
-    }
-    
+    }    
 }
 
 void ofApp::draw(){
@@ -86,6 +84,8 @@ void ofApp::draw(){
     tbR.draw();
     
     exporter.end();
+    
+    ofBackground(20);
     exporter.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight() );
     
 }
@@ -180,11 +180,11 @@ void ofApp::loadXml(){
         float startFrame =   1 + i*durationSec*fps;
         
         shared_ptr<Motion> m = shared_ptr<Motion>(new Motion());
-        
+
         {
             //  Age
-            shared_ptr<Age> age = static_pointer_cast<Age>(m->msr[Measure::TYPE::AGE]);
-            
+            shared_ptr<UAge> age = shared_ptr<UAge>(new UAge());
+            m->msr[UMeasure::TYPE::AGE] = age;
             age->setData(ageData[i]);
             float val = age->val;
             float min = std::get<0>(ageData[0])-5;
@@ -194,28 +194,28 @@ void ofApp::loadXml(){
         
         {
             //  Temprature
-            shared_ptr<Temperature> tmprt = static_pointer_cast<Temperature>(m->msr[Measure::TYPE::TEMPERATURE]);
-            
-            tmprt->setData( temperatureData[i] );
-            
+            shared_ptr<UTemp> temp = shared_ptr<UTemp>(new UTemp());
+            m->msr[UMeasure::TYPE::TEMPERATURE] = temp;
+            temp->setData( temperatureData[i] );
             float min = std::get<0>(temperatureData[8])-0.5;
             float max = std::get<0>(temperatureData[0])+2;
-            m->basey = ofMap(tmprt->val, min, max, canvas.height, 0);
+            m->basey = ofMap(temp->val, min, max, canvas.height, 0);
             
         }
         
         {
             //  Size
-            shared_ptr<Scale> sz = static_pointer_cast<Scale>(m->msr[Measure::TYPE::SIZE]);
-            
+            shared_ptr<USize> sz = shared_ptr<USize>(new USize());
+            m->msr[UMeasure::TYPE::SIZE] = sz;
             sz->setData(sizeData[i]);
-            
             float min = std::get<0>(sizeData[0])-4;
             float max = std::get<0>(sizeData[8])+2;
-            sz->targetRectSize = ofMap(sz->val, min, max, 0, canvas.height*0.35);
+            sz->targetRadSize = ofMap(sz->val, min, max, 0, canvas.height*0.35);
         }
         
+        
         int motionId = i;
+        
         m->setup(startFrame, motionId);
         ms.push_back( m );
     }
