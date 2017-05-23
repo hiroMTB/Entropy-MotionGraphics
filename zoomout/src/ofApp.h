@@ -40,8 +40,6 @@ public:
     // <screen pos, exp num>
     vector<tuple<float, float>> ticks;
     
-    int currentExpOfBiggestBox;
-    
     vector<EasingPrm> anim;
 };
 

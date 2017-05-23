@@ -51,8 +51,6 @@ void ofApp::setup(){
     scaleLenW = (getExportWidth()-hMargin)/2;
     scaleLenH = (getExportHeight()-vMargin)/2;
     
-    currentExpOfBiggestBox = -12345;
-    
     ofxeasing::function e = easing(Function::Quadratic, Type::In);
     EasingUtil::addAnimBySec(anim, &scaleMax, 0, 45, scaleMax, 42, e);
 }
@@ -110,6 +108,10 @@ void ofApp::draw(){
         }
     }ofPopMatrix();
     
+    
+    int currentExpOfBiggestBox = -12345;
+    float currentPosOfBiggestBox = 0;
+    
     // Bbox
     ofPushMatrix();{
         ofTranslate(getExportWidth()/2, getExportHeight()/2);
@@ -120,18 +122,23 @@ void ofApp::draw(){
             float diam = pos*2;
             
             if(diam<scaleLenH*2){
-                ofSetLineWidth(5);
+                ofSetLineWidth(6);
                 ofSetColor(ofColor(255, 255));
+                currentExpOfBiggestBox = exp;
+                currentPosOfBiggestBox = pos;
+                ofNoFill();
+                ofSetRectMode(OF_RECTMODE_CENTER);
+                ofDrawRectangle(0, 0, diam, diam);
+                ofFill();
             }else{
+                // Too big rectangle
                 ofSetLineWidth(2);
                 float a = ofMap(diam, getExportHeight(), scaleLenW*2, 200, 0);
                 ofSetColor(ofColor(255, a));
+                ofDrawLine( pos, -getExportHeight() , pos, scaleLenH);
+                ofDrawLine(-pos, -getExportHeight(), -pos, scaleLenH);
             }
-            ofNoFill();
-            ofSetRectMode(OF_RECTMODE_CENTER);
-            ofDrawRectangle(0, 0, diam, diam);
-            ofFill();
-            currentExpOfBiggestBox = exp;
+ 
         }
     }ofPopMatrix();
     
@@ -145,6 +152,9 @@ void ofApp::draw(){
             
             ofRectangle bb = FontManager::font["L"].getStringBoundingBox("-15", 0, 0);
             ofRectangle bb2 = FontManager::font["XL"].getStringBoundingBox("10", 0, 0);
+            
+            float a = ofMap(currentPosOfBiggestBox, 0, scaleLenH*2, 100, 255);
+            ofSetColor(ofColor(255, a));
             
             ofPushMatrix();{
                 ofTranslate(getExportWidth()/2+scaleLenH*1.2, getExportHeight()/2);
@@ -188,8 +198,8 @@ void ofApp::drawTick(float pos, float exp, bool text){
         ofSetColor(255, 255);
     }
     
-    ofDrawLine(  pos, 0,  pos, 20);
-    ofDrawLine( -pos, 0, -pos, 20);
+    ofDrawLine(  pos, 0,  pos, -20);
+    ofDrawLine( -pos, 0, -pos, -20);
 
     string s = ofToString(exp);
     ofRectangle r = FontManager::font["M"].getStringBoundingBox("10", 0, 0);
@@ -198,11 +208,11 @@ void ofApp::drawTick(float pos, float exp, bool text){
     
     if(text){
 
-        FontManager::font["M"].drawString("10", -pos-w/2*1.2,  h*3);
-        FontManager::font["S"].drawString(s,    -pos+w/2,  h*2);
+        FontManager::font["M"].drawString("10", -pos-w/2*1.2,  h*2.5);
+        FontManager::font["S"].drawString(s,    -pos+w/2,  h*1.5);
         
-        FontManager::font["M"].drawString("10", pos-w/2*1.2,  h*3);
-        FontManager::font["S"].drawString(s,    pos+w/2,  h*2);
+        FontManager::font["M"].drawString("10", pos-w/2*1.2,  h*2.5);
+        FontManager::font["S"].drawString(s,    pos+w/2,  h*1.5);
     }
 }
 
