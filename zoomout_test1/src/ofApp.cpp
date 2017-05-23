@@ -52,7 +52,7 @@ void ofApp::setup(){
 
 void ofApp::update(){
     
-    if(bStart) frame++;
+    frame++;
     
     scaleMax += 0.05;
 }
@@ -143,7 +143,6 @@ void ofApp::drawTick(float pos, string s){
 
 void ofApp::keyPressed(int key){
     switch(key){
-        case ' ': bStart = !bStart; break;
         case 'E': exporter.startExport(); exporter.setFrameRange(frame); break;
         case 'T': exporter.stopExport(); break;
     }
