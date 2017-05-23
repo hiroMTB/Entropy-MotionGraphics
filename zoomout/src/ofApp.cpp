@@ -2,6 +2,8 @@
 #include "Util.h"
 #include "FontManager.h"
 
+using namespace ofxeasing;
+
 double myMap(double value, double inputMin, double inputMax, double outputMin, double outputMax, bool clamp=false) {
     
     //    if (fabs(inputMin - inputMax) < FLT_EPSILON){
@@ -43,23 +45,31 @@ void ofApp::setup(){
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
     
-    //exporter.startExport();
+    exporter.startExport();
     
     scaleMax = -15;
     scaleLenW = (getExportWidth()-hMargin)/2;
     scaleLenH = (getExportHeight()-vMargin)/2;
     
+    currentExpOfBiggestBox = -12345;
+    
+    ofxeasing::function e = easing(Function::Quadratic, Type::In);
+    EasingUtil::addAnimBySec(anim, &scaleMax, 0, 45, scaleMax, 42, e);
 }
 
 void ofApp::update(){
+
+    for(int i=0; i<anim.size(); i++){
+        anim[i].update(frame);
+    }
     
     frame++;
-    scaleMax += 0.03;
+//  scaleMax += 0.03;
     
     ticks.clear();
 
     int expMin = -15;
-    ticks = calcExpScale(5, expMin, scaleMax, scaleLenW);
+    ticks = calcExpScale(3, expMin, scaleMax, scaleLenW);
 }
 
 void ofApp::draw(){
@@ -71,9 +81,11 @@ void ofApp::draw(){
     ofSetColor(255);
 
     if(1){
+        // horizontal
         ofPushMatrix();{
             ofTranslate(getExportWidth()/2, getExportHeight()-vMargin/2);
-            Util::drawLineAsRect(-scaleLenW, 0, scaleLenW, 0, 2);
+            ofSetLineWidth(5);
+            ofDrawLine(-scaleLenW, 0, scaleLenW, 0);
             for(int i=0; i<ticks.size(); i++){
                 float pos = std::get<0>(ticks[i]);
                 int exp = std::get<1>(ticks[i]);
@@ -82,22 +94,25 @@ void ofApp::draw(){
         }ofPopMatrix();
     }
     
+    // vertical
     ofPushMatrix();{
         ofTranslate(getExportWidth()-hMargin/2, getExportHeight()/2);
-        Util::drawLineAsRect(0, -scaleLenH, 0, scaleLenH, 5);
+        ofSetLineWidth(5);
+        ofDrawLine(0, -scaleLenH, 0, scaleLenH);
 
         ofRotate(-90);
         for(int i=0; i<ticks.size(); i++){
             float pos = std::get<0>(ticks[i]);
             int exp = std::get<1>(ticks[i]);
-            drawTick(pos, exp);
+            if(pos*2<scaleLenH*2){
+                drawTick(pos, exp, false);
+            }
         }
     }ofPopMatrix();
     
+    // Bbox
     ofPushMatrix();{
         ofTranslate(getExportWidth()/2, getExportHeight()/2);
-        Util::drawLineAsRect(-1, 0, 1, 0, 1);
-        Util::drawLineAsRect(0, -1, 0, 1, 1);
         
         for(int i=0; i<ticks.size(); i++){
             float pos = std::get<0>(ticks[i]);
@@ -106,13 +121,39 @@ void ofApp::draw(){
             
             if(diam<scaleLenH*2){
                 ofSetLineWidth(5);
-                ofNoFill();
-                ofSetRectMode(OF_RECTMODE_CENTER);
-                ofDrawRectangle(0, 0, diam, diam);
-                ofFill();
+                ofSetColor(ofColor(255, 255));
+            }else{
+                ofSetLineWidth(2);
+                float a = ofMap(diam, getExportHeight(), scaleLenW*2, 200, 0);
+                ofSetColor(ofColor(255, a));
             }
+            ofNoFill();
+            ofSetRectMode(OF_RECTMODE_CENTER);
+            ofDrawRectangle(0, 0, diam, diam);
+            ofFill();
+            currentExpOfBiggestBox = exp;
         }
     }ofPopMatrix();
+    
+    // draw text on right
+    {
+        int exp = currentExpOfBiggestBox;
+        
+        if( exp != -12345){
+            string num  = ofToString(exp);
+            string unit = "Light Years";
+            
+            ofRectangle bb = FontManager::font["L"].getStringBoundingBox("-15", 0, 0);
+            ofRectangle bb2 = FontManager::font["XL"].getStringBoundingBox("10", 0, 0);
+            
+            ofPushMatrix();{
+                ofTranslate(getExportWidth()/2+scaleLenH*1.2, getExportHeight()/2);
+                FontManager::font["XL"].drawString("10", 0, bb2.height/2);
+                FontManager::font["L"].drawString(num, bb2.width+20, bb2.height/2-bb.height);
+                FontManager::font["L"].drawString(unit, bb2.width+bb.width+40, bb2.height/2);
+            }ofPopMatrix();
+        }
+    }
     
     exporter.end();
     
@@ -125,15 +166,12 @@ vector<tuple<float, float>> ofApp::calcExpScale(float base, float min, float sma
 
     vector<tuple<float, float>> data;
     
-    Util::drawLineAsRect(-length, 0, length, 0, 2);
-    Util::drawLineAsRect(0, 0, 0, 40, 2);
-    
     for(int i=min; i<smax; i++){
         double val = pow((double)base, (double)i);
         double max = pow((double)base, (double)smax);
         
         float pos = myMap(val, 0, max, 0, length);
-        if(pos>50){
+        if(pos>30){
             tuple<float, float> d = {pos, (float)i};
             data.push_back(d);
         }
@@ -141,21 +179,31 @@ vector<tuple<float, float>> ofApp::calcExpScale(float base, float min, float sma
     return data;
 }
 
-void ofApp::drawTick(float pos, float exp){
+void ofApp::drawTick(float pos, float exp, bool text){
     
-    Util::drawLineAsRect(  pos, 0,  pos, 20, 5);
-    Util::drawLineAsRect( -pos, 0, -pos, 20, 5);
+    if(pos<100){
+        float a = ofMap(pos, 30, 100, 0, 255);
+        ofSetColor(255,a);
+    }else{
+        ofSetColor(255, 255);
+    }
+    
+    ofDrawLine(  pos, 0,  pos, 20);
+    ofDrawLine( -pos, 0, -pos, 20);
 
     string s = ofToString(exp);
     ofRectangle r = FontManager::font["M"].getStringBoundingBox("10", 0, 0);
     float w = r.width;
     float h = r.height;
     
-    FontManager::font["M"].drawString("10", -pos-w*1.2,  h*3);
-    FontManager::font["S"].drawString(s,    -pos,  h*2);
+    if(text){
 
-    FontManager::font["M"].drawString("10", pos-w*1.2,  h*3);
-    FontManager::font["S"].drawString(s,    pos,  h*2);
+        FontManager::font["M"].drawString("10", -pos-w/2*1.2,  h*3);
+        FontManager::font["S"].drawString(s,    -pos+w/2,  h*2);
+        
+        FontManager::font["M"].drawString("10", pos-w/2*1.2,  h*3);
+        FontManager::font["S"].drawString(s,    pos+w/2,  h*2);
+    }
 }
 
 void ofApp::keyPressed(int key){
