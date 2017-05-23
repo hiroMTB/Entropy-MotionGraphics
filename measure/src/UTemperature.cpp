@@ -25,6 +25,8 @@ void UTemp::setup(float offsetFrame, int motionId){
     indText.a = 0;
     
     aLine1.reset();
+    aLine2.reset();
+    aLine2.p1.x = aLine2.p2.x = ms.basex-20;
     
     int end = ofApp::get()->canvas.height;
     
@@ -38,17 +40,21 @@ void UTemp::setup(float offsetFrame, int motionId){
         anim.push_back(e);
     }
     
+    float height = ofApp::get()->canvas.height;
     
     addAnimBySec(anim, &ind.angle,      os+0.1*s, os+0.5*s, 0, -90);
     addAnimBySec(anim, &alphaAll,       os+0.1*s, os+0.6*s, alphaAll, 1);
-    addAnimBySec(anim, &aLine1.p2.y,    os+0.5*s, os+1.5*s, 0, ofApp::get()->canvas.height);
-    addAnimBySec(anim, &ind.posy,       os+1.0*s, os+1.5*s, ind.posy, ms.basey);
+    addAnimBySec(anim, &aLine1.p2.y,    os+0.5*s, os+1.5*s, 0, height);
+
+    addAnimBySec(anim, &aLine2.p1.y,    os+1.0*s, os+1.7*s, 0, ms.basey, sinOut);
+    addAnimBySec(anim, &aLine2.p2.y,    os+1.2*s, os+1.9*s, 0, ms.basey, sinIn);
+    
+    addAnimBySec(anim, &ind.posy,       os+0.6*s, os+1.5*s, ind.posy, ms.basey);
     addAnimBySec(anim, &indText.a,      os+1.2*s, os+1.7*s);
-    addAnimBySec(anim, &textAlpha,      os+1.0*s, os+1.5*s);
     addAnimBySec(anim, &indText.tpos,   os+1.5*s, os+2.0*s);  //3.5f + text.size()*0.05f);
     
     ofApp::get()->tbR.setAnimation(os+1.5*s);
-    
+    addAnimBySec(anim, &ind.triAlpha,   os+4.5*s, os+4.9*s, 1, 0);
     
     if(1){
         EasingPrm e;
@@ -76,6 +82,9 @@ void UTemp::draw(){
     ofSetColor(255, a);
     ofSetLineWidth(5);
     Util::drawLineAsRect(x, aLine1.p1.y, x, aLine1.p2.y, 5);
+
+    // Vertical sub Line, moving
+    if(highlight) Util::drawLineAsRect(aLine2.p1, aLine2.p2, 4);
     
     // Horizontal Line, short
     Util::drawLineAsRect(x-5,y, x+18, y, 4);

@@ -49,7 +49,6 @@ public:
     AnimText  indText;
     
     float alphaAll;
-    float textAlpha;
     float fake;
     
     UMeasure()=default;
@@ -96,6 +95,8 @@ public:
     virtual ~UAge(){ cout << "UAge destloyed  "; }
 
     AnimLine aLine1;
+    AnimLine aLine2;
+
     void setup(float offsetFrame, int motionId) override;
     void draw() override;
 };
@@ -107,6 +108,7 @@ public:
     virtual ~UTemp(){ cout << "UTemp destroyed  ";}
 
     AnimLine aLine1;
+    AnimLine aLine2;
 
     void setup(float offsetFrame, int motionId) override;
     void draw() override;
@@ -120,16 +122,10 @@ public:
 
     AnimArc aArc1, aArc2;
     AnimLine aLine1;
+    AnimLine aLine2, aLine3, aLine4, aLine5;    // shotgun line
     
     float targetRadSize;
     
-    void setup(float offsetFrame, int motionId) override;
-    void draw() override;
-};
-
-class Velocity : public UMeasure{
-    
-public:
     void setup(float offsetFrame, int motionId) override;
     void draw() override;
 };

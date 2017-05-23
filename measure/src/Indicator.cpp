@@ -14,7 +14,7 @@ void Indicator::draw(){
     ofRotate(angle);
     ofSetColor(255, triAlpha*255.0);
     ofFill();
-    float distFromBase = 20;
+    float distFromBase = 35;
     ofDrawTriangle(0, -distFromBase, -10, -30-distFromBase, 0, -30-distFromBase);
     ofPopMatrix();
 }

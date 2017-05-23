@@ -12,7 +12,6 @@
 		45AFB35B1EC9EEA6007FBF38 /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AFB3591EC9EEA6007FBF38 /* FontManager.cpp */; };
 		45D6245D1EC0F466003FCB11 /* UAge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D6245B1EC0F466003FCB11 /* UAge.cpp */; };
 		45D624601EC122B2003FCB11 /* UTemperature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D6245E1EC122B2003FCB11 /* UTemperature.cpp */; };
-		45D624671EC12C96003FCB11 /* UVelocity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D624641EC124EB003FCB11 /* UVelocity.cpp */; };
 		45D624681EC12C96003FCB11 /* USize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D624651EC124F5003FCB11 /* USize.cpp */; };
 		45D624691EC143CB003FCB11 /* Indicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D624661EC12957003FCB11 /* Indicator.cpp */; };
 		45F1568A1ECF457E00DE35F5 /* UMeasure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F156891ECF457E00DE35F5 /* UMeasure.cpp */; };
@@ -65,7 +64,6 @@
 		45D6245B1EC0F466003FCB11 /* UAge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = UAge.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45D6245E1EC122B2003FCB11 /* UTemperature.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = UTemperature.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45D624611EC123CF003FCB11 /* UMeasure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = UMeasure.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		45D624641EC124EB003FCB11 /* UVelocity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = UVelocity.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45D624651EC124F5003FCB11 /* USize.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = USize.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45D624661EC12957003FCB11 /* Indicator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Indicator.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F156891ECF457E00DE35F5 /* UMeasure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = UMeasure.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -264,7 +262,6 @@
 				45D6245B1EC0F466003FCB11 /* UAge.cpp */,
 				45D6245E1EC122B2003FCB11 /* UTemperature.cpp */,
 				45D624651EC124F5003FCB11 /* USize.cpp */,
-				45D624641EC124EB003FCB11 /* UVelocity.cpp */,
 				45D624661EC12957003FCB11 /* Indicator.cpp */,
 				456585651EC4BA320028B82B /* TextBox.h */,
 				45FDDFB51EC4CBA300374560 /* TextBox.cpp */,
@@ -373,7 +370,6 @@
 				45F1568A1ECF457E00DE35F5 /* UMeasure.cpp in Sources */,
 				45AFB35B1EC9EEA6007FBF38 /* FontManager.cpp in Sources */,
 				45D624691EC143CB003FCB11 /* Indicator.cpp in Sources */,
-				45D624671EC12C96003FCB11 /* UVelocity.cpp in Sources */,
 				45D624681EC12C96003FCB11 /* USize.cpp in Sources */,
 				45D624601EC122B2003FCB11 /* UTemperature.cpp in Sources */,
 				45D6245D1EC0F466003FCB11 /* UAge.cpp in Sources */,

@@ -125,4 +125,49 @@ namespace EasingUtil{
         prm.setTo(v, sf, ef, ev, e);
         anim.push_back(prm);
     }
+    
+    const ofxeasing::function linIn = easing(Function::Linear, Type::In);
+    const ofxeasing::function linOut = easing(Function::Linear, Type::Out);
+    const ofxeasing::function linInOut = easing(Function::Linear, Type::InOut);
+    
+    const ofxeasing::function sinIn = easing(Function::Sine, Type::In);
+    const ofxeasing::function sinOut = easing(Function::Sine, Type::Out);
+    const ofxeasing::function sinInOut = easing(Function::Sine, Type::InOut);
+
+    const ofxeasing::function circIn = easing(Function::Circular, Type::In);
+    const ofxeasing::function circOut = easing(Function::Circular, Type::Out);
+    const ofxeasing::function circInOut = easing(Function::Circular, Type::InOut);
+    
+    const ofxeasing::function quadIn = easing(Function::Quadratic, Type::In);
+    const ofxeasing::function quadOut = easing(Function::Quadratic, Type::Out);
+    const ofxeasing::function quadInOut = easing(Function::Quadratic, Type::InOut);
+    
+    const ofxeasing::function cubicIn = easing(Function::Cubic, Type::In);
+    const ofxeasing::function cubicOut = easing(Function::Cubic, Type::Out);
+    const ofxeasing::function cubicInOut = easing(Function::Cubic, Type::InOut);
+    
+    const ofxeasing::function quarticIn = easing(Function::Quartic, Type::In);
+    const ofxeasing::function quarticOut = easing(Function::Quartic, Type::Out);
+    const ofxeasing::function quarticInOut = easing(Function::Quartic, Type::InOut);
+    
+    const ofxeasing::function quinIn = easing(Function::Quintic, Type::In);
+    const ofxeasing::function quinOut = easing(Function::Quintic, Type::Out);
+    const ofxeasing::function quinInOut = easing(Function::Quintic, Type::InOut);
+    
+    const ofxeasing::function expIn = easing(Function::Exponential, Type::In);
+    const ofxeasing::function expOut = easing(Function::Exponential, Type::Out);
+    const ofxeasing::function expInOut = easing(Function::Exponential, Type::InOut);
+    
+    const ofxeasing::function backIn = easing(Function::Back, Type::In);
+    const ofxeasing::function backOut = easing(Function::Back, Type::Out);
+    const ofxeasing::function backInOut = easing(Function::Back, Type::InOut);
+    
+    const ofxeasing::function bounceIn = easing(Function::Bounce, Type::In);
+    const ofxeasing::function bounceOut = easing(Function::Bounce, Type::Out);
+    const ofxeasing::function bounceInOut = easing(Function::Bounce, Type::InOut);
+    
+    const ofxeasing::function elasIn = easing(Function::Elastic, Type::In);
+    const ofxeasing::function elasOut = easing(Function::Elastic, Type::Out);
+    const ofxeasing::function elasInOut = easing(Function::Elastic, Type::InOut);
+    
 };

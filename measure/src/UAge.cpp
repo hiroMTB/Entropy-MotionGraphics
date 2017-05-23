@@ -17,6 +17,8 @@ void UAge::setup(float offsetFrame, int motionId){
     Indicator & ind = ofApp::get()->ind;
 
     aLine1.reset();
+    aLine2.reset();
+    aLine2.p1.y = aLine2.p2.y = -10;
     
     alphaAll = 0;
     indText.tpos = 0;
@@ -39,9 +41,12 @@ void UAge::setup(float offsetFrame, int motionId){
     addAnimBySec(anim, &ind.angle,      os+0.0*s, os+0.1*s, 90, 0);
     addAnimBySec(anim, &ind.triAlpha,   os+0.1*s, os+0.6*s, 0, 1);
     addAnimBySec(anim, &aLine1.p2.x,    os+0.5*s, os+1.5*s, 0, ms.basex);
+
+    addAnimBySec(anim, &aLine2.p1.x,    os+1.0*s, os+1.7*s, 0, ms.basex, sinOut);
+    addAnimBySec(anim, &aLine2.p2.x,    os+1.2*s, os+1.9*s, 0, ms.basex, sinIn);
+
     addAnimBySec(anim, &ind.posx,       os+0.6*s, os+1.5*s, 0, ms.basex);
     addAnimBySec(anim, &indText.a,      os+1.2*s, os+1.8*s, 0, 1);
-    addAnimBySec(anim, &textAlpha,      os+1.0*s,   os+1.5*s);
     addAnimBySec(anim, &indText.tpos,   os+1.5*s,   os+2*s);  //3.5f + text.size()*0.05f);
     
     ofApp::get()->tbR.setAnimation(os+1.5*s);
@@ -66,9 +71,13 @@ void UAge::draw(){
 
     ofPushMatrix(); {
         
-        // Horizontal Line
+        // Horizontal Main Line
         ofSetColor(255, a);
-        Util::drawLineAsRect(aLine1.p1, aLine1.p2, 5);
+        Util::drawLineAsRect(aLine1.p1, aLine1.p2, 6);
+        
+        // Horizontal sub Line, moving
+        if(highlight) Util::drawLineAsRect(aLine2.p1, aLine2.p2, 4);
+        
         
         // Vertical Line, short
         ofSetColor(255, a);

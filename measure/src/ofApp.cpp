@@ -4,13 +4,14 @@
 
 void ofApp::setup(){
     ofSetBackgroundColor(0);
-    ofSetFrameRate(30);
+    ofSetFrameRate(60);
     ofSetCircleResolution(120);
     ofSetFullscreen(false);
     ofSetLogLevel(OF_LOG_NOTICE);
     
     bStart = true;
-    animSpdFactor = 0.5;
+    animSpdFactor = 1;
+    
     int w = 1920*2;
     int h = 1080;
     
@@ -23,8 +24,8 @@ void ofApp::setup(){
     
     FontManager::setup(scale);
     
-    exporter.setup(1920*2, 1080, 30, GL_RGB, 4);
-    exporter.setOutputDir("render2");
+    exporter.setup(1920*2, 1080, 60, GL_RGB, 4);
+    exporter.setOutputDir("render");
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
     
@@ -84,6 +85,15 @@ void ofApp::draw(){
     
     exporter.end();
     
+    
+    // PNG save
+    // Slow but small file size, 5 times smaller
+    if(0){
+        char m[255];
+        sprintf(m, "render_%05d.png", frame);
+        ofSaveScreen("renderPng/" + string(m));
+    }
+    
     ofBackground(20);
     exporter.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight() );
     
@@ -94,6 +104,7 @@ void ofApp::keyPressed(int key){
         case ' ': bStart = !bStart; break;
         case 'E': exporter.startExport(); exporter.setFrameRange(frame); break;
         case 'T': exporter.stopExport(); break;
+        case 'F': ofToggleFullscreen(); break;
     }
     
     if( 49<=key && key<=48+9){
@@ -177,7 +188,7 @@ void ofApp::loadXml(){
     
     for(int i=0; i<ageData.size(); i++){
         
-        float durationSec = 16 * animSpdFactor;
+        float durationSec = 15 * animSpdFactor;
         float startFrame =   1 + i*durationSec*fps;
         
         Motion & m = ms[i];

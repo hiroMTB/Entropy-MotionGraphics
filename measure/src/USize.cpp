@@ -23,7 +23,12 @@ void USize::setup(float offsetFrame, int motionId){
     aArc1.reset();
     aArc2.reset();
     aArc1.angle = -25;
+
     aLine1.reset();
+    aLine2.reset();
+    aLine3.reset();
+    aLine4.reset();
+    aLine5.reset();
     
     {
         EasingPrm e;
@@ -37,22 +42,34 @@ void USize::setup(float offsetFrame, int motionId){
     }
     
     
-    ofxeasing::function expout = easing(Function::Exponential, Type::Out);
-    
-    addAnimBySec(anim, &ind.angle,      os,       os+1.4*s, -90, 160);
+    //addAnimBySec(anim, &ind.angle,      os,       os+1.4*s, -90, 160);
     addAnimBySec(anim, &alphaAll,       os,       os+0.5*s, 0, 1);
-    addAnimBySecTo(anim, &ind.triAlpha, os+0.2*s, os+1.4*s, 0);
-    addAnimBySec(anim, &aArc1.rad,      os+0.1*s, os+0.5*s, 0, targetRadSize, expout);
+    
+
+    // shotgun line
+    float sgSt = os+0.8*s;
+    float sgEnd = os+1.1*s;
+    
+    addAnimBySec(anim, &aLine2.p1.x,    sgSt, sgEnd, 0, targetRadSize, sinOut);
+    addAnimBySec(anim, &aLine2.p2.x,    sgSt, sgEnd, 0, targetRadSize, sinIn);
+    addAnimBySec(anim, &aLine3.p1.x,    sgSt, sgEnd, 0, -targetRadSize, sinOut);
+    addAnimBySec(anim, &aLine3.p2.x,    sgSt, sgEnd, 0, -targetRadSize, sinIn);
+    
+    addAnimBySec(anim, &aLine4.p1.y,    sgSt, sgEnd, 0, targetRadSize, sinOut);
+    addAnimBySec(anim, &aLine4.p2.y,    sgSt, sgEnd, 0, targetRadSize, sinIn);
+    addAnimBySec(anim, &aLine5.p1.y,    sgSt, sgEnd, 0, -targetRadSize, sinOut);
+    addAnimBySec(anim, &aLine5.p2.y,    sgSt, sgEnd, 0, -targetRadSize, sinIn);
+
+    
+    addAnimBySec(anim, &aArc1.rad,      os+0.1*s, os+0.5*s, 0, targetRadSize, expOut);
     addAnimBySec(anim, &aArc1.end,      os+0.3*s, os+1.0*s, 0, 360);
 
     addAnimBySec(anim, &aArc2.end,      os+0.8*s, os+1.2*s, 0, -45);
     addAnimBySec(anim, &aArc2.angle,    os+0.0*s, os+6*s,   0, -360);
 
     addAnimBySec(anim, &aLine1.p2.x,    os+1.1*s, os+1.4*s, 0, 70);
-    addAnimBySecTo(anim,&ind.posx,      os+1.5*s,  os+2.5*s, ms.basex+targetRadSize, expout);
-    addAnimBySec(anim, &indText.a,      os+1.6*s,  os+2.8*s, 0, 1);
     addAnimBySec(anim, &indText.tpos,   os+1.5*s,  os+2*s);  //3.5f + text.size()*0.05f);
-    addAnimBySec(anim, &aArc1.angle,    os+1.2*s, os+6*s, -25, 7);
+    addAnimBySec(anim, &aArc1.angle,    os+0.0*s, os+6*s, -55, 7);
 
     ofApp::get()->tbR.setAnimation(os+1.5*s);
     blinkBySec(anim,    &alphaAll,         os+4*s,   os+4.1*s, 0.3, 0.1);
@@ -100,6 +117,13 @@ void USize::draw(){
                 Util::drawArc(0, 0, aArc2.rad, 9*0.6, aArc2.end, 0);
                 ofPopMatrix();
             }
+            
+            // shotgun
+            Util::drawLineAsRect(aLine2.p1, aLine2.p2, 2);
+            Util::drawLineAsRect(aLine3.p1, aLine3.p2, 2);
+            Util::drawLineAsRect(aLine4.p1, aLine4.p2, 2);
+            Util::drawLineAsRect(aLine5.p1, aLine5.p2, 2);
+            
         }else{
             Util::drawCircle(0, 0, aArc1.rad, 4.5);
         }
@@ -109,22 +133,22 @@ void USize::draw(){
             ofFill();
             // center circle
             ofDrawCircle(0, 0, 4);
-            if(currentMotionId<6){
+            //if(currentMotionId<6){
                 ofPushMatrix();
                 ofTranslate(aArc1.rad, 0);
                 Util::drawLineAsRect(aLine1.p1, aLine1.p2, 3);
                 ofPopMatrix();
-            }
+            //}
         }
         
         // text
         string show = indText.tshow;
         
         if(highlight){
-            if(currentMotionId<=6){
+            //if(currentMotionId<=6){
                 float h = FontManager::font["M"].stringHeight(indText.t);
                 FontManager::font["M"].drawString(show, aArc1.rad+100, h/2);
-            }
+            //}
         }else{
             // show history
             float h = FontManager::font["S"].stringHeight(indText.t);
