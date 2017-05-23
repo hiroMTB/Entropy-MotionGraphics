@@ -4,7 +4,7 @@
 
 void ofApp::setup(){
     ofSetBackgroundColor(0);
-    ofSetFrameRate(30);
+    ofSetFrameRate(60);
     ofSetCircleResolution(120);
     ofSetFullscreen(false);
     ofSetLogLevel(OF_LOG_NOTICE);
@@ -15,12 +15,11 @@ void ofApp::setup(){
     
     FontManager::setup(1);
     
-    exporter.setup(1920*2, 1080, 30, GL_RGB, 4);
+    exporter.setup(1920*2, 1080, 60, GL_RGB, 4);
     exporter.setOutputDir("render");
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
-    //exporter.setCompression(ofxExportImageSequence::Compression::UNCOMPRESSED);
-
+   
     exporter.startExport();
 
     

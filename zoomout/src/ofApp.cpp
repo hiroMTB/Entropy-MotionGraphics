@@ -3,6 +3,7 @@
 #include "FontManager.h"
 
 using namespace ofxeasing;
+using namespace EasingUtil;
 
 double myMap(double value, double inputMin, double inputMax, double outputMin, double outputMax, bool clamp=false) {
     
@@ -27,7 +28,7 @@ double myMap(double value, double inputMin, double inputMax, double outputMin, d
 
 void ofApp::setup(){
     ofSetBackgroundColor(0);
-    ofSetFrameRate(30);
+    ofSetFrameRate(60);
     ofSetCircleResolution(120);
     ofSetFullscreen(false);
     ofSetLogLevel(OF_LOG_NOTICE);
@@ -40,7 +41,7 @@ void ofApp::setup(){
     
     FontManager::setup(1);
     
-    exporter.setup(1920*2, 1080, 30, GL_RGB, 4);
+    exporter.setup(1920*2, 1080, 60, GL_RGB, 4);
     exporter.setOutputDir("render");
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
@@ -51,8 +52,8 @@ void ofApp::setup(){
     scaleLenW = (getExportWidth()-hMargin)/2;
     scaleLenH = (getExportHeight()-vMargin)/2;
     
-    ofxeasing::function e = easing(Function::Quadratic, Type::In);
-    EasingUtil::addAnimBySec(anim, &scaleMax, 0, 45, scaleMax, 42, e);
+    float durationSec = 20;
+    EasingUtil::addAnimBySec(anim, &scaleMax, 0, durationSec, scaleMax, 42, quadIn);
 }
 
 void ofApp::update(){

@@ -44,7 +44,7 @@ public:
         tb.update(frame);
         
         int n = ofSignedNoise(ofGetElapsedTimeMicros())*20.0;
-        tb.base.tshow = toString(currentVal+n);
+        tb.base.t = toString(currentVal+n);
         
         for( EasingPrm & p : anim){
             p.update(frame);
