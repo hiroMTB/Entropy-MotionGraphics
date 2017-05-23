@@ -12,6 +12,12 @@ void FontManager::setup(float scale){
     font.insert( make_pair("M", ofTrueTypeFontCustom() ) );
     font.insert( make_pair("S", ofTrueTypeFontCustom() ) );
     
+    /*
+     *      NOTICE when you see font loading error
+     *      If you dont have /bin/data folder, you can not find these font file.
+     *      Please create empty /data folder just like oF default
+     *      very strange behavior :<
+     */
     filesystem::path fontDir = Util::getResFolder()/"font";
     
     font["XL"].load((fontDir/"KP Bob Bold.otf").string(), 120.0f*scale);
@@ -25,5 +31,5 @@ void FontManager::setup(float scale){
     
     font["S"].load((fontDir/"KP Bob Bold.otf").string(), 26.0f*scale);
     font["S"].setLetterSpacing(1.03);
-    
+ 
 }

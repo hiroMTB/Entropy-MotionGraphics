@@ -30,8 +30,6 @@ void ofApp::setup(){
     ofSetFullscreen(false);
     ofSetLogLevel(OF_LOG_NOTICE);
     
-    bStart = true;
-    animSpdFactor = 0.5;
     int w = 1920*2;
     int h = 1080;
 

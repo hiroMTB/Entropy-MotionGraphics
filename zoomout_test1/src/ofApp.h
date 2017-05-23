@@ -30,16 +30,12 @@ private:
     ofxExportImageSequence exporter;
     
 public:
-    bool bStart;
     float vMargin;
     float hMargin;
-    float animSpdFactor;
     int frame = -1;
 
-    float scaleLen;
-    
-    // linear
-    float scaleMax;    
+    float scaleLen;    
+    float scaleMax;
     
 };
 
