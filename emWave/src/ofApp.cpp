@@ -24,19 +24,42 @@ void ofApp::setup(){
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
     
-    //exporter.startExport();
+    exporter.startExport();
 
     phase = 0;
     
     wavePos.y = h/2-150;
     
-    float startx = w*0.2;
+    float durationSec = 5;
+    float startx = wavePos.x = w*0.3;
     float endx   = w*0.65;
-    addAnimBySec(anim, &wavePos.x, 0, 10, startx, endx);
+    addAnimBySec(anim, &wavePos.x, 2, durationSec, startx, endx, sinInOut);
     
-    float startAmp = 50;
-    float endAmp = 300;
-    addAnimBySec(anim, &circleRad, 0, 10, startAmp, endAmp);
+    float startAmp = circleRad = 50;
+    float endAmp = 200;
+    addAnimBySec(anim, &circleRad, 2, durationSec, startAmp, endAmp, sinInOut);
+
+    addAnimBySec(anim, &alphaAll, 0, 1, 0, 1, circIn);
+    addAnimBySec(anim, &alphaSubLine, 1.2, 1.8, 0, 1, circIn);
+    
+    // turn off
+    addAnimBySec(anim, &alphaAll, 5, 6, 1, 0, circIn);
+   
+    
+    // Animation for bottom bar
+
+    float barStartx = safeAreaL.x;
+    float barEndx = safeAreaR.x+safeAreaR.width;
+    aLine1.reset();
+    aLine1.p1.y = aLine1.p2.y = safeAreaL.y+safeAreaL.height;
+//    addAnimBySec(anim, &aLine1.p1.x, 0.1, 0.2, barStartx, barEndx, sinOut);
+//    addAnimBySec(anim, &aLine1.p2.x, 0.1, 0.2, barStartx, barEndx, sinIn);
+//    addAnimBySec(anim, &aLine1.p1.x, 0.5, 0.8, safeAreaR.x+safeAreaR.width, safeAreaR.x+safeAreaR.width);
+//    addAnimBySec(anim, &aLine1.p2.x, 0.5, 0.8, safeAreaR.x+safeAreaR.width, safeAreaL.x, sinIn);
+
+    addAnimBySec(anim, &aLine1.p1.x, 0.4, 1, barStartx, barStartx);
+    addAnimBySec(anim, &aLine1.p2.x, 0.4, 1, barStartx, barEndx, sinInOut);
+    
 }
 
 void ofApp::update(){
@@ -49,6 +72,7 @@ void ofApp::update(){
     for(int i=0; i<anim.size(); i++){
         anim[i].update(frame);
     }
+
 }
 
 void ofApp::draw(){
@@ -62,13 +86,43 @@ void ofApp::draw(){
     ofBackground(0);
     
     ofPushMatrix();{
-        ofSetColor(255);
+        
+        ofSetRectMode(OF_RECTMODE_CORNER);
+        ofFill();
+        ofSetColor(255, alphaAll*255);
+        ofDrawRectangle( aLine1.p1.x, aLine1.p1.y, aLine1.p2.x-aLine1.p1.x, 20 );
+        
+        ofSetColor(255, alphaAll*255);
         ofSetLineWidth(5);
         
         ofNoFill();
         ofTranslate(wavePos);
         ofDrawCircle(0, 0, circleRad);
         drawSineWave(waveLength, amp, numWave, phase);
+        
+        ofSetLineWidth(4);
+        float bary = aLine1.p1.y-wavePos.y;
+        
+        // calculate touching point
+        {
+            float r = circleRad*0.99;
+            float ww = circleRad*0.4;
+
+            ofVec2f ch(0, bary);
+            ofVec2f w(ww, 0);
+            ofVec2f d = ch - w;
+            float radian = asin(r/d.length());
+            ofVec2f L = d.getRotatedRad(radian);
+            ofVec2f t = w + L;
+            ofPushMatrix();
+            ofTranslate(0, bary);
+
+            ofSetColor(255, alphaAll*alphaSubLine*255);
+
+            ofDrawLine( -ww, 0, t.x, -t.y);
+            ofDrawLine( ww, 0, -t.x, -t.y);
+            ofPopMatrix();
+        }
         
     }ofPopMatrix();
     exporter.end();

@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxExportImageSequence.h"
 #include "EasingPrm.h"
+#include "AnimationParts.h"
 
 class ofApp : public ofBaseApp{
     
@@ -31,8 +32,10 @@ public:
     int frame = -1;
     float phase;
     float circleRad;
-    
+    float alphaAll = 0;
+    float alphaSubLine = 0;
     vector<EasingPrm> anim;
 
     ofPoint wavePos;
+    AnimLine aLine1;
 };
