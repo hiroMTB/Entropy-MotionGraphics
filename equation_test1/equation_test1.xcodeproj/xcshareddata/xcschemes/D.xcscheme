@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "fontDrawTestDebug.app"
-            BlueprintName = "equationAnim"
-            ReferencedContainer = "container:equationAnim.xcodeproj">
+            BuildableName = "equation_test1.app"
+            BlueprintName = "equation_test1"
+            ReferencedContainer = "container:equation_test1.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "fontDrawTestDebug.app"
-            BlueprintName = "equationAnim"
-            ReferencedContainer = "container:equationAnim.xcodeproj">
+            BuildableName = "equation_test1.app"
+            BlueprintName = "equation_test1"
+            ReferencedContainer = "container:equation_test1.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>

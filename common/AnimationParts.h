@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ofMain.h"
+
 struct AnimText{
     
 public:
@@ -28,6 +30,19 @@ public:
     }
 };
 
+struct AnimPoint{
+
+    AnimPoint(){
+        reset();
+    }
+    
+    ofPoint p;
+    float w;
+    float a;
+    void reset(){
+        p.set(0,0);
+    }
+};
 
 struct AnimLine{
     
