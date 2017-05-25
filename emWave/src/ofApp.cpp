@@ -24,42 +24,51 @@ void ofApp::setup(){
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
     
-    exporter.startExport();
+    //exporter.startExport();
 
     phase = 0;
     
-    wavePos.y = h/2-150;
+    wavePos.y = (safeAreaR.y+safeAreaR.height)/2;
+    barStartx = safeAreaL.x;
+    barEndx = safeAreaR.x+safeAreaR.width;
     
     float durationSec = 5;
-    float startx = wavePos.x = w*0.3;
-    float endx   = w*0.65;
-    addAnimBySec(anim, &wavePos.x, 2, durationSec, startx, endx, sinInOut);
     
-    float startAmp = circleRad = 50;
-    float endAmp = 200;
-    addAnimBySec(anim, &circleRad, 2, durationSec, startAmp, endAmp, sinInOut);
+    // size of universe, should be 10e+3 times bigger after CMB
+    float startRad = circleRad = 100;
+    float endRad = 320;
+    
+    float startx = wavePos.x = barStartx + 600;   // original CMB wavelength
+    float endx   = barEndx - endRad - 450;         // current CMB wavelength
+
+    addAnimBySec(anim, &wavePos.x, 2, durationSec, startx, endx, sinInOut);
+    addAnimBySec(anim, &circleRad, 2, durationSec, startRad, endRad, sinInOut);
 
     addAnimBySec(anim, &alphaAll, 0, 1, 0, 1, circIn);
     addAnimBySec(anim, &alphaSubLine, 1.2, 1.8, 0, 1, circIn);
     
-    // turn off
-    addAnimBySec(anim, &alphaAll, 5, 6, 1, 0, circIn);
-   
     
     // Animation for bottom bar
-
-    float barStartx = safeAreaL.x;
-    float barEndx = safeAreaR.x+safeAreaR.width;
-    aLine1.reset();
     aLine1.p1.y = aLine1.p2.y = safeAreaL.y+safeAreaL.height;
-//    addAnimBySec(anim, &aLine1.p1.x, 0.1, 0.2, barStartx, barEndx, sinOut);
-//    addAnimBySec(anim, &aLine1.p2.x, 0.1, 0.2, barStartx, barEndx, sinIn);
-//    addAnimBySec(anim, &aLine1.p1.x, 0.5, 0.8, safeAreaR.x+safeAreaR.width, safeAreaR.x+safeAreaR.width);
-//    addAnimBySec(anim, &aLine1.p2.x, 0.5, 0.8, safeAreaR.x+safeAreaR.width, safeAreaL.x, sinIn);
-
     addAnimBySec(anim, &aLine1.p1.x, 0.4, 1, barStartx, barStartx);
     addAnimBySec(anim, &aLine1.p2.x, 0.4, 1, barStartx, barEndx, sinInOut);
+
     
+    // turn off
+    //addAnimBySec(anim, &alphaAll, 5, 6, 1, 0, circIn);
+
+    waveType = {
+        {"Gamma ray",   "10",   "-12",      "m",   pow(10, -12) },
+        {"X-ray",       "10",   "-10",      "m",   pow(10,-10) },
+        {"Ultraviolet", "10",   "-8",       "m",   pow(10, -8)},
+        {"Visible",     "0.5 * 10",   "-6", "m",  0.5*pow(10, -6)},
+        {"Infrared",    "10",   "-5",       "m",    pow(10, -5)},
+        {"Microwave",   "1",    "",         "cm",   pow(10,-2)},
+        {"Radio",       "1",    "",         "km",   pow(10,3)}
+    };
+    
+    wvlMin = -13;
+    wvlMax = 4;
 }
 
 void ofApp::update(){
@@ -80,31 +89,23 @@ void ofApp::draw(){
     float numWave = 3;
     float totalWaveLength = circleRad*2;
     float waveLength = totalWaveLength/numWave;
-    float amp = waveLength*0.5;
+    float amp = circleRad*0.3;
     
     exporter.begin();
     ofBackground(0);
     
     ofPushMatrix();{
         
-        ofSetRectMode(OF_RECTMODE_CORNER);
-        ofFill();
-        ofSetColor(255, alphaAll*255);
-        ofDrawRectangle( aLine1.p1.x, aLine1.p1.y, aLine1.p2.x-aLine1.p1.x, 20 );
         
         ofSetColor(255, alphaAll*255);
-        ofSetLineWidth(5);
-        
-        ofNoFill();
+       
         ofTranslate(wavePos);
-        ofDrawCircle(0, 0, circleRad);
-        drawSineWave(waveLength, amp, numWave, phase);
         
         ofSetLineWidth(4);
         float bary = aLine1.p1.y-wavePos.y;
-        
+    
         // calculate touching point
-        {
+        if(0){
             float r = circleRad*0.99;
             float ww = circleRad*0.4;
 
@@ -124,35 +125,157 @@ void ofApp::draw(){
             ofPopMatrix();
         }
         
+        if(1){
+            // wave length of CMB
+            // Right side guide line and text
+
+            
+            // line
+            float xL = circleRad;
+            float xR = barEndx- wavePos.x;
+            float y = amp;
+            ofSetLineWidth(1);
+            ofDrawLine( xL, y+10, xR, y+10);
+            ofDrawLine( xL, -y-10, xR, -y-10);
+            
+            // text
+            string title = "CMB\nWavelength";
+            ofRectangle rL = FontManager::font["M"].getStringBoundingBox(title, 0, 0);
+            FontManager::font["M"].drawString(title, xR+50, -rL.height-50);
+            
+            int exp = round( ofMap(wavePos.x, barStartx, barEndx, wvlMin, wvlMax) );
+            string expText = ofToString(pow(10, exp));
+        
+            expText +=  " m";
+
+            ofRectangle r = FontManager::font["M"].getStringBoundingBox(expText, 0, 0);
+            FontManager::font["M"].drawString(expText, xR+50, r.height/2);
+        }
+        
+        if(1){
+            // size of the universe
+            // draw left side guide line and text
+            
+            // line
+            float xL = barStartx - wavePos.x;
+            float xR = 0;//circleRad*0.9;
+            float y = circleRad;
+            ofSetLineWidth(1);
+            ofDrawLine( xL, y+10, xR, y+10);
+            ofDrawLine( xL, -y-10, xR, -y-10);
+            
+            // text
+            string title = "Size of the Universe";
+            ofRectangle rL = FontManager::font["M"].getStringBoundingBox(title, 0, 0);
+            FontManager::font["M"].drawString(title, xL-rL.width-50, -rL.height-50);
+            
+            
+            float sizeMin = log10(4.0*pow(10,7));         // 4*10e+07 lyr
+            float sizeMax = log10(5.0*pow(10,10));        // 5*10e+10 lyr
+            int exp = round( ofMap(wavePos.x, barStartx, barEndx, sizeMin, sizeMax) );
+            //string expText = ofToString(pow(10, exp));
+            char m[255];
+            sprintf(m, "%0.0f", pow(10, exp));
+            string expText = string(m);
+            expText +=  " lyr";
+            ofRectangle r = FontManager::font["M"].getStringBoundingBox(expText, 0, 0);
+            FontManager::font["M"].drawString(expText, xL-r.width-50, r.height/2);
+            
+        }
+        
+        // draw black circle bg
+        ofFill();
+        ofSetColor(0);
+        ofDrawCircle(0, 0, circleRad+50);
+
+        
+        // draw circle and wave
+        ofSetColor(255, alphaAll*255);
+        ofNoFill();
+        ofSetLineWidth(5);
+        ofDrawCircle(0, 0, circleRad);
+        drawSineWave(waveLength*0.9, amp, numWave, phase);
+
+        
     }ofPopMatrix();
+    
+    
+    // aaand spectrum
+    drawSpectrum();
+    
+    
+    
     exporter.end();
     
     ofBackground(20);
     exporter.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight() );
 }
 
+void ofApp::drawSpectrum(){
+    
+    float thickness = 6;
+    
+    ofSetRectMode(OF_RECTMODE_CORNER);
+    ofFill();
+    ofSetColor(255, alphaAll*255);
+    ofDrawRectangle( aLine1.p1.x, aLine1.p1.y, aLine1.p2.x-aLine1.p1.x, thickness );
+    
+    
+    // legend
+    for(int i=0; i<waveType.size(); i++){
+        
+        string n = std::get<0>(waveType[i]);
+        double v = std::get<4>(waveType[i]);
+        
+        float wLenMin = pow(10, wvlMin);
+        float wLenMax = pow(10, wvlMax);
+        
+        float vLog = log10(v);
+        float wLenMinLog = log10(wLenMin);
+        float wLenMaxLog = log10(wLenMax);
+        
+        float posx = ofMap(vLog, wLenMinLog, wLenMaxLog, barStartx, barEndx);
+        
+        ofSetLineWidth(5);
+        ofDrawLine(posx,  aLine1.p1.y+thickness, posx,  aLine1.p1.y+thickness+30);
+     
+        ofRectangle r = FontManager::font["S"].getStringBoundingBox(n, 0, 0);
+        
+        FontManager::font["S"].drawString(n, posx-r.width/2, aLine1.p1.y+r.height+thickness+30+30 );
+    }
+}
 
 void ofApp::drawSineWave(float _waveLength, float _amp, float _numWave, float _phase){
     
     ofPolyline p;
-    float resolution = _waveLength;
+    float resolution = 32; //_waveLength/4;
+    
     float totalWaveLength = _waveLength * _numWave;
     float xStart = -totalWaveLength/2;
+    
     for(int i=0; i<_numWave; i++){
+        
         for(int j=0; j<resolution; j++){
+            
             float angle = phase + 360.0/resolution * j;
             float rad = ofDegToRad(angle);
             float y = sin(rad) * _amp;
-            float x = xStart + (1.0/resolution)*j*_waveLength + _waveLength*i;
+            float x = xStart + (_waveLength/resolution)*j + _waveLength*i;
             
             float dist = sqrt(x*x + y*y);
             bool insideOfCircle = (dist<totalWaveLength/2);
             if( insideOfCircle ){
                 p.addVertex(ofPoint(x, y));
+                
+                ofSetLineWidth(2);
+                //ofDrawLine(x, 0, x, y);
+                ofFill();
+                float cRad = 0.5+_waveLength*0.025;
+                ofDrawCircle(x, y, cRad);
             }
         }
     }
-    p.draw();
+    //p.draw();
 }
 
 void ofApp::keyPressed(int key){

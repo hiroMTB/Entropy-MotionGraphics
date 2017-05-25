@@ -16,6 +16,8 @@ public:
     
     void setup();
     void draw();
+    void drawSpectrum();
+    
     void update();
     void keyPressed(int key);    
     float getExportWidth();
@@ -38,4 +40,11 @@ public:
 
     ofPoint wavePos;
     AnimLine aLine1;
+    
+    vector<tuple<string, string, string, string, double>> waveType;
+
+    float barStartx;
+    float barEndx;
+    float fake;
+    float wvlMax, wvlMin;
 };

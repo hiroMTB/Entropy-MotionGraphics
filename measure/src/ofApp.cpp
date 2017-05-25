@@ -242,7 +242,7 @@ void ofApp::writeXml(){
         {   0.0,             "Age", "1",                "",     "sec",  "", "Seconds",  "1 sec"},
         {   2.25/fakeRate,   "Age", "180",              "",     "sec",  "", "Seconds",  "180 sec"},
         {   12.23*fakeRate,  "Age", "6,000",            "",     "yr",   "", "Years",    "6000 years"},
-        {   13.10*fakeRate,  "Age", "400,000",          "",     "yr",   "", "Years",    "400000 years"},
+        {   13.10*fakeRate,  "Age", "400,000",          "",     "yr",   "", "Years",    "400000 years"},        // CMB
         {   16.50*fakeRate,  "Age", "1,000,000,000",    "",     "yr",   "", "Years",    "1000000000 years"},
         {   17.64*fakeRate,  "Age", "1,380,000,000",    "",     "yr",   "", "Years",    "1380000000 years"}
     };
@@ -266,7 +266,7 @@ void ofApp::writeXml(){
         {  1,   "Size", "10",       "",     "lyr",  "",                 "Light Years",  "10 lyr"},
         {  2,   "Size", "100",      "",     "lyr",  "",                 "Light Years",  "100 lyr"},
         {  7,   "Size", "10,000,000","",    "lyr",  "",                 "Light Years",  "10000000 lyr"},
-        {  7.5, "Size", "4 * 10",   "7",    "lyr",  "40,000,000",       "Light Years",  "40000000 lyr"},
+        {  7.5, "Size", "4 * 10",   "7",    "lyr",  "40,000,000",       "Light Years",  "40000000 lyr"},        //CMB
         {  10.5,"Size", "4 * 10",   "10",   "lyr",  "40,000,000,000",   "Light Years",  "40000000000 lyr"},
         {  10.8,"Size", "5 * 10",   "10",   "lyr",  "50,000,000,000",   "Light Years",  "50000000000 lyr"}
     };
