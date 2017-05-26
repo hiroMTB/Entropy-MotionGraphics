@@ -41,17 +41,32 @@ void ofApp::setup(){
     float startx = wavePos.x = barStartx + 600;   // original CMB wavelength
     float endx   = barEndx - endRad - 450;         // current CMB wavelength
 
-    addAnimBySec(anim, &wavePos.x, 2, durationSec, startx, endx, sinInOut);
-    addAnimBySec(anim, &circleRad, 2, durationSec, startRad, endRad, sinInOut);
 
+    // animation for alpha
     addAnimBySec(anim, &alphaAll, 0, 1, 0, 1, circIn);
     addAnimBySec(anim, &alphaSubLine, 1.2, 1.8, 0, 1, circIn);
+
+    // animation for L R guide line
+    addAnimBySec(anim, &aGuideL_drawRate, 1.2, 1.7, 0, 1, sinInOut);
+    addAnimBySec(anim, &aGuideR_drawRate, 2.2, 2.7, 0, 1, sinInOut);
     
+    // animation for text
+    aTextL_drawRate = aTextR_drawRate = 0;
+    addAnimBySec(anim, &aTextL_drawRate, 1.7, 2.0);
+    addAnimBySec(anim, &aTextR_drawRate, 2.7, 3.0);
+
     
     // Animation for bottom bar
     aLine1.p1.y = aLine1.p2.y = safeAreaL.y+safeAreaL.height;
-    addAnimBySec(anim, &aLine1.p1.x, 0.4, 1, barStartx, barStartx);
-    addAnimBySec(anim, &aLine1.p2.x, 0.4, 1, barStartx, barEndx, sinInOut);
+    addAnimBySec(anim, &aLine1.p1.x, 3.3, 3.8, barStartx, barStartx);
+    addAnimBySec(anim, &aLine1.p2.x, 3.3, 3.8, barStartx, barEndx, sinInOut);
+
+    // legend
+    addAnimBySec(anim, &aLegend_drawRate, 3.7, 3.9);
+    
+    // animation for circle and wave
+    addAnimBySec(anim, &wavePos.x, 4.5, 4.5+durationSec, startx, endx, sinInOut);
+    addAnimBySec(anim, &circleRad, 4.5, 4.5+durationSec, startRad, endRad, sinInOut);
 
     
     // turn off
@@ -135,21 +150,23 @@ void ofApp::draw(){
             float xR = barEndx- wavePos.x;
             float y = amp;
             ofSetLineWidth(1);
-            ofDrawLine( xL, y+10, xR, y+10);
-            ofDrawLine( xL, -y-10, xR, -y-10);
+            ofDrawLine( xL, y+10, xR*aGuideR_drawRate, y+10);
+            ofDrawLine( xL, -y-10, xR*aGuideR_drawRate, -y-10);
             
             // text
             string title = "CMB\nWavelength";
+            string show1 = title.substr(0, title.size()*aTextR_drawRate);
             ofRectangle rL = FontManager::font["M"].getStringBoundingBox(title, 0, 0);
-            FontManager::font["M"].drawString(title, xR+50, -rL.height-50);
+            FontManager::font["M"].drawString(show1, xR+50, -rL.height-50);
             
             int exp = round( ofMap(wavePos.x, barStartx, barEndx, wvlMin, wvlMax) );
             string expText = ofToString(pow(10, exp));
         
             expText +=  " m";
 
+            string show = expText.substr(0, expText.size()*aTextR_drawRate);
             ofRectangle r = FontManager::font["M"].getStringBoundingBox(expText, 0, 0);
-            FontManager::font["M"].drawString(expText, xR+50, r.height/2);
+            FontManager::font["M"].drawString(show, xR+50, r.height/2);
         }
         
         if(1){
@@ -161,13 +178,15 @@ void ofApp::draw(){
             float xR = 0;//circleRad*0.9;
             float y = circleRad;
             ofSetLineWidth(1);
-            ofDrawLine( xL, y+10, xR, y+10);
-            ofDrawLine( xL, -y-10, xR, -y-10);
+            ofDrawLine( xL*aGuideL_drawRate,  y+10, xR, y+10);
+            ofDrawLine( xL*aGuideL_drawRate, -y-10, xR, -y-10);
             
             // text
             string title = "Size of the Universe";
+            string show1 = title.substr(0, title.size()*aTextL_drawRate);
+
             ofRectangle rL = FontManager::font["M"].getStringBoundingBox(title, 0, 0);
-            FontManager::font["M"].drawString(title, xL-rL.width-50, -rL.height-50);
+            FontManager::font["M"].drawString(show1, xL-rL.width-50, -rL.height-50);
             
             
             float sizeMin = log10(4.0*pow(10,7));         // 4*10e+07 lyr
@@ -178,8 +197,9 @@ void ofApp::draw(){
             sprintf(m, "%0.0f", pow(10, exp));
             string expText = string(m);
             expText +=  " lyr";
+            string show = expText.substr(0, expText.size()*aTextL_drawRate);
             ofRectangle r = FontManager::font["M"].getStringBoundingBox(expText, 0, 0);
-            FontManager::font["M"].drawString(expText, xL-r.width-50, r.height/2);
+            FontManager::font["M"].drawString(show, xL-r.width-50, r.height/2);
             
         }
         
@@ -222,7 +242,7 @@ void ofApp::drawSpectrum(){
     
     
     // legend
-    for(int i=0; i<waveType.size(); i++){
+    for(int i=0; i<waveType.size()*aLegend_drawRate; i++){
         
         string n = std::get<0>(waveType[i]);
         double v = std::get<4>(waveType[i]);
