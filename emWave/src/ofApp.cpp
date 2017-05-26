@@ -28,9 +28,12 @@ void ofApp::setup(){
 
     phase = 0;
     
+    wvlMin = log10(pow(10, -10.2));
+    wvlMax = log10(pow(10, 3.2));
+    
     wavePos.y = (safeAreaR.y+safeAreaR.height)/2;
-    barStartx = safeAreaL.x;
-    barEndx = safeAreaR.x+safeAreaR.width;
+    barStartx = renderW*0.025;
+    barEndx =   renderW*0.975;
     
     float durationSec = 5;
     
@@ -38,8 +41,8 @@ void ofApp::setup(){
     float startRad = circleRad = 100;
     float endRad = 320;
     
-    float startx = wavePos.x = barStartx + 600;   // original CMB wavelength
-    float endx   = barEndx - endRad - 450;         // current CMB wavelength
+    float startx = wavePos.x = mapWaveLength( 4.8*pow(10,-6)); //barStartx + 600;   // original CMB wavelength, 4.8um
+    float endx   = mapWaveLength( 1.9*pow(10,-3) );///barEndx - endRad - 450;         // current CMB wavelength, peak 1.9mm
 
 
     // animation for alpha
@@ -72,7 +75,7 @@ void ofApp::setup(){
     //addAnimBySec(anim, &alphaAll, 5, 6, 1, 0, circIn);
 
     waveType = {
-        {"Gamma ray",   "10",   "-12",      "m",   pow(10, -12) },
+        //{"Gamma ray",   "10",   "-12",      "m",   pow(10, -12) },
         {"X-ray",       "10",   "-10",      "m",   pow(10,-10) },
         {"Ultraviolet", "10",   "-8",       "m",   pow(10, -8)},
         {"Visible",     "0.5 * 10",   "-6", "m",  0.5*pow(10, -6)},
@@ -81,8 +84,6 @@ void ofApp::setup(){
         {"Radio",       "1",    "",         "km",   pow(10,3)}
     };
     
-    wvlMin = -13;
-    wvlMax = 4;
 }
 
 void ofApp::update(){
@@ -109,8 +110,6 @@ void ofApp::draw(){
     ofBackground(0);
     
     ofPushMatrix();{
-        
-        
         ofSetColor(255, alphaAll*255);
        
         ofTranslate(wavePos);
@@ -146,7 +145,7 @@ void ofApp::draw(){
             
             // line
             float xL = circleRad;
-            float xR = barEndx- wavePos.x;
+            float xR = safeAreaR.x+safeAreaR.width/2 - wavePos.x;
             float y = amp;
             ofSetLineWidth(2);
             ofDrawLine( xL, y+10, xR*aGuideR_drawRate, y+10);
@@ -158,10 +157,14 @@ void ofApp::draw(){
             ofRectangle rL = FontManager::font["M"].getStringBoundingBox(title, 0, 0);
             FontManager::font["M"].drawString(show1, xR+50, -rL.height-50);
             
-            int exp = round( ofMap(wavePos.x, barStartx, barEndx, wvlMin, wvlMax) );
-            string expText = ofToString(pow(10, exp));
+            float exp = ofMap(wavePos.x, barStartx, barEndx, wvlMin, wvlMax);
+            //string expText = ofToString(pow(10, exp+3));
         
-            expText +=  " m";
+            char m[255];
+            sprintf(m, "%0.4f", pow(10, exp+3));
+            string expText = string(m);
+            
+            expText +=  " mm";
 
             string show = expText.substr(0, expText.size()*aTextR_drawRate);
             ofRectangle r = FontManager::font["M"].getStringBoundingBox(expText, 0, 0);
@@ -173,7 +176,7 @@ void ofApp::draw(){
             // draw left side guide line and text
             
             // line
-            float xL = barStartx - wavePos.x;
+            float xL = safeAreaL.x + safeAreaL.width/2 - wavePos.x; //barStartx - wavePos.x;
             float xR = 0;//circleRad*0.9;
             float y = circleRad;
             ofSetLineWidth(2);
@@ -186,7 +189,6 @@ void ofApp::draw(){
 
             ofRectangle rL = FontManager::font["M"].getStringBoundingBox(title, 0, 0);
             FontManager::font["M"].drawString(show1, xL-rL.width-50, -rL.height-50);
-            
             
             float sizeMin = log10(4.0*pow(10,7));         // 4*10e+07 lyr
             float sizeMax = log10(5.0*pow(10,10));        // 5*10e+10 lyr
@@ -222,11 +224,9 @@ void ofApp::draw(){
     // aaand spectrum
     drawSpectrum();
     
-    
-    
     exporter.end();
     
-    ofBackground(20);
+    ofBackground(75);
     exporter.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight() );
 }
 
@@ -245,15 +245,7 @@ void ofApp::drawSpectrum(){
         
         string n = std::get<0>(waveType[i]);
         double v = std::get<4>(waveType[i]);
-        
-        float wLenMin = pow(10, wvlMin);
-        float wLenMax = pow(10, wvlMax);
-        
-        float vLog = log10(v);
-        float wLenMinLog = log10(wLenMin);
-        float wLenMaxLog = log10(wLenMax);
-        
-        float posx = ofMap(vLog, wLenMinLog, wLenMaxLog, barStartx, barEndx);
+        float posx = mapWaveLength(v);
         
         ofSetLineWidth(5);
         ofDrawLine(posx,  aLine1.p1.y+thickness, posx,  aLine1.p1.y+thickness+30);
@@ -294,7 +286,7 @@ void ofApp::drawSineWave(float _waveLength, float _amp, float _numWave, float _p
             }
         }
     }
-    //p.draw();
+    p.draw();
 }
 
 void ofApp::keyPressed(int key){
@@ -315,20 +307,19 @@ float ofApp::getExportHeight(){
     return exporter.getFbo().getHeight();
 }
 
+float ofApp::mapWaveLength(double waveLength){
+    float wLenMin = pow(10, wvlMin);
+    float wLenMax = pow(10, wvlMax);
+    
+    float vLog = log10(waveLength);
+    float wLenMinLog = log10(wLenMin);
+    float wLenMaxLog = log10(wLenMax);
+    
+    return ofMap(vLog, wLenMinLog, wLenMaxLog, barStartx, barEndx);
+}
+
 int main(){
     
-//    ofGLFWWindowSettings s;
-//    s.setPosition( ofVec2f(0,0));
-//    s.title = "Entropy Motion Graphics::Measure";
-//    s.setGLVersion(4, 1);
-//    s.multiMonitorFullScreen = true;
-//    s.windowMode = OF_WINDOW;
-//    s.numSamples = 16;
-//    s.width = 3840/2;
-//    s.height = 1080/2;
-//    s.monitor = 2;
-//    s.decorated = true;
-//    ofCreateWindow(s);
     ofSetupOpenGL(1920, 1080, OF_WINDOW);
     ofRunApp(ofApp::get());
 }

@@ -24,7 +24,7 @@ public:
     float getExportHeight();
     
     void drawSineWave(float width, float height, float numWave, float phase);
-    
+    float mapWaveLength(double waveLength);
 private:
     
     ofxExportImageSequence exporter;
