@@ -48,10 +48,10 @@ void ofApp::setup(){
 
     // animation for L R guide line and text
     aTextL_drawRate = aTextR_drawRate = 0;
-    addAnimBySec(anim, &aGuideL_drawRate, 1.1, 1.6, 0, 1, sinInOut);
+    addAnimBySec(anim, &aGuideL_drawRate, 1.0, 1.6, 0, 1, quadOut);
     addAnimBySec(anim, &aTextL_drawRate,  1.2, 1.7);
 
-    addAnimBySec(anim, &aGuideR_drawRate, 1.2, 1.7, 0, 1, sinInOut);
+    addAnimBySec(anim, &aGuideR_drawRate, 1.1, 1.7, 0, 1, quadOut);
     addAnimBySec(anim, &aTextR_drawRate,  1.4, 1.9);
     
 
@@ -64,8 +64,8 @@ void ofApp::setup(){
     addAnimBySec(anim, &aLegend_drawRate, 1.4, 2.3);
     
     // animation for circle and wave
-    addAnimBySec(anim, &wavePos.x, 5, 5+durationSec, startx, endx, sinInOut);
-    addAnimBySec(anim, &circleRad, 5, 5+durationSec, startRad, endRad, sinInOut);
+    addAnimBySec(anim, &wavePos.x, 5, 5+durationSec, startx, endx, sinOut);
+    addAnimBySec(anim, &circleRad, 5, 5+durationSec, startRad, endRad, sinOut);
 
     
     // turn off
