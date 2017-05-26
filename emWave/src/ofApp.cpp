@@ -43,30 +43,29 @@ void ofApp::setup(){
 
 
     // animation for alpha
-    addAnimBySec(anim, &alphaAll, 0, 1, 0, 1, circIn);
+    addAnimBySec(anim, &alphaAll, 0, 0.6, 0, 1, circIn);
     addAnimBySec(anim, &alphaSubLine, 1.2, 1.8, 0, 1, circIn);
 
-    // animation for L R guide line
-    addAnimBySec(anim, &aGuideL_drawRate, 1.2, 1.7, 0, 1, sinInOut);
-    addAnimBySec(anim, &aGuideR_drawRate, 2.2, 2.7, 0, 1, sinInOut);
-    
-    // animation for text
+    // animation for L R guide line and text
     aTextL_drawRate = aTextR_drawRate = 0;
-    addAnimBySec(anim, &aTextL_drawRate, 1.7, 2.0);
-    addAnimBySec(anim, &aTextR_drawRate, 2.7, 3.0);
+    addAnimBySec(anim, &aGuideL_drawRate, 1.1, 1.6, 0, 1, sinInOut);
+    addAnimBySec(anim, &aTextL_drawRate,  1.2, 1.7);
 
+    addAnimBySec(anim, &aGuideR_drawRate, 1.2, 1.7, 0, 1, sinInOut);
+    addAnimBySec(anim, &aTextR_drawRate,  1.4, 1.9);
     
+
     // Animation for bottom bar
     aLine1.p1.y = aLine1.p2.y = safeAreaL.y+safeAreaL.height;
-    addAnimBySec(anim, &aLine1.p1.x, 3.3, 3.8, barStartx, barStartx);
-    addAnimBySec(anim, &aLine1.p2.x, 3.3, 3.8, barStartx, barEndx, sinInOut);
+    addAnimBySec(anim, &aLine1.p1.x, 1.3, 1.9, barStartx, barStartx);
+    addAnimBySec(anim, &aLine1.p2.x, 1.3, 1.9, barStartx, barEndx, sinInOut);
 
     // legend
-    addAnimBySec(anim, &aLegend_drawRate, 3.7, 3.9);
+    addAnimBySec(anim, &aLegend_drawRate, 1.4, 2.3);
     
     // animation for circle and wave
-    addAnimBySec(anim, &wavePos.x, 4.5, 4.5+durationSec, startx, endx, sinInOut);
-    addAnimBySec(anim, &circleRad, 4.5, 4.5+durationSec, startRad, endRad, sinInOut);
+    addAnimBySec(anim, &wavePos.x, 5, 5+durationSec, startx, endx, sinInOut);
+    addAnimBySec(anim, &circleRad, 5, 5+durationSec, startRad, endRad, sinInOut);
 
     
     // turn off
@@ -90,7 +89,7 @@ void ofApp::update(){
     
     if(bStart){
         frame++;
-        phase -= 15;
+        phase -= 12;
     }
     
     for(int i=0; i<anim.size(); i++){
@@ -149,7 +148,7 @@ void ofApp::draw(){
             float xL = circleRad;
             float xR = barEndx- wavePos.x;
             float y = amp;
-            ofSetLineWidth(1);
+            ofSetLineWidth(2);
             ofDrawLine( xL, y+10, xR*aGuideR_drawRate, y+10);
             ofDrawLine( xL, -y-10, xR*aGuideR_drawRate, -y-10);
             
@@ -177,7 +176,7 @@ void ofApp::draw(){
             float xL = barStartx - wavePos.x;
             float xR = 0;//circleRad*0.9;
             float y = circleRad;
-            ofSetLineWidth(1);
+            ofSetLineWidth(2);
             ofDrawLine( xL*aGuideL_drawRate,  y+10, xR, y+10);
             ofDrawLine( xL*aGuideL_drawRate, -y-10, xR, -y-10);
             
@@ -268,7 +267,7 @@ void ofApp::drawSpectrum(){
 void ofApp::drawSineWave(float _waveLength, float _amp, float _numWave, float _phase){
     
     ofPolyline p;
-    float resolution = 32; //_waveLength/4;
+    float resolution = 28; //_waveLength/4;
     
     float totalWaveLength = _waveLength * _numWave;
     float xStart = -totalWaveLength/2;
