@@ -24,31 +24,36 @@ void ofApp::setup(){
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
     
-    //exporter.startExport();
+    exporter.startExport();
 
     phase = 0;
     
     wvlMin = log10(pow(10, -10.2));
     wvlMax = log10(pow(10, 3.2));
     
-    wavePos.y = (safeAreaR.y+safeAreaR.height)/2;
+    wavePos.y = h * 0.35;
     barStartx = renderW*0.025;
     barEndx =   renderW*0.975;
     
-    float durationSec = 5;
+    float durationSec = 3.5;
     
     // size of universe, should be 10e+3 times bigger after CMB
-    float startRad = circleRad = 100;
-    float endRad = 320;
+    float startRad = circleRad = 80;
+    float endRad = 210;
     
-    float startx = wavePos.x = mapWaveLength( 4.8*pow(10,-6)); //barStartx + 600;   // original CMB wavelength, 4.8um
-    float endx   = mapWaveLength( 1.9*pow(10,-3) );///barEndx - endRad - 450;         // current CMB wavelength, peak 1.9mm
+    wavePosStartx = wavePos.x = mapWaveLength( 4.8*pow(10,-6)); //barStartx + 600;   // original CMB wavelength, 4.8um
+    wavePosEndx   = mapWaveLength( 1.9*pow(10,-3) );///barEndx - endRad - 450;         // current CMB wavelength, peak 1.9mm
 
 
     // animation for alpha
-    addAnimBySec(anim, &alphaAll, 0, 0.6, 0, 1, circIn);
+    addAnimBySec(anim, &alphaAll, 0, 0.5, 0, 1, circIn);
     addAnimBySec(anim, &alphaSubLine, 1.2, 1.8, 0, 1, circIn);
 
+    // arc
+    aArcAngle = 0;
+    addAnimBySec(anim, &aArcAngle, 0.7, 1.2, 0, 360, sinInOut);
+    
+    
     // animation for L R guide line and text
     aTextL_drawRate = aTextR_drawRate = 0;
     addAnimBySec(anim, &aGuideL_drawRate, 1.0, 1.6, 0, 1, quadOut);
@@ -64,15 +69,14 @@ void ofApp::setup(){
     addAnimBySec(anim, &aLine1.p2.x, 1.3, 1.9, barStartx, barEndx, sinInOut);
 
     // legend
-    addAnimBySec(anim, &aLegend_drawRate, 1.4, 2.3);
+    addAnimBySec(anim, &aLegend_drawRate, 1.4, 3.0);
     
     // animation for circle and wave
-    addAnimBySec(anim, &wavePos.x, 5, 5+durationSec, startx, endx, sinOut);
-    addAnimBySec(anim, &circleRad, 5, 5+durationSec, startRad, endRad, sinOut);
-
+    addAnimBySec(anim, &wavePos.x, 5, 5+durationSec, wavePosStartx, wavePosEndx);
+    addAnimBySec(anim, &circleRad, 5, 5+durationSec, startRad, endRad);
     
     // turn off
-    //addAnimBySec(anim, &alphaAll, 5, 6, 1, 0, circIn);
+    addAnimBySec(anim, &alphaAll, 5+durationSec, 5+durationSec+1, 1, 0, circIn);
 
     waveType = {
         //{"Gamma ray",   "10",   "-12",      "m",   pow(10, -12) },
@@ -80,7 +84,7 @@ void ofApp::setup(){
         {"Ultraviolet", "10",   "-8",       "m",   pow(10, -8)},
         {"Visible",     "0.5 * 10",   "-6", "m",  0.5*pow(10, -6)},
         {"Infrared",    "10",   "-5",       "m",    pow(10, -5)},
-        {"Microwave",   "1",    "",         "cm",   pow(10,-2)},
+        {"Microwave",   "1",    "",         "cm",   1.9*pow(10,-3) },
         {"Radio",       "1",    "",         "km",   pow(10,3)}
     };
     
@@ -144,18 +148,22 @@ void ofApp::draw(){
 
             
             // line
-            float xL = circleRad;
+            float xL = waveLength/2 + 50;
             float xR = safeAreaR.x+safeAreaR.width/2 - wavePos.x;
-            float y = amp;
-            ofSetLineWidth(2);
-            ofDrawLine( xL, y+10, xR*aGuideR_drawRate, y+10);
-            ofDrawLine( xL, -y-10, xR*aGuideR_drawRate, -y-10);
+            float y  = 400;
+            ofSetLineWidth(3);
+            ofDrawLine( xL*aGuideR_drawRate, y, xR*aGuideR_drawRate, y);
+            ofDrawLine( -waveLength/2*aGuideR_drawRate, y*aGuideR_drawRate, waveLength/2*aGuideR_drawRate, y*aGuideR_drawRate);
+
+            // short
+            ofDrawLine( -waveLength/2, (circleRad)*aGuideR_drawRate, -waveLength/2, (y+10)*aGuideR_drawRate);
+            ofDrawLine(  waveLength/2, (circleRad)*aGuideR_drawRate,  waveLength/2, (y+10)*aGuideR_drawRate);
             
             // text
             string title = "CMB\nWavelength";
             string show1 = title.substr(0, title.size()*aTextR_drawRate);
             ofRectangle rL = FontManager::font["M"].getStringBoundingBox(title, 0, 0);
-            FontManager::font["M"].drawString(show1, xR+50, -rL.height-50);
+            FontManager::font["M"].drawString(show1, xR+50, y-rL.height-50);
             
             float exp = ofMap(wavePos.x, barStartx, barEndx, wvlMin, wvlMax);
             //string expText = ofToString(pow(10, exp+3));
@@ -168,7 +176,23 @@ void ofApp::draw(){
 
             string show = expText.substr(0, expText.size()*aTextR_drawRate);
             ofRectangle r = FontManager::font["M"].getStringBoundingBox(expText, 0, 0);
-            FontManager::font["M"].drawString(show, xR+50, r.height/2);
+
+            float textWidth = FontManager::font["M"].stringWidth("9");
+
+            float len = show.size() * textWidth;
+            float nextSpace = 0;
+            float posx = 0;
+            for(int i=0; i<show.size(); i++){
+                char c = show[i];
+                string s(&c);
+                posx += nextSpace;
+                if(c=='.'){
+                    nextSpace = 7;
+                }else{
+                    nextSpace = textWidth+8;
+                }
+                FontManager::font["M"].drawString( s, xR+50+posx, y+r.height/2);
+            }
         }
         
         if(1){
@@ -188,19 +212,28 @@ void ofApp::draw(){
             string show1 = title.substr(0, title.size()*aTextL_drawRate);
 
             ofRectangle rL = FontManager::font["M"].getStringBoundingBox(title, 0, 0);
-            FontManager::font["M"].drawString(show1, xL-rL.width-50, -rL.height-50);
+            FontManager::font["M"].drawString(show1, xL-rL.width-50, -rL.height/2-30);
             
-            float sizeMin = log10(4.0*pow(10,7));         // 4*10e+07 lyr
-            float sizeMax = log10(5.0*pow(10,10));        // 5*10e+10 lyr
-            int exp = round( ofMap(wavePos.x, barStartx, barEndx, sizeMin, sizeMax) );
-            //string expText = ofToString(pow(10, exp));
+            double sizeMin = sizeOfUniverse = 4.0*pow(10,7);         // 4*10e+07 lyr
+            double sizeMax = 5.0*pow(10,10);                         // 5*10e+10 lyr
+            sizeOfUniverse = sizeMin + (sizeMax-sizeMin)*(double)(wavePos.x-wavePosStartx)/(double)(wavePosEndx-wavePosStartx);
+            
             char m[255];
-            sprintf(m, "%0.0f", pow(10, exp));
+            sprintf(m, "%0.0f", sizeOfUniverse);
             string expText = string(m);
             expText +=  " lyr";
             string show = expText.substr(0, expText.size()*aTextL_drawRate);
             ofRectangle r = FontManager::font["M"].getStringBoundingBox(expText, 0, 0);
-            FontManager::font["M"].drawString(show, xL-r.width-50, r.height/2);
+            float textWidth = FontManager::font["M"].stringWidth("9")+8;
+            float len = show.size() * textWidth;
+            for(int i=0; i<show.size(); i++){
+                float posx = textWidth * i;
+                char c = show[i];
+                string s(&c);
+                FontManager::font["M"].drawString( s, xL-50+posx-len, r.height+30);
+            }
+            
+            //FontManager::font["M"].drawString(show, xL-r.width-50, r.height+30);
             
         }
         
@@ -214,7 +247,9 @@ void ofApp::draw(){
         ofSetColor(255, alphaAll*255);
         ofNoFill();
         ofSetLineWidth(5);
-        ofDrawCircle(0, 0, circleRad);
+        //ofDrawCircle(0, 0, circleRad);
+        if(aArcAngle!=0)Util::drawArc(0, 0, circleRad, 4, 0, aArcAngle);
+        
         drawSineWave(waveLength*0.9, amp, numWave, phase);
 
         
@@ -233,11 +268,12 @@ void ofApp::draw(){
 void ofApp::drawSpectrum(){
     
     float thickness = 6;
+    float bary = aLine1.p1.y;
     
     ofSetRectMode(OF_RECTMODE_CORNER);
     ofFill();
     ofSetColor(255, alphaAll*255);
-    ofDrawRectangle( aLine1.p1.x, aLine1.p1.y, aLine1.p2.x-aLine1.p1.x, thickness );
+    ofDrawRectangle( aLine1.p1.x, bary, aLine1.p2.x-aLine1.p1.x, thickness );
     
     
     // legend
@@ -254,11 +290,22 @@ void ofApp::drawSpectrum(){
         
         FontManager::font["S"].drawString(n, posx-r.width/2, aLine1.p1.y+r.height+thickness+30+30 );
     }
+    
+    // indicator
+    if(1){
+        ofPushMatrix();
+        ofSetColor(255, 255*alphaAll*aLegend_drawRate);
+        ofTranslate(wavePos.x, bary-10);
+        ofFill();
+        ofDrawTriangle(0, 0, -10, -40, 10, -40);
+        ofPopMatrix();
+    }
 }
 
 void ofApp::drawSineWave(float _waveLength, float _amp, float _numWave, float _phase){
     
     ofPolyline p;
+    
     float resolution = 28; //_waveLength/4;
     
     float totalWaveLength = _waveLength * _numWave;
@@ -274,7 +321,7 @@ void ofApp::drawSineWave(float _waveLength, float _amp, float _numWave, float _p
             float x = xStart + (_waveLength/resolution)*j + _waveLength*i;
             
             float dist = sqrt(x*x + y*y);
-            bool insideOfCircle = (dist<totalWaveLength/2);
+            bool insideOfCircle = (dist<circleRad);
             if( insideOfCircle ){
                 p.addVertex(ofPoint(x, y));
                 
@@ -282,10 +329,12 @@ void ofApp::drawSineWave(float _waveLength, float _amp, float _numWave, float _p
                 //ofDrawLine(x, 0, x, y);
                 ofFill();
                 float cRad = 0.5+_waveLength*0.025;
+                
                 ofDrawCircle(x, y, cRad);
             }
         }
     }
+    ofSetLineWidth(1);
     p.draw();
 }
 

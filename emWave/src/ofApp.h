@@ -47,8 +47,14 @@ public:
     float barEndx;
     float fake;
     float wvlMax, wvlMin;
+    float wavePosStartx;
+    float wavePosEndx;
+
     
     float aGuideL_drawRate, aGuideR_drawRate;
     float aTextL_drawRate, aTextR_drawRate;
     float aLegend_drawRate;
+    float aArcAngle;
+    
+    double sizeOfUniverse;
 };
