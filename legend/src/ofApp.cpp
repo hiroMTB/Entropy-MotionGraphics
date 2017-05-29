@@ -39,7 +39,7 @@ void ofApp::setup(){
     mesh.assign(3, ofVboMesh());
     
     ofFloatImage img;
-    filesystem::path imgDir = Util::getResFolder()/"paper"/"1";
+    filesystem::path imgDir = Util::getResFolder()/"paper"/"png"/"1";
     img.load( (imgDir/"3.png").string() );
     
     int skip = 1;
