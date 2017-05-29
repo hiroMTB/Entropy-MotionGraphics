@@ -35,6 +35,7 @@ public:
     
     TextBox tbR;
     vector<Equation> eqs;
+    vector<Equation> eqs2;
     
     ofRectangle black;
 

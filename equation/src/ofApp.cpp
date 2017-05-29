@@ -51,7 +51,7 @@ void ofApp::setup(){
         eqs[i].load(path.string());
         eqs[i].posx = safeAreaR.x;
         
-        float durationSec = 5;
+        float durationSec = 12;
         float startSec = 0 + i*durationSec;
         float endSec = startSec + durationSec;
 
@@ -104,7 +104,20 @@ void ofApp::draw(){
             ofPushMatrix();
             ofScale(scale, scale);
             ofTranslate(eqs[i].posx/scale, 0);
-            eqs[i].draw();
+            
+            // easy motion blur not so good
+            if(0){
+                if(frame%2==1){
+                    eqs[i].draw(ofColor(255,175));
+                    ofTranslate(-20/scale, 0);
+                    eqs[i].draw(ofColor(255,200 ));
+                }else{
+                    ofTranslate(-20/scale, 0);
+                    eqs[i].draw(ofColor(255,255));
+                }
+            }
+            eqs[i].draw(ofColor(255,255));
+            
             ofPopMatrix();
         }
         

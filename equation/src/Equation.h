@@ -11,13 +11,14 @@ public:
     
     void load(string path);
     void update(int frame);
-    void draw();
+    void draw(ofColor color);
     
     vector<EasingPrm> anim;
     float posx;
     ofxSVG svg;
     ofRectangle bb;
-    
+    vector<ofPolyline> poly;
+    vector<ofPath> paths;
     float w = -123;
     float h = -456;
 };

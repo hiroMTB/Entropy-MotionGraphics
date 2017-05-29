@@ -15,6 +15,8 @@ void Equation::load(string path){
     int n=svg.getNumPath();
     for(int i=0; i<n;i++){
         ofPath & p = svg.getPathAt(i);
+        paths.push_back(p);
+        
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
         //p.tessellate();
         p.setColor(ofColor(255));
@@ -49,14 +51,16 @@ void Equation::update( int frame ){
 }
 
 
-void Equation::draw(){
-    
-    
+void Equation::draw(ofColor color){
+        
     ofPushMatrix(); {
-        ofNoFill();
-        //ofDrawRectangle(bb);
         ofFill();
-        svg.draw();
+        //svg.draw();
+        
+        for(int i=0; i<paths.size(); i++){
+            paths[i].setColor(color);
+            paths[i].draw();
+        }
     }ofPopMatrix();
 
 }
