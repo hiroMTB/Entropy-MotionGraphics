@@ -20,7 +20,7 @@ void TextBox::draw(){
     
     // prepare text fitting
     float y = 120;
-    Util::fitText(legend.tshow, FontManager::font["L"], area.width);
+    Util::stringFit(legend.tshow, FontManager::font["L"], area.width);
     FontManager::font["L"].drawString(legend.tshow, area.x, y+area.y);
     Util::eraseLineBreak(legend.tshow);
 }
