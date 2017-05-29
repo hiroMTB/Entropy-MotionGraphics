@@ -4,6 +4,9 @@
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/features2d.hpp>
+#include "EasingPrm.h"
+#include "AnimationParts.h"
+
 
 template <typename T>
 static cv::Mat toCv(ofPixels_<T>& pix)
@@ -31,5 +34,9 @@ public:
     vector<cv::KeyPoint> key;
     
     bool bDrawImg = true;
+
+    vector<EasingPrm> anim;
+    
+    AnimPoint aPos;
     
 };
