@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45001D801EDC7B5C002BE611 /* Graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45001D7E1EDC7B5C002BE611 /* Graph.cpp */; };
 		4549F29D1EC7AC49009F66A1 /* src_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4549F2941EC7ABA7009F66A1 /* src_colors.cpp */; };
 		4549F29E1EC7AC49009F66A1 /* svgtiny_gradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4549F2971EC7ABA7009F66A1 /* svgtiny_gradient.cpp */; };
 		4549F29F1EC7AC49009F66A1 /* svgtiny_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4549F2991EC7ABA7009F66A1 /* svgtiny_list.cpp */; };
@@ -48,6 +49,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		45001D7E1EDC7B5C002BE611 /* Graph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Graph.cpp; path = ../../common/Graph.cpp; sourceTree = "<group>"; };
+		45001D7F1EDC7B5C002BE611 /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Graph.h; path = ../../common/Graph.h; sourceTree = "<group>"; };
 		4549F2941EC7ABA7009F66A1 /* src_colors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = src_colors.cpp; sourceTree = "<group>"; };
 		4549F2951EC7ABA7009F66A1 /* svgtiny.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = svgtiny.cpp; sourceTree = "<group>"; };
 		4549F2961EC7ABA7009F66A1 /* svgtiny.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = svgtiny.h; sourceTree = "<group>"; };
@@ -189,6 +192,8 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
+				45001D7E1EDC7B5C002BE611 /* Graph.cpp */,
+				45001D7F1EDC7B5C002BE611 /* Graph.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -290,6 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45A6ECE21ECB33AD00022390 /* Util.cpp in Sources */,
+				45001D801EDC7B5C002BE611 /* Graph.cpp in Sources */,
 				4549F2A11EC7AC5F009F66A1 /* svgtiny.cpp in Sources */,
 				4549F29D1EC7AC49009F66A1 /* src_colors.cpp in Sources */,
 				4549F29E1EC7AC49009F66A1 /* svgtiny_gradient.cpp in Sources */,
