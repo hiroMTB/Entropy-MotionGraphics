@@ -15,6 +15,7 @@ void Graph::load(filesystem::path filePath, int resolution){
     svg.load(filePath.string());
     
     int n=svg.getNumPath();
+    cout << "svg num pathes : " << n << endl;
     for(int i=0; i<n;i++){
         ofPath & p = svg.getPathAt(i);
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
@@ -29,6 +30,10 @@ void Graph::load(filesystem::path filePath, int resolution){
             poly.push_back(p[j]);
         }
     }
+
+    cout << "svg num polylines : " << poly.size() << endl;
+
+    int nVerts = 0;
     
     for(int i=0; i<poly.size(); i++){
         
@@ -44,15 +49,19 @@ void Graph::load(filesystem::path filePath, int resolution){
             
             v.addVertex(ofVec3f(pt1.x, pt1.y,0));
             v.addVertex(ofVec3f(pt2.x, pt2.y,0));
+            
+            nVerts += 2;
         }
         
         vbos.push_back(v);
         
     }
+    
+    cout << "svg num vbo vertices : " << nVerts << endl;
+
 }
 
-
-void Graph::draw( float percent){
+void Graph::draw(float percent){
     
     for(int i=0; i<vbos.size(); i++){
         vbos[i].getVbo().draw(GL_LINES, 0, vbos[i].getNumVertices()*percent);

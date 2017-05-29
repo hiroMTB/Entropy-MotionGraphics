@@ -2,6 +2,7 @@
 #include "Util.h"
 
 unordered_map<string, ofTrueTypeFontCustom> FontManager::font;
+unordered_map<string, ofRectangle> FontManager::bb;
 
 void FontManager::setup(float scale){
     
@@ -31,5 +32,20 @@ void FontManager::setup(float scale){
     
     font["S"].load((fontDir/"KP Bob Bold.otf").string(), 26.0f*scale);
     font["S"].setLetterSpacing(1.03);
- 
+
+    font["SS"].load((fontDir/"KP Bob Bold.otf").string(), 18.0f*scale);
+    font["SS"].setLetterSpacing(1.03);
+
+    
+    bb["XL"] = font["XL"].getStringBoundingBox("0", 0, 0);
+    bb["L"] = font["L"].getStringBoundingBox("0", 0, 0);
+    bb["M"] = font["M"].getStringBoundingBox("0", 0, 0);
+    bb["S"] = font["S"].getStringBoundingBox("0", 0, 0);
+    bb["SS"] = font["SS"].getStringBoundingBox("0", 0, 0);
+
+    
+    font["M"].setLineHeight( bb["M"].height*1.8 );
+    font["S"].setLineHeight( bb["S"].height*1.6 );
+    font["SS"].setLineHeight( bb["SS"].height*1.8 );
+
 }

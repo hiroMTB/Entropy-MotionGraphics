@@ -15,6 +15,9 @@ void ofApp::setup(){
         g.load(filePath, 1200);
         graphs.push_back(g);
     }
+    
+    //filesystem::path filePath = Util::getResFolder()/"test"/"eagle_p13.svg";
+    
 }
 
 
