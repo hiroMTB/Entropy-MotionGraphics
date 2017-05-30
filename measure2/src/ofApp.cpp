@@ -9,7 +9,8 @@ using namespace ScreenGuide;
 void ofApp::setup(){
     ofSetBackgroundColor(0);
     ofSetFrameRate(60);
-    ofSetCircleResolution(120);
+    ofSetCircleResolution(160);
+    ofSetWindowPosition(0, 0);
     ofSetFullscreen(false);
     ofSetLogLevel(OF_LOG_NOTICE);
     
@@ -18,12 +19,12 @@ void ofApp::setup(){
     
     FontManager::setup(1);
     
-    exporter.setup(renderW, renderH, 60, GL_RGB, 4);
+    exporter.setup(renderW, renderH , 60, GL_RGB, 4);
     exporter.setOutputDir("render");
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
     
-    //exporter.startExport();
+    exporter.startExport();
     
     loadXml();
 }
@@ -31,18 +32,22 @@ void ofApp::setup(){
 void ofApp::update(){
     
     if(bStart) frame++;
+    
+    for(int i=0; i<ms.size(); i++){
+        ms[i]->update(frame);
+    }
 }
 
 void ofApp::draw(){
-
+    
     exporter.begin();
     ofBackground(0);
     
     ofPushMatrix();{
-       
-        
+        for(int i=0; i<ms.size(); i++){
+            ms[i]->draw();
+        }
     }ofPopMatrix();
-    
     
     exporter.end();
     
@@ -125,33 +130,36 @@ void ofApp::loadXml(){
     
     for(int i=0; i<ageData.size(); i++){
         
-        float durationSec = 15 * animSpdFactor;
-        float startFrame =   1 + i*durationSec*fps;
+        float durationSec = 11 * animSpdFactor;
+        float startSec =   i*durationSec;
         
         {
             //  Age
+            float min = std::get<0>(ageData[0])-5;
+            float max = std::get<0>(ageData[8])+20;
             shared_ptr<UAge> age = shared_ptr<UAge>(new UAge());
-            age->setup(ageData[i]);
+            age->setup(ageData[i], startSec, min, max, i);
             ms.push_back(age);
         }
         
         {
             //  Temprature
+            float min = std::get<0>(temperatureData[8])-0.5;
+            float max = std::get<0>(temperatureData[0])+2;
             shared_ptr<UTmp> tmp = shared_ptr<UTmp>(new UTmp());
-            tmp->setup(temperatureData[i]);
+            tmp->setup(temperatureData[i], startSec, min, max, i);
             ms.push_back(tmp);
             
         }
         
         {
             //  Size
+            float min = std::get<0>(sizeData[0])-4;
+            float max = std::get<0>(sizeData[8])+2;
             shared_ptr<USize> size = shared_ptr<USize>(new USize());
-            size->setup(sizeData[i]);
+            size->setup(sizeData[i], startSec, min, max, i);
             ms.push_back(size);
         }
-        
-        int motionId = i;
-
     }
 }
 

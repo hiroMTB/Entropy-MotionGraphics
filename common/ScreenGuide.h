@@ -5,7 +5,7 @@
 namespace ScreenGuide{
     
     const static float renderW = 3840;
-    const static float renderH = 1080;
+    const static float renderH = 1280;
     const static float centerX = renderW/2;
     const static float centerY = renderH/2;
     
