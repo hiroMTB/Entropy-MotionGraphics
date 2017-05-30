@@ -40,8 +40,8 @@ void ofApp::setup(){
     tbL.area.y = h * 0.243;
     tbR.area.y = h * 0.243;
     
-    //writeXml();
-    loadXml();
+    writeXml();
+    //loadXml();
     
     // check settings
     for(int i=0; i<ms.size(); i++){
@@ -232,43 +232,46 @@ void ofApp::loadXml(){
 
 void ofApp::writeXml(){
     
-    float fakeRate = 2.5f;
+    float fakeRate = 1;
     
     DataSet ageData =
     
     {   {   -43.0/fakeRate,  "Age", "10",               "-43",  "sec",  "0.000000000\\n0000000000\\n0000000000\\n0000000000\\n0001", "Seconds", "0.0000000000000000000000000000000000000000001 sec"},
         {   -32.0/fakeRate,  "Age", "10",               "-32",  "sec",  "0.000000000\\n0000000000\\n0000000000\\n01", "Seconds", "0.0000000000000000000000000000001 sec"},
-        {   -12.0/fakeRate,  "Age", "10",               "-12",  "sec",  "0.000000000\\n001", "Seconds",  "0.000000000001 sec"},
+        {   -6.0/fakeRate,  "Age", "10",               "-6",   "sec",  "0.000001", "Seconds",  "0.000001 sec"},
         {   0.0,             "Age", "1",                "",     "sec",  "", "Seconds",  "1 sec"},
-        {   2.25/fakeRate,   "Age", "180",              "",     "sec",  "", "Seconds",  "180 sec"},
-        {   12.23*fakeRate,  "Age", "6,000",            "",     "yr",   "", "Years",    "6000 years"},
+        {   2.26/fakeRate,   "Age", "3",                "",     "min",  "", "Minutes",  "3 min"},
+        {   11.28*fakeRate,  "Age", "6,000",            "",     "yr",   "", "Years",    "6000 years"},
         {   13.10*fakeRate,  "Age", "400,000",          "",     "yr",   "", "Years",    "400000 years"},        // CMB
         {   16.50*fakeRate,  "Age", "1,000,000,000",    "",     "yr",   "", "Years",    "1000000000 years"},
-        {   17.64*fakeRate,  "Age", "1,380,000,000",    "",     "yr",   "", "Years",    "1380000000 years"}
+        {   17.64*fakeRate,  "Age", "13,800,000,000",    "",     "yr",   "", "Years",    "13800000000 years"},
+        {   18.50*fakeRate,  "Age", "100,000,000,000",    "",     "yr",   "", "Years",    "100000000000 years"}
     };
     
     DataSet temperatureData =
     {   {  32,   "Temperature", "10",   "32",  "°C", "10000000000\\n0000000000\\n0000000000\\n00", "°Celsius", "100000000000000000000000000000000 °C"},
         {  22,   "Temperature", "10",   "22",  "°C", "10000000000\\n0000000000\\n00", "°Celsius", "10000000000000000000000 °C"},
-        {  12,   "Temperature", "10",   "12",  "°C", "10000000000\\n00", "°Celsius", "1000000000000 °C"},
+        {  13,   "Temperature", "10",   "13",  "°C", "10000000000\\n000", "°Celsius", "10000000000000 °C"},
         {  10,   "Temperature", "10",   "10",  "°C", "10000000000",     "°Celsius", "10000000000 °C"},
         {  9,    "Temperature", "10",   "9",   "°C", "1000000000",      "°Celsius", "1000000000 °C"},
-        {  4,    "Temperature", "11,000", "",  "°C",  "",               "°Celsius", "11000 °C"},
-        {  3,    "Temperature", "1,000",  "",  "°C",  "",               "°Celsius", "1000 °C"},
-        {  -2,   "Temperature", "-260",   "",  "°C",  "",               "°Celsius", "-260 °C"},
-        {  -2.5, "Temperature", "−270.4", "",  "°C",  "",               "°Celsius", "−270.4 °C"}
+        {  4.05,    "Temperature", "11,000", "",  "°C",  "",               "°Celsius", "11000 °C"},
+        {  3.51,    "Temperature", "3,000",  "",  "°C",  "",               "°Celsius", "3000 °C"},
+        {  1.12,   "Temperature", "-260",   "",  "°C",  "",               "°Celsius", "-260 °C"},
+        {  0.44, "Temperature", "−270.4", "",  "°C",  "",               "°Celsius", "−270.4 °C"},
+        {  -1, "Temperature", "−273.06", "",  "°C",  "",               "°Celsius", "−273.06 °C"}
     };
     
     DataSet sizeData =
-    {   {  -100,"Size", "~ 0.",     "",     "",     "",                 "",             "~ 0."},
-        {  -97, "Size", "500",      "",     "cm",   "",                 "",             "500 cm"},
-        {  -1,  "Size", "0.1",      "",     "lyr",  "",                 "Light Years",  "0.1 lyr"},
+    {   {  -100,"Size", "approx. 0",     "",     "",     "",                 "",        "~ 0."},
+        {  -97, "Size", "10",       "",     "cm",   "",                "",              "10 cm"},
+        {  -1,  "Size", "0.1",      "",     "lyr",  "",                "Light Years",   "0.1 lyr"},
         {  1,   "Size", "10",       "",     "lyr",  "",                 "Light Years",  "10 lyr"},
         {  2,   "Size", "100",      "",     "lyr",  "",                 "Light Years",  "100 lyr"},
-        {  7,   "Size", "10,000,000","",    "lyr",  "",                 "Light Years",  "10000000 lyr"},
+        {  7,   "Size", "10",       "7",    "lyr",  "",                 "Light Years",  "10000000 lyr"},
         {  7.5, "Size", "4 * 10",   "7",    "lyr",  "40,000,000",       "Light Years",  "40000000 lyr"},        //CMB
         {  10.5,"Size", "4 * 10",   "10",   "lyr",  "40,000,000,000",   "Light Years",  "40000000000 lyr"},
-        {  10.8,"Size", "5 * 10",   "10",   "lyr",  "50,000,000,000",   "Light Years",  "50000000000 lyr"}
+        {  10.8,"Size", "5 * 10",   "10",   "lyr",  "50,000,000,000",   "Light Years",  "50000000000 lyr"},
+        {  10.8,"Size", "5 * 10",   "12",   "lyr",  "5,000,000,000,000",   "Light Years",  "5000000000000 lyr"}
     };
     
     
