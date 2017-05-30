@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-               BuildableName = "zoomout2.temp_caseinsensitive_renameDebug.app"
-               BlueprintName = "zoomout2"
-               ReferencedContainer = "container:zoomout2.xcodeproj">
+               BuildableName = "measure.temp_caseinsensitive_renameDebug.app"
+               BlueprintName = "measure2"
+               ReferencedContainer = "container:measure2.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "zoomout2.temp_caseinsensitive_renameDebug.app"
-            BlueprintName = "zoomout2"
-            ReferencedContainer = "container:zoomout2.xcodeproj">
+            BuildableName = "measure.temp_caseinsensitive_renameDebug.app"
+            BlueprintName = "measure2"
+            ReferencedContainer = "container:measure2.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "zoomout2.temp_caseinsensitive_renameDebug.app"
-            BlueprintName = "zoomout2"
-            ReferencedContainer = "container:zoomout2.xcodeproj">
+            BuildableName = "measure.temp_caseinsensitive_renameDebug.app"
+            BlueprintName = "measure2"
+            ReferencedContainer = "container:measure2.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "zoomout2.temp_caseinsensitive_renameDebug.app"
-            BlueprintName = "zoomout2"
-            ReferencedContainer = "container:zoomout2.xcodeproj">
+            BuildableName = "measure.temp_caseinsensitive_renameDebug.app"
+            BlueprintName = "measure2"
+            ReferencedContainer = "container:measure2.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
