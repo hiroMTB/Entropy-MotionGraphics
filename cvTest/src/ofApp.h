@@ -38,5 +38,7 @@ public:
     vector<EasingPrm> anim;
     
     AnimPoint aPos;
+    int frame = -1;
     
+    ofVboMesh mesh;
 };
