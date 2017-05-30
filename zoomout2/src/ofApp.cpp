@@ -144,7 +144,7 @@ void ofApp::draw(){
                 ofFill();
             }else{
                 // Too big rectangle
-                ofSetLineWidth(2);
+                ofSetLineWidth(3);
                 float a = ofMap(diam, getExportHeight(), scaleLenW*2, 200, 0);
                 ofSetColor(ofColor(255, a));
                 ofDrawLine( pos, -getExportHeight()/2 , pos, -getExportHeight()/2+20);

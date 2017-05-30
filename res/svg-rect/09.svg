@@ -5,22 +5,24 @@
 	 width="500px" height="500px" viewBox="0 0 500 500" enable-background="new 0 0 500 500" xml:space="preserve">
 <g>
 	<g>
-		<polyline fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="250,248.5 
-			250,250 248.5,250 		"/>
-		
-			<line fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3.2697,163.4868" x1="85" y1="250" x2="-166.8" y2="250"/>
-		<polyline fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="-248.5,250 
-			-250,250 -250,248.5 		"/>
-		
-			<line fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3.2697,163.4868" x1="-250" y1="85" x2="-250" y2="-166.8"/>
-		<polyline fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="-250,-248.5 
-			-250,-250 -248.5,-250 		"/>
-		
-			<line fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3.2697,163.4868" x1="-85" y1="-250" x2="166.8" y2="-250"/>
-		<polyline fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="248.5,-250 
-			250,-250 250,-248.5 		"/>
-		
-			<line fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3.2697,163.4868" x1="250" y1="-85" x2="250" y2="166.8"/>
+		<path fill="#FFFFFF" d="M85,251.5h-3.27c-0.829,0-1.5-0.672-1.5-1.5c0-0.829,0.671-1.5,1.5-1.5H85c0.829,0,1.5,0.671,1.5,1.5
+			C86.5,250.828,85.829,251.5,85,251.5z M-81.756,251.5h-3.27c-0.829,0-1.5-0.672-1.5-1.5c0-0.829,0.671-1.5,1.5-1.5h3.27
+			c0.829,0,1.5,0.671,1.5,1.5C-80.256,250.828-80.928,251.5-81.756,251.5z"/>
+	</g>
+	<g>
+		<path fill="#FFFFFF" d="M-250,86.5c-0.829,0-1.5-0.671-1.5-1.5v-3.27c0-0.829,0.671-1.5,1.5-1.5s1.5,0.671,1.5,1.5V85
+			C-248.5,85.829-249.171,86.5-250,86.5z M-250-80.256c-0.829,0-1.5-0.671-1.5-1.5v-3.27c0-0.829,0.671-1.5,1.5-1.5
+			s1.5,0.671,1.5,1.5v3.27C-248.5-80.928-249.171-80.256-250-80.256z"/>
+	</g>
+	<g>
+		<path fill="#FFFFFF" d="M85.026-248.5h-3.27c-0.829,0-1.5-0.671-1.5-1.5s0.671-1.5,1.5-1.5h3.27c0.829,0,1.5,0.671,1.5,1.5
+			S85.855-248.5,85.026-248.5z M-81.73-248.5H-85c-0.829,0-1.5-0.671-1.5-1.5s0.671-1.5,1.5-1.5h3.27c0.829,0,1.5,0.671,1.5,1.5
+			S-80.902-248.5-81.73-248.5z"/>
+	</g>
+	<g>
+		<path fill="#FFFFFF" d="M250,86.526c-0.829,0-1.5-0.671-1.5-1.5v-3.27c0-0.829,0.671-1.5,1.5-1.5c0.828,0,1.5,0.671,1.5,1.5v3.27
+			C251.5,85.855,250.828,86.526,250,86.526z M250-80.23c-0.829,0-1.5-0.671-1.5-1.5V-85c0-0.829,0.671-1.5,1.5-1.5
+			c0.828,0,1.5,0.671,1.5,1.5v3.27C251.5-80.902,250.828-80.23,250-80.23z"/>
 	</g>
 </g>
 </svg>

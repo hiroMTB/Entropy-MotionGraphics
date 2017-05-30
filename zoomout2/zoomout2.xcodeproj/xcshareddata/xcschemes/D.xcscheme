@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
                BuildableName = "zoomout.temp_caseinsensitive_renameDebug.app"
-               BlueprintName = "zoomout"
-               ReferencedContainer = "container:zoomout.xcodeproj">
+               BlueprintName = "zoomout2"
+               ReferencedContainer = "container:zoomout2.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,8 +34,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
             BuildableName = "zoomout.temp_caseinsensitive_renameDebug.app"
-            BlueprintName = "zoomout"
-            ReferencedContainer = "container:zoomout.xcodeproj">
+            BlueprintName = "zoomout2"
+            ReferencedContainer = "container:zoomout2.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -57,8 +57,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
             BuildableName = "zoomout.temp_caseinsensitive_renameDebug.app"
-            BlueprintName = "zoomout"
-            ReferencedContainer = "container:zoomout.xcodeproj">
+            BlueprintName = "zoomout2"
+            ReferencedContainer = "container:zoomout2.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -76,8 +76,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
             BuildableName = "zoomout.temp_caseinsensitive_renameDebug.app"
-            BlueprintName = "zoomout"
-            ReferencedContainer = "container:zoomout.xcodeproj">
+            BlueprintName = "zoomout2"
+            ReferencedContainer = "container:zoomout2.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
