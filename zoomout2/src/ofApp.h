@@ -21,10 +21,7 @@ public:
     void update();
     void keyPressed(int key);
     void loadSvg();
-    
-    float getExportWidth();
-    float getExportHeight();
-    
+        
     vector<tuple<float, float>> calcExpScale(float base, float min, float max, float length);
     void drawTick(float pos, float val, bool text=true);
 private:

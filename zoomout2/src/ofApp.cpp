@@ -1,7 +1,9 @@
 #include "ofApp.h"
 #include "Util.h"
 #include "FontManager.h"
+#include "ScreenGuide.h"
 
+using namespace ScreenGuide;
 using namespace ofxeasing;
 using namespace EasingUtil;
 
@@ -41,18 +43,18 @@ void ofApp::setup(){
     
     FontManager::setup(1);
     
-    exporter.setup(1920*2, 1080, 60, GL_RGB, 4);
+    exporter.setup(renderW, renderH+marginH*2, 60, GL_RGB, 4);
     exporter.setOutputDir("render");
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
     
-    //exporter.startExport();
+    exporter.startExport();
     
     loadSvg();
     
     scaleMax = -15;
-    scaleLenW = (getExportWidth()-hMargin)/2;
-    scaleLenH = (getExportHeight()-vMargin)/2;
+    scaleLenW = (renderW-hMargin)/2;
+    scaleLenH = (renderH-vMargin)/2;
     
     float durationSec = 20;
     EasingUtil::addAnimBySec(anim, &scaleMax, 0, durationSec, scaleMax, 42, quadIn);
@@ -77,6 +79,10 @@ void ofApp::draw(){
 
     exporter.begin();
  
+    ofPushMatrix();
+    
+    ofTranslate(0, marginH);
+    
     ofBackground(0);
 
     ofSetColor(255);
@@ -84,7 +90,7 @@ void ofApp::draw(){
     if(1){
         // horizontal
         ofPushMatrix();{
-            ofTranslate(getExportWidth()/2, getExportHeight()-vMargin/2);
+            ofTranslate(renderW/2, renderH-vMargin/2);
             ofSetLineWidth(5);
             ofDrawLine(-scaleLenW, 0, scaleLenW, 0);
             for(int i=0; i<ticks.size(); i++){
@@ -97,7 +103,7 @@ void ofApp::draw(){
     
     // vertical
     ofPushMatrix();{
-        ofTranslate(getExportWidth()-hMargin/2, getExportHeight()/2);
+        ofTranslate(renderW-hMargin/2, renderH/2);
         ofSetLineWidth(5);
         ofDrawLine(0, -scaleLenH, 0, scaleLenH);
 
@@ -117,7 +123,7 @@ void ofApp::draw(){
     
     // Box
     ofPushMatrix();{
-        ofTranslate(getExportWidth()/2, getExportHeight()/2);
+        ofTranslate(renderW/2, renderH/2);
         
         for(int i=0; i<ticks.size(); i++){
             float pos = std::get<0>(ticks[i]);
@@ -145,10 +151,10 @@ void ofApp::draw(){
             }else{
                 // Too big rectangle
                 ofSetLineWidth(3);
-                float a = ofMap(diam, getExportHeight(), scaleLenW*2, 200, 0);
+                float a = ofMap(diam, renderH, scaleLenW*2, 200, 0);
                 ofSetColor(ofColor(255, a));
-                ofDrawLine( pos, -getExportHeight()/2 , pos, -getExportHeight()/2+20);
-                ofDrawLine(-pos, -getExportHeight()/2, -pos, -getExportHeight()/2+20);
+                ofDrawLine( pos, -renderH , pos, -renderH/2+20);
+                ofDrawLine(-pos, -renderH, -pos, -renderH/2+20);
 
                 ofPushMatrix();
                 ofSetColor(ofColor(255, 255));
@@ -177,7 +183,7 @@ void ofApp::draw(){
             ofSetColor(ofColor(255, a));
             
             ofPushMatrix();{
-                ofTranslate(getExportWidth()/2+scaleLenH*1.2, getExportHeight()/2);
+                ofTranslate(renderW/2+scaleLenH*1.2, renderH/2);
                 FontManager::font["XL"].drawString("10", 0, bb2.height/2);
                 FontManager::font["L"].drawString(num, bb2.width+20, bb2.height/2-bb.height);
                 FontManager::font["L"].drawString(unit, bb2.width+bb.width+40, bb2.height/2);
@@ -185,6 +191,7 @@ void ofApp::draw(){
         }
     }
     
+    ofPopMatrix();
     exporter.end();
     
     ofBackground(20);
@@ -241,14 +248,6 @@ void ofApp::keyPressed(int key){
         case 'E': exporter.startExport(); exporter.setFrameRange(frame); break;
         case 'T': exporter.stopExport(); break;
     }
-}
-
-float ofApp::getExportWidth(){
-    return exporter.getFbo().getWidth();
-}
-
-float ofApp::getExportHeight(){
-    return exporter.getFbo().getHeight();
 }
 
 void ofApp::loadSvg(){

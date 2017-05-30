@@ -51,6 +51,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		455BE5C71EDE094600BA970C /* ScreenGuide.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ScreenGuide.h; path = ../../common/ScreenGuide.h; sourceTree = "<group>"; };
 		45AFB3541EC9EC39007FBF38 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = "../../../../../../../../../../../../Downloads/ofxExportImageSequence-master/libs/lib/osx/libtiff.a"; sourceTree = "<group>"; };
 		45AFB3571EC9EC5A007FBF38 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../addons/ofxExportImageSequence/libs/lib/osx/libtiff.a; sourceTree = "<group>"; };
 		45AFB3591EC9EEA6007FBF38 /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = FontManager.cpp; path = ../../common/FontManager.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -199,6 +200,7 @@
 				4D2E9B821EC602ED00B1993E /* EasingPrm.h */,
 				45AFB3591EC9EEA6007FBF38 /* FontManager.cpp */,
 				45AFB35A1EC9EEA6007FBF38 /* FontManager.h */,
+				455BE5C71EDE094600BA970C /* ScreenGuide.h */,
 			);
 			name = common;
 			sourceTree = "<group>";
