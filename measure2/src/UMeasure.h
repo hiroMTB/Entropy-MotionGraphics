@@ -14,7 +14,7 @@ public:
     UMeasure & operator=(UMeasure const &)=default;
     template<class T> UMeasure & operator=(T const &)=delete;
 
-    void setup(tuple<float, string, string, string, string, string, string, string> data, float startSec, float min, float max, int motionId);
+    void setup(tuple<float, string, string, string, string, string> data, float startSec, float min, float max, int motionId);
     virtual void setPosition(){};
     void setCommonAnimation(float sec);
     virtual void setAnimation(float sec){};
@@ -26,11 +26,12 @@ public:
     vector<EasingPrm> anim;
     TextBox tbName, tbBase, tbExp, tbUnit;
     
-    float val, min, max;
+    float val, prevVal, min, max;
     int motionId = -123;
     float textAnimStSec;
     float textAnimDuration;
     
+    bool complete;
 };
 
 class UAge : public UMeasure{

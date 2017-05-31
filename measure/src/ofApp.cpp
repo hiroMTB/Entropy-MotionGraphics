@@ -233,45 +233,46 @@ void ofApp::loadXml(){
 void ofApp::writeXml(){
     
     float fakeRate = 1;
+    float year2sec = 31557600;
     
     DataSet ageData =
     
-    {   {   -43.0/fakeRate,  "Age", "10",               "-43",  "sec",  "0.000000000\\n0000000000\\n0000000000\\n0000000000\\n0001", "Seconds", "0.0000000000000000000000000000000000000000001 sec"},
-        {   -32.0/fakeRate,  "Age", "10",               "-32",  "sec",  "0.000000000\\n0000000000\\n0000000000\\n01", "Seconds", "0.0000000000000000000000000000001 sec"},
-        {   -6.0/fakeRate,  "Age", "10",               "-6",   "sec",  "0.000001", "Seconds",  "0.000001 sec"},
-        {   0.0,             "Age", "1",                "",     "sec",  "", "Seconds",  "1 sec"},
-        {   2.26/fakeRate,   "Age", "3",                "",     "min",  "", "Minutes",  "3 min"},
-        {   11.28*fakeRate,  "Age", "6,000",            "",     "yr",   "", "Years",    "6000 years"},
-        {   13.10*fakeRate,  "Age", "400,000",          "",     "yr",   "", "Years",    "400000 years"},        // CMB
-        {   16.50*fakeRate,  "Age", "1,000,000,000",    "",     "yr",   "", "Years",    "1000000000 years"},
-        {   17.64*fakeRate,  "Age", "13,800,000,000",    "",     "yr",   "", "Years",    "13800000000 years"},
-        {   18.50*fakeRate,  "Age", "100,000,000,000",    "",     "yr",   "", "Years",    "100000000000 years"}
+    {   {   pow(10,-43),  "Age", "10",               "-43",  "sec",  "0.000000000\\n0000000000\\n0000000000\\n0000000000\\n0001", "Seconds", "0.0000000000000000000000000000000000000000001 sec"},
+        {   pow(10,-32),  "Age", "10",               "-32",  "sec",  "0.000000000\\n0000000000\\n0000000000\\n01", "Seconds", "0.0000000000000000000000000000001 sec"},
+        {   pow(10,-6),  "Age", "10",               "-6",   "sec",  "0.000001", "Seconds",  "0.000001 sec"},
+        {   1,             "Age", "1",                "",     "sec",  "", "Seconds",  "1 sec"},
+        {   180,   "Age", "3",                "",     "min",  "", "Minutes",  "3 min"},
+        {   6000.0*year2sec,  "Age", "6,000",            "",     "yr",   "", "Years",    "6000 years"},
+        {   400000*year2sec,  "Age", "400,000",          "",     "yr",   "", "Years",    "400000 years"},        // CMB
+        {   1000000000*year2sec,  "Age", "1,000,000,000",    "",     "yr",   "", "Years",    "1000000000 years"},
+        {   13800000000*year2sec,  "Age", "13,800,000,000",    "",     "yr",   "", "Years",    "13800000000 years"},
+        {   100000000000*year2sec,  "Age", "100,000,000,000",    "",     "yr",   "", "Years",    "100000000000 years"}
     };
     
     DataSet temperatureData =
-    {   {  32,   "Temperature", "10",   "32",  "°C", "10000000000\\n0000000000\\n0000000000\\n00", "°Celsius", "100000000000000000000000000000000 °C"},
-        {  22,   "Temperature", "10",   "22",  "°C", "10000000000\\n0000000000\\n00", "°Celsius", "10000000000000000000000 °C"},
-        {  13,   "Temperature", "10",   "13",  "°C", "10000000000\\n000", "°Celsius", "10000000000000 °C"},
-        {  10,   "Temperature", "10",   "10",  "°C", "10000000000",     "°Celsius", "10000000000 °C"},
-        {  9,    "Temperature", "10",   "9",   "°C", "1000000000",      "°Celsius", "1000000000 °C"},
-        {  4.05,    "Temperature", "11,000", "",  "°C",  "",               "°Celsius", "11000 °C"},
-        {  3.51,    "Temperature", "3,000",  "",  "°C",  "",               "°Celsius", "3000 °C"},
-        {  1.12,   "Temperature", "-260",   "",  "°C",  "",               "°Celsius", "-260 °C"},
-        {  0.44, "Temperature", "−270.4", "",  "°C",  "",               "°Celsius", "−270.4 °C"},
-        {  -1, "Temperature", "−273.06", "",  "°C",  "",               "°Celsius", "−273.06 °C"}
+    {   {  pow(10,32),   "Temperature", "10",   "32",  "°C", "10000000000\\n0000000000\\n0000000000\\n00", "°Celsius", "100000000000000000000000000000000 °C"},
+        {  pow(10,22),   "Temperature", "10",   "22",  "°C", "10000000000\\n0000000000\\n00", "°Celsius", "10000000000000000000000 °C"},
+        {  pow(10,13),   "Temperature", "10",   "13",  "°C", "10000000000\\n000", "°Celsius", "10000000000000 °C"},
+        {  pow(10,10),   "Temperature", "10",   "10",  "°C", "10000000000",     "°Celsius", "10000000000 °C"},
+        {  pow(10,9),    "Temperature", "10",   "9",   "°C", "1000000000",      "°Celsius", "1000000000 °C"},
+        {  11000,    "Temperature", "11,000", "",  "°C",  "",               "°Celsius", "11000 °C"},
+        {  3000,    "Temperature", "3,000",  "",  "°C",  "",               "°Celsius", "3000 °C"},
+        {  -260,   "Temperature", "-260",   "",  "°C",  "",               "°Celsius", "-260 °C"},
+        {  -270.4, "Temperature", "−270.4", "",  "°C",  "",               "°Celsius", "−270.4 °C"},
+        {  -273.06, "Temperature", "-273.06", "",  "°C",  "",               "°Celsius", "−273.06 °C"}
     };
     
     DataSet sizeData =
-    {   {  -100,"Size", "approx. 0",     "",     "",     "",                 "",        "~ 0."},
-        {  -97, "Size", "10",       "",     "cm",   "",                "",              "10 cm"},
-        {  -1,  "Size", "0.1",      "",     "lyr",  "",                "Light Years",   "0.1 lyr"},
-        {  1,   "Size", "10",       "",     "lyr",  "",                 "Light Years",  "10 lyr"},
-        {  2,   "Size", "100",      "",     "lyr",  "",                 "Light Years",  "100 lyr"},
-        {  7,   "Size", "10",       "7",    "lyr",  "",                 "Light Years",  "10000000 lyr"},
-        {  7.5, "Size", "4 * 10",   "7",    "lyr",  "40,000,000",       "Light Years",  "40000000 lyr"},        //CMB
-        {  10.5,"Size", "4 * 10",   "10",   "lyr",  "40,000,000,000",   "Light Years",  "40000000000 lyr"},
-        {  10.8,"Size", "5 * 10",   "10",   "lyr",  "50,000,000,000",   "Light Years",  "50000000000 lyr"},
-        {  10.8,"Size", "5 * 10",   "12",   "lyr",  "5,000,000,000,000",   "Light Years",  "5000000000000 lyr"}
+    {   {  pow(10, -32),"Size", "approx. 0",     "",     "",     "",                 "",        "~ 0."},
+        {  pow(10, -16), "Size", "10",       "",     "cm",   "",                "",              "10 cm"},
+        {  0.1,  "Size", "0.1",      "",     "lyr",  "",                "Light Years",   "0.1 lyr"},
+        {  10,   "Size", "10",       "",     "lyr",  "",                 "Light Years",  "10 lyr"},
+        {  100,   "Size", "100",      "",     "lyr",  "",                 "Light Years",  "100 lyr"},
+        {  pow(10,7),   "Size", "10",       "7",    "lyr",  "",                 "Light Years",  "10000000 lyr"},
+        {  4*pow(10,7), "Size", "4 * 10",   "7",    "lyr",  "40,000,000",       "Light Years",  "40000000 lyr"},        //CMB
+        {  4*pow(10,10),"Size", "4 * 10",   "10",   "lyr",  "40,000,000,000",   "Light Years",  "40000000000 lyr"},
+        {  5*pow(10,10),"Size", "5 * 10",   "10",   "lyr",  "50,000,000,000",   "Light Years",  "50000000000 lyr"},
+        {  5*pow(10,12),"Size", "5 * 10",   "12",   "lyr",  "5,000,000,000,000",   "Light Years",  "5000000000000 lyr"}
     };
     
     
@@ -298,14 +299,14 @@ void ofApp::writeXml(){
                 ofXml scene;
                 scene.addChild("scene");
                 scene.setTo("scene");
-                scene.addValue("logVal",  std::get<0>(d[i]));
+                scene.addValue("num",  std::get<0>(d[i]));
                 scene.addValue("name",    std::get<1>(d[i]));
                 scene.addValue("base",    std::get<2>(d[i]));
                 scene.addValue("exp",    std::get<3>(d[i]));
                 scene.addValue("sUnit",    std::get<4>(d[i]));
-                scene.addValue("longNum",    std::get<5>(d[i]));
+                //scene.addValue("longNum",    std::get<5>(d[i]));
                 scene.addValue("unit",    std::get<6>(d[i]));
-                scene.addValue("ind",    std::get<7>(d[i]));
+                //scene.addValue("ind",    std::get<7>(d[i]));
                 measure.addXml(scene);
             }
             xml.addXml(measure);

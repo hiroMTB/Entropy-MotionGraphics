@@ -17,4 +17,25 @@ public:
     static filesystem::path getResFolder();
     
     static string replaceAll(std::string str, const std::string& from, const std::string& to);
+    
+    static double myMap(double value, double inputMin, double inputMax, double outputMin, double outputMax, bool clamp=false) {
+        
+//        if (fabs(inputMin - inputMax) < FLT_EPSILON){
+//            return outputMin;
+//        } else {
+            double outVal = ((value - inputMin) / (inputMax - inputMin) * (outputMax - outputMin) + outputMin);
+            
+            if( clamp ){
+                if(outputMax < outputMin){
+                    if( outVal < outputMax )outVal = outputMax;
+                    else if( outVal > outputMin )outVal = outputMin;
+                }else{
+                    if( outVal > outputMax )outVal = outputMax;
+                    else if( outVal < outputMin )outVal = outputMin;
+                }
+            }
+            return outVal;
+//        }
+    }
+
 };

@@ -24,7 +24,7 @@ void ofApp::setup(){
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
     
-    //exporter.startExport();
+    exporter.startExport();
     
     loadXml();
 }
@@ -86,7 +86,7 @@ void ofApp::keyPressed(int key){
 // 5 : longNum  : long number, e.g. 0.0000000000000001
 // 6 : unit     : unit name, e.g. Seconds
 // 7 : ind      : text for indicator (left screen)
-typedef tuple<float, string, string, string, string, string, string, string> SceneData;
+typedef tuple<float, string, string, string, string, string> SceneData;
 typedef vector<SceneData> DataSet;
 
 void ofApp::loadXml(){
@@ -114,16 +114,13 @@ void ofApp::loadXml(){
             SceneData s;
             for(int i=0; i<sn; i++){
                 xml.setToChild(i);
-                float logVal = xml.getFloatValue("logVal");
+                float num = xml.getFloatValue("num");
                 string name = xml.getValue("name");
                 string base = xml.getValue("base");
                 string exp = xml.getValue("exp");
                 string sUnit = xml.getValue("sUnit");
-                string longNum = xml.getValue("longNum");
-                longNum = Util::replaceAll(longNum, "\\n", "\n");
                 string unit = xml.getValue("unit");
-                string ind = xml.getValue("ind");
-                s = {logVal, name, base, exp, sUnit, longNum, unit, ind};
+                s = {num, name, base, exp, sUnit, unit};
                 d.push_back(s);
                 xml.setToParent();
             }
@@ -142,13 +139,13 @@ void ofApp::loadXml(){
     
     for(int i=0; i<ageData.size(); i++){
         
-        float durationSec = 11 * animSpdFactor;
+        float durationSec = 20 * animSpdFactor;
         float startSec =   i*durationSec;
         
         {
             //  Age
-            float min = std::get<0>(ageData[0])-5;
-            float max = std::get<0>(ageData[8])+20;
+            float min = std::get<0>(ageData[0]);
+            float max = std::get<0>(ageData[ageData.size()-1]);
             shared_ptr<UAge> age = shared_ptr<UAge>(new UAge());
             age->setup(ageData[i], startSec, min, max, i);
             ms.push_back(age);
@@ -156,8 +153,8 @@ void ofApp::loadXml(){
         
         {
             //  Temprature
-            float min = std::get<0>(temperatureData[8])-0.5;
-            float max = std::get<0>(temperatureData[0])+2;
+            float min = -273.16f;
+            float max = std::get<0>(temperatureData[0]);
             shared_ptr<UTmp> tmp = shared_ptr<UTmp>(new UTmp());
             tmp->setup(temperatureData[i], startSec, min, max, i);
             ms.push_back(tmp);
@@ -166,8 +163,8 @@ void ofApp::loadXml(){
         
         {
             //  Size
-            float min = std::get<0>(sizeData[0])-4;
-            float max = std::get<0>(sizeData[8])+2;
+            float min = std::get<0>(sizeData[0]);
+            float max = std::get<0>(sizeData[sizeData.size()-1]);
             shared_ptr<USize> size = shared_ptr<USize>(new USize());
             size->setup(sizeData[i], startSec, min, max, i);
             ms.push_back(size);

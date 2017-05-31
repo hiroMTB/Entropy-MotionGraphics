@@ -8,19 +8,21 @@
 using namespace EasingUtil;
 using namespace ScreenGuide;
 
-void UMeasure::setup(tuple<float, string, string, string, string, string, string, string> data, float st, float _min, float _max, int _motionId){
+void UMeasure::setup(tuple<float, string, string, string, string, string> data, float st, float _min, float _max, int _motionId){
 
     val = std::get<0>(data);
     min = _min;
     max = _max;
     motionId = _motionId;
 
+    if(motionId!=0) prevVal = ofApp::get()->ms[motionId*3+2-3]->val;
+    else prevVal = 0;
+    
     string name     = std::get<1>(data);
     string base     = std::get<2>(data);
     string exp      = std::get<3>(data);
     string sUnit    = std::get<4>(data);
-    string longNum  = std::get<5>(data);
-    string unit     = std::get<6>(data);
+    string unit     = std::get<5>(data);
 
     tbName.text.t = name;
     tbBase.text.t = base;
@@ -32,8 +34,8 @@ void UMeasure::setup(tuple<float, string, string, string, string, string, string
     tbExp.text.a = 1;
     tbUnit.text.a = 1;
     
-    textAnimStSec = 4;
-    textAnimDuration = 4  ;
+    textAnimStSec = 3;
+    textAnimDuration = 14;
     
     setPosition();
     setCommonAnimation(st);
@@ -194,20 +196,24 @@ void USize::setPosition(){
     if(motionId == 0){
         aCirclePrev.rad = 0;
     }else{
-        float prevVal = ofApp::get()->ms[motionId]->val;
-        aCirclePrev.rad = ofMap(prevVal, min, max, 10, 300);
+        float prevVal = ofApp::get()->ms[motionId*3+2-3]->val;
+        aCirclePrev.rad = ofMap(log10(prevVal), log10(min), log10(max), 10, 300);
     }
 }
 
 void UAge::setAnimation(float st){
 
+    
     st += 1;
     float stx = tbName.area.x;
-    float pos = ofMap(val, min, max, stx, stx +safeAreaR.width);
+    float pos = ofMap(log10(val), log10(min), log10(max), stx, stx +safeAreaR.width) + 10;
     addAnimBySec(anim, &aLine.p2.x, st+textAnimStSec, st+textAnimStSec+1, stx, pos, cubicOut);
    
     st -= 1;
     addAnimBySec(anim, &aLine.p2.x, st+textAnimStSec+textAnimDuration, st+textAnimStSec+textAnimDuration+1, pos, stx);
+
+    
+
 }
 
 void UTmp::setAnimation(float st){
@@ -215,16 +221,20 @@ void UTmp::setAnimation(float st){
     st += 1;
     float stx = tbName.area.x;
     
-    float pos = ofMap(val, min, max, stx , stx+safeAreaR.width);
+    float pos = ofMap(log10(val-min), 1, log10(max-min), stx , stx+safeAreaR.width) + 10;
     addAnimBySec(anim, &aLine.p2.x, st+textAnimStSec, st+textAnimStSec+1, stx, pos, cubicOut);
     
     st -= 1;
     addAnimBySec(anim, &aLine.p2.x, st+textAnimStSec+textAnimDuration, st+textAnimStSec+textAnimDuration+1, pos, stx);
+    
+    printf("pos %f\n", pos);
 }
 
 void USize::setAnimation(float st){
     
-    float rad = ofMap(val, min, max, 10, 300);
+    
+    float rad = ofMap(log10(val), log10(min), log10(max), 10, 300);
+    
     
     if(motionId==0){
         addAnimBySec(anim, &aCircle.rad,    st,  st+2.0,  0, rad, cubicOut);
