@@ -10,6 +10,9 @@
 		450339C31EDD9A9600D39AF0 /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450339C11EDD9A9600D39AF0 /* TextBox.cpp */; };
 		450339C61EDD9B5900D39AF0 /* UMeasure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450339C41EDD9B5900D39AF0 /* UMeasure.cpp */; };
 		455F04441ECFB4A50019D628 /* data.xml in CopyFiles */ = {isa = PBXBuildFile; fileRef = 455F04431ECFB4A00019D628 /* data.xml */; };
+		45A6A69C1EDF72FD002013D5 /* UAge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A6A6991EDF71C7002013D5 /* UAge.cpp */; };
+		45A6A69D1EDF72FD002013D5 /* UTmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A6A69A1EDF71D5002013D5 /* UTmp.cpp */; };
+		45A6A69E1EDF72FD002013D5 /* USize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A6A69B1EDF71E0002013D5 /* USize.cpp */; };
 		45AFB3551EC9EC39007FBF38 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45AFB3541EC9EC39007FBF38 /* libtiff.a */; };
 		45AFB35B1EC9EEA6007FBF38 /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AFB3591EC9EEA6007FBF38 /* FontManager.cpp */; };
 		45FDDFC11EC4D82F00374560 /* ofTrueTypeFontCustom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45FDDFBF1EC4D82F00374560 /* ofTrueTypeFontCustom.cpp */; };
@@ -56,6 +59,9 @@
 		450339C51EDD9B5900D39AF0 /* UMeasure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMeasure.h; sourceTree = "<group>"; };
 		455BE5C51EDE067500BA970C /* ScreenGuide.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ScreenGuide.h; path = ../../common/ScreenGuide.h; sourceTree = "<group>"; };
 		455F04431ECFB4A00019D628 /* data.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = data.xml; path = bin/data/data.xml; sourceTree = SOURCE_ROOT; };
+		45A6A6991EDF71C7002013D5 /* UAge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UAge.cpp; sourceTree = "<group>"; };
+		45A6A69A1EDF71D5002013D5 /* UTmp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UTmp.cpp; sourceTree = "<group>"; };
+		45A6A69B1EDF71E0002013D5 /* USize.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = USize.cpp; sourceTree = "<group>"; };
 		45AFB3541EC9EC39007FBF38 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = "../../../../../../../../../../../../Downloads/ofxExportImageSequence-master/libs/lib/osx/libtiff.a"; sourceTree = "<group>"; };
 		45AFB3571EC9EC5A007FBF38 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../addons/ofxExportImageSequence/libs/lib/osx/libtiff.a; sourceTree = "<group>"; };
 		45AFB3591EC9EEA6007FBF38 /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = FontManager.cpp; path = ../../common/FontManager.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -248,6 +254,9 @@
 				4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */,
 				450339C51EDD9B5900D39AF0 /* UMeasure.h */,
 				450339C41EDD9B5900D39AF0 /* UMeasure.cpp */,
+				45A6A6991EDF71C7002013D5 /* UAge.cpp */,
+				45A6A69A1EDF71D5002013D5 /* UTmp.cpp */,
+				45A6A69B1EDF71E0002013D5 /* USize.cpp */,
 				450339C11EDD9A9600D39AF0 /* TextBox.cpp */,
 				450339C21EDD9A9600D39AF0 /* TextBox.h */,
 			);
@@ -350,6 +359,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45A6A69C1EDF72FD002013D5 /* UAge.cpp in Sources */,
+				45A6A69D1EDF72FD002013D5 /* UTmp.cpp in Sources */,
+				45A6A69E1EDF72FD002013D5 /* USize.cpp in Sources */,
 				4D2E9B7B1EC6011100B1993E /* ofxExportImageSequence.cpp in Sources */,
 				45FDDFC11EC4D82F00374560 /* ofTrueTypeFontCustom.cpp in Sources */,
 				45AFB35B1EC9EEA6007FBF38 /* FontManager.cpp in Sources */,

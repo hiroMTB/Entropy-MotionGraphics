@@ -24,7 +24,7 @@ void ofApp::setup(){
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
     
-    exporter.startExport();
+    //exporter.startExport();
     
     loadXml();
 }

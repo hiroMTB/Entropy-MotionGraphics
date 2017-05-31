@@ -21,8 +21,7 @@ public:
     
     void update(int frame);
     virtual void draw(){};
-    void drawTextBox();
-
+  
     vector<EasingPrm> anim;
     TextBox tbName, tbBase, tbExp, tbUnit;
     
@@ -32,6 +31,7 @@ public:
     float textAnimDuration;
     
     bool complete;
+    string name, unit;
 };
 
 class UAge : public UMeasure{
