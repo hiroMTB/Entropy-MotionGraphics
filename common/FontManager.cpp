@@ -4,7 +4,7 @@
 unordered_map<string, ofTrueTypeFontCustom> FontManager::font;
 unordered_map<string, ofRectangle> FontManager::bb;
 
-void FontManager::setup(float scale){
+void FontManager::setup(float XL, float L, float M, float S, float SS){
     
     ofTrueTypeFont::setGlobalDpi(72);
     
@@ -21,19 +21,19 @@ void FontManager::setup(float scale){
      */
     filesystem::path fontDir = Util::getResFolder()/"font";
     
-    font["XL"].load((fontDir/"KP Bob Bold.otf").string(), 120.0f*scale);
+    font["XL"].load((fontDir/"KP Bob Bold.otf").string(), XL);
     font["XL"].setLetterSpacing(1.05);
     
-    font["L"].load((fontDir/"KP Bob Bold.otf").string(), 75.0f*scale);
+    font["L"].load((fontDir/"KP Bob Bold.otf").string(), L);
     font["L"].setLetterSpacing(1.05);
     
-    font["M"].load((fontDir/"KP Bob Bold.otf").string(), 47.0f*scale);
+    font["M"].load((fontDir/"KP Bob Bold.otf").string(), M);
     font["M"].setLetterSpacing(1.05);
     
-    font["S"].load((fontDir/"KP Bob Bold.otf").string(), 26.0f*scale);
+    font["S"].load((fontDir/"KP Bob Bold.otf").string(), S);
     font["S"].setLetterSpacing(1.03);
 
-    font["SS"].load((fontDir/"KP Bob Bold.otf").string(), 18.0f*scale);
+    font["SS"].load((fontDir/"KP Bob Bold.otf").string(), SS);
     font["SS"].setLetterSpacing(1.03);
 
     

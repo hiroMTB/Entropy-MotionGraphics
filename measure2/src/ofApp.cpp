@@ -17,14 +17,14 @@ void ofApp::setup(){
     bStart = true;
     animSpdFactor = 1;
     
-    FontManager::setup(1);
+    FontManager::setup(120, 105, 84, 63, 40);
     
-    exporter.setup(renderW, renderH , 60, GL_RGB, 4);
+    exporter.setup(renderW, renderH+marginH*2, 60, GL_RGB, 4);
     exporter.setOutputDir("render");
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
     
-    exporter.startExport();
+    //exporter.startExport();
     
     loadXml();
 }
@@ -42,6 +42,18 @@ void ofApp::draw(){
     
     exporter.begin();
     ofBackground(0);
+    ofTranslate(0, marginH);
+    
+    if(!exporter.isExporting()){
+        ofNoFill();
+        ofSetColor(0,0,255);
+        ofSetLineWidth(2);
+        ofDrawRectangle(0, 0, renderW, renderH);
+        ofDrawLine(renderW/2, 0, renderW/2, renderH);
+        ofDrawLine(0, renderH/2, renderW, renderH/2);
+        ofDrawRectangle(safeAreaL);
+        ofDrawRectangle(safeAreaR);
+    }
     
     ofPushMatrix();{
         for(int i=0; i<ms.size(); i++){
