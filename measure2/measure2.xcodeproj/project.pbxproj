@@ -10,6 +10,8 @@
 		450339C31EDD9A9600D39AF0 /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450339C11EDD9A9600D39AF0 /* TextBox.cpp */; };
 		450339C61EDD9B5900D39AF0 /* UMeasure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450339C41EDD9B5900D39AF0 /* UMeasure.cpp */; };
 		455F04441ECFB4A50019D628 /* data.xml in CopyFiles */ = {isa = PBXBuildFile; fileRef = 455F04431ECFB4A00019D628 /* data.xml */; };
+		4581B0801EE097A0007753A7 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 4581B07A1EE097A0007753A7 /* README.md */; };
+		4581B0811EE097A0007753A7 /* ofxTextureRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4581B07C1EE097A0007753A7 /* ofxTextureRecorder.cpp */; };
 		45A6A69C1EDF72FD002013D5 /* UAge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A6A6991EDF71C7002013D5 /* UAge.cpp */; };
 		45A6A69D1EDF72FD002013D5 /* UTmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A6A69A1EDF71D5002013D5 /* UTmp.cpp */; };
 		45A6A69E1EDF72FD002013D5 /* USize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A6A69B1EDF71E0002013D5 /* USize.cpp */; };
@@ -59,6 +61,10 @@
 		450339C51EDD9B5900D39AF0 /* UMeasure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMeasure.h; sourceTree = "<group>"; };
 		455BE5C51EDE067500BA970C /* ScreenGuide.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ScreenGuide.h; path = ../../common/ScreenGuide.h; sourceTree = "<group>"; };
 		455F04431ECFB4A00019D628 /* data.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = data.xml; path = bin/data/data.xml; sourceTree = SOURCE_ROOT; };
+		4581B0791EE097A0007753A7 /* half.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = half.hpp; sourceTree = "<group>"; };
+		4581B07A1EE097A0007753A7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4581B07C1EE097A0007753A7 /* ofxTextureRecorder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTextureRecorder.cpp; sourceTree = "<group>"; };
+		4581B07D1EE097A0007753A7 /* ofxTextureRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTextureRecorder.h; sourceTree = "<group>"; };
 		45A6A6991EDF71C7002013D5 /* UAge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UAge.cpp; sourceTree = "<group>"; };
 		45A6A69A1EDF71D5002013D5 /* UTmp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UTmp.cpp; sourceTree = "<group>"; };
 		45A6A69B1EDF71E0002013D5 /* USize.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = USize.cpp; sourceTree = "<group>"; };
@@ -83,7 +89,7 @@
 		4D47AFB41EB5F8B800D3F83B /* ofApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = ofApp.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		4D47AFB51EB5F8B800D3F83B /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ofApp.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
-		E4B69B5B0A3A1756003C02F2 /* measure.temp_caseinsensitive_renameDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = measure.temp_caseinsensitive_renameDebug.app; path = measure2.temp_caseinsensitive_renameDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B69B5B0A3A1756003C02F2 /* measure2.temp_caseinsensitive_renameDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = measure2.temp_caseinsensitive_renameDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
 		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; lineEnding = 0; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.xcconfig; };
 		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
@@ -102,6 +108,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4581B06D1EE097A0007753A7 /* ofxTextureRecorder */ = {
+			isa = PBXGroup;
+			children = (
+				4581B0761EE097A0007753A7 /* libs */,
+				4581B07A1EE097A0007753A7 /* README.md */,
+				4581B07B1EE097A0007753A7 /* src */,
+			);
+			name = ofxTextureRecorder;
+			path = ../addons/ofxTextureRecorder;
+			sourceTree = "<group>";
+		};
+		4581B0761EE097A0007753A7 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				4581B0771EE097A0007753A7 /* half */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		4581B0771EE097A0007753A7 /* half */ = {
+			isa = PBXGroup;
+			children = (
+				4581B0781EE097A0007753A7 /* include */,
+			);
+			path = half;
+			sourceTree = "<group>";
+		};
+		4581B0781EE097A0007753A7 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				4581B0791EE097A0007753A7 /* half.hpp */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		4581B07B1EE097A0007753A7 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4581B07C1EE097A0007753A7 /* ofxTextureRecorder.cpp */,
+				4581B07D1EE097A0007753A7 /* ofxTextureRecorder.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		45AFB3561EC9EC5A007FBF38 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +267,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				4581B06D1EE097A0007753A7 /* ofxTextureRecorder */,
 				4D2E9B5C1EC5FFF400B1993E /* ofxExportImageSequence */,
 				4D2E9B421EC5FFEF00B1993E /* ofxEasing */,
 			);
@@ -240,7 +291,7 @@
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
 				6948EE371B920CB800B5AC1A /* local_addons */,
-				E4B69B5B0A3A1756003C02F2 /* measure.temp_caseinsensitive_renameDebug.app */,
+				E4B69B5B0A3A1756003C02F2 /* measure2.temp_caseinsensitive_renameDebug.app */,
 				45AFB3561EC9EC5A007FBF38 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -291,7 +342,7 @@
 			);
 			name = measure2;
 			productName = myOFApp;
-			productReference = E4B69B5B0A3A1756003C02F2 /* measure.temp_caseinsensitive_renameDebug.app */;
+			productReference = E4B69B5B0A3A1756003C02F2 /* measure2.temp_caseinsensitive_renameDebug.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -360,9 +411,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				45A6A69C1EDF72FD002013D5 /* UAge.cpp in Sources */,
+				4581B0811EE097A0007753A7 /* ofxTextureRecorder.cpp in Sources */,
 				45A6A69D1EDF72FD002013D5 /* UTmp.cpp in Sources */,
 				45A6A69E1EDF72FD002013D5 /* USize.cpp in Sources */,
 				4D2E9B7B1EC6011100B1993E /* ofxExportImageSequence.cpp in Sources */,
+				4581B0801EE097A0007753A7 /* README.md in Sources */,
 				45FDDFC11EC4D82F00374560 /* ofTrueTypeFontCustom.cpp in Sources */,
 				45AFB35B1EC9EEA6007FBF38 /* FontManager.cpp in Sources */,
 				4D47AFB61EB5F8B800D3F83B /* ofApp.cpp in Sources */,
@@ -483,6 +536,7 @@
 					"$(inherited)",
 					../addons/ofxExportImageSequence/libs/lib/osx,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = measure2.temp_caseinsensitive_renameDebug;
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
@@ -514,6 +568,7 @@
 					"$(inherited)",
 					../addons/ofxExportImageSequence/libs/lib/osx,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = measure2.temp_caseinsensitive_renameDebug;
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;

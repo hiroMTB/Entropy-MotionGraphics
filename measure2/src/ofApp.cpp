@@ -4,6 +4,8 @@
 #include "ScreenGuide.h"
 #include "UMeasure.h"
 
+#define USE_OFX_TEXTURE_RECORDER 1
+
 using namespace ScreenGuide;
 
 void ofApp::setup(){
@@ -19,12 +21,20 @@ void ofApp::setup(){
     
     FontManager::setup(120, 105, 84, 63, 40);
     
+#ifdef USE_OFX_TEXTURE_RECORDER
+    fbo.allocate(renderW, renderH+marginH*2, GL_RGB);
+    ofxTextureRecorder::Settings settings(fbo.getTexture());
+    settings.imageFormat = OF_IMAGE_FORMAT_PNG;
+    settings.numThreads = 4;
+    settings.maxMemoryUsage = 9000000000;
+    recorder.setup(settings);
+#else
     exporter.setup(renderW, renderH+marginH*2, 60, GL_RGB, 4);
     exporter.setOutputDir("render");
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
-    
     exporter.startExport();
+#endif
     
     loadXml();
 }
@@ -39,8 +49,12 @@ void ofApp::update(){
 }
 
 void ofApp::draw(){
-    
+
+#ifdef USE_OFX_TEXTURE_RECORDER
+    fbo.begin();
+#else
     exporter.begin();
+#endif
     ofBackground(0);
     ofTranslate(0, marginH);
     
@@ -60,12 +74,20 @@ void ofApp::draw(){
             ms[i]->draw();
         }
     }ofPopMatrix();
-    
+#ifdef USE_OFX_TEXTURE_RECORDER
+    fbo.end();
+    recorder.save(fbo.getTexture());
+#else
     exporter.end();
+#endif
     
     ofBackground(20);
-    exporter.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight() );
     
+#ifdef USE_OFX_TEXTURE_RECORDER
+    fbo.draw(0, 0, ofGetWindowWidth(), ofGetWindowWidth());
+#else
+    exporter.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight() );
+#endif
 }
 
 void ofApp::keyPressed(int key){
