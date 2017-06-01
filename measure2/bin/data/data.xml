@@ -41,7 +41,7 @@
 			<unit>Minutes</unit>
 		</scene>
 		<scene>
-			<num>1.89346e+11</num>
+			<num>1.896e+11</num>
 			<name>Age</name>
 			<base>6,000</base>
 			<exp/>
@@ -49,7 +49,7 @@
 			<unit>Years</unit>
 		</scene>
 		<scene>
-			<num>1.2623e+13</num>
+			<num>1.264e+13</num>
 			<name>Age</name>
 			<base>400,000</base>
 			<exp/>
@@ -57,7 +57,7 @@
 			<unit>Years</unit>
 		</scene>
 		<scene>
-			<num>3.15576e+16</num>
+			<num>3.16e+16</num>
 			<name>Age</name>
 			<base>1,000,000,000</base>
 			<exp/>
@@ -65,7 +65,7 @@
 			<unit>Years</unit>
 		</scene>
 		<scene>
-			<num>4.35495e+17</num>
+			<num>4.3608e+17</num>
 			<name>Age</name>
 			<base>13,800,000,000</base>
 			<exp/>
@@ -73,7 +73,7 @@
 			<unit>Years</unit>
 		</scene>
 		<scene>
-			<num>3.15576e+18</num>
+			<num>3.16e+18</num>
 			<name>Age</name>
 			<base>100,000,000,000</base>
 			<exp/>
@@ -149,7 +149,7 @@
 		<scene>
 			<num>-270.4</num>
 			<name>Temperature</name>
-			<base>−270.4</base>
+			<base>-270.4</base>
 			<exp/>
 			<sUnit>°C</sUnit>
 			<unit>°Celsius</unit>
@@ -165,7 +165,7 @@
 	</Measure>
 	<Measure>
 		<scene>
-			<num>1e-32</num>
+			<num>1e-40</num>
 			<name>Size</name>
 			<base>approx. 0</base>
 			<exp/>
@@ -215,7 +215,7 @@
 		<scene>
 			<num>4e+07</num>
 			<name>Size</name>
-			<base>4 * 10</base>
+			<base>4*10</base>
 			<exp>7</exp>
 			<sUnit>lyr</sUnit>
 			<unit>Light Years</unit>
@@ -223,7 +223,7 @@
 		<scene>
 			<num>4e+10</num>
 			<name>Size</name>
-			<base>4 * 10</base>
+			<base>4*10</base>
 			<exp>10</exp>
 			<sUnit>lyr</sUnit>
 			<unit>Light Years</unit>
@@ -231,7 +231,7 @@
 		<scene>
 			<num>5e+10</num>
 			<name>Size</name>
-			<base>5 * 10</base>
+			<base>5*10</base>
 			<exp>10</exp>
 			<sUnit>lyr</sUnit>
 			<unit>Light Years</unit>
@@ -239,7 +239,7 @@
 		<scene>
 			<num>5e+12</num>
 			<name>Size</name>
-			<base>5 * 10</base>
+			<base>5*10</base>
 			<exp>12</exp>
 			<sUnit>lyr</sUnit>
 			<unit>Light Years</unit>

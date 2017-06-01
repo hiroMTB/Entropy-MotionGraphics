@@ -60,9 +60,17 @@ void Util::drawArc( float x, float y, float rad, float thickness, float startAng
     }
 }
 
+void Util::replaceChar(string &text, char oldChar, char newChar){
+    replace_if(text.begin(), text.end(), [=](char c){return c==oldChar;}, newChar ), text.end();
+}
+
+void Util::eraseChar(string &text, char eraseChar){
+    text.erase( remove_if(text.begin(), text.end(), [=](char c){return c==eraseChar;} ), text.end() );
+}
+
 
 void Util::eraseLineBreak(string &text){
-    text.erase( remove_if(text.begin(), text.end(), [](char c){return c=='\n';} ), text.end() );
+    eraseChar(text, '\n');
 }
 
 void Util::stringFit(string & text, const ofTrueTypeFontCustom& font, float fitWidth){

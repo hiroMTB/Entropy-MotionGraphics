@@ -19,19 +19,25 @@ public:
     void setCommonAnimation(float sec);
     virtual void setAnimation(float sec){};
     
-    void update(int frame);
+    virtual void update(int frame){};
     virtual void draw(){};
   
     vector<EasingPrm> anim;
-    TextBox tbName, tbBase, tbExp, tbUnit;
-    
-    float val, prevVal, min, max;
+   
+    float targetVal, val, prevVal, min, max;
     int motionId = -123;
-    float textAnimStSec;
-    float textAnimDuration;
     
-    bool complete;
-    string name, unit;
+    bool bStart = false;
+    bool bComplete = false;
+    string name;
+    string base, fbase, prevfbase;
+    string exp,  fexp,  prevfexp;
+    string unit, funit, prevfunit;
+    float tpos;
+    
+    float hold = 20;
+    float change = 4;
+    
 };
 
 class UAge : public UMeasure{
@@ -42,8 +48,10 @@ public:
     virtual void setPosition();
     virtual void setAnimation(float sec);
     virtual void draw();
+    virtual void update(int frame);
     
     AnimLine aLine;
+    const float barLen = 500;
 };
 
 class UTmp : public UMeasure{
@@ -54,8 +62,11 @@ public:
     virtual void setPosition();
     virtual void setAnimation(float sec);
     virtual void draw();
+    virtual void update(int frame);
     
     AnimLine aLine;
+    const float barLen = 800;
+
 };
 
 class USize : public UMeasure{
@@ -66,6 +77,7 @@ public:
     virtual void setPosition();
     virtual void setAnimation(float sec);
     virtual void draw();
+    virtual void update(int frame);
     
     AnimCircle aCircle;
     AnimCircle aCirclePrev;

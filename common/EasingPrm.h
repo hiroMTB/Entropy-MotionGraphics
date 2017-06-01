@@ -48,6 +48,7 @@ public:
     float * target;
     ofxeasing::function easing;
     std::function<void(void)> callback;
+    std::function<void(void)> callbackSt;
     
     bool check(int frame){
         return startFrame<=frame && frame<=endFrame;
@@ -60,6 +61,12 @@ public:
         
         if(!bDone && check(frame)){
             *target = ofxeasing::map_clamp(frame, startFrame, endFrame, startVal, endVal, easing);
+            if(frame==startFrame){
+                if(callbackSt != nullptr){
+                    callbackSt();
+                }
+            }
+            
             if(frame==endFrame){
                 bDone = true;
                 if(callback != nullptr){
@@ -69,10 +76,14 @@ public:
         }
     }
     
+    void setCbSt(std::function<void(void)> cbst){
+        callbackSt = cbst;
+    }
+
     void setCb(std::function<void(void)> cb){
         callback = cb;
     }
-    
+
 };
 
 

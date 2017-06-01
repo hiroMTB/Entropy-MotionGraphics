@@ -24,7 +24,7 @@ void ofApp::setup(){
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
     
-    //exporter.startExport();
+    exporter.startExport();
     
     loadXml();
 }
@@ -144,7 +144,7 @@ void ofApp::loadXml(){
         
         {
             //  Age
-            float min = std::get<0>(ageData[0]);
+            float min = pow(10, -45);
             float max = std::get<0>(ageData[ageData.size()-1]);
             shared_ptr<UAge> age = shared_ptr<UAge>(new UAge());
             age->setup(ageData[i], startSec, min, max, i);

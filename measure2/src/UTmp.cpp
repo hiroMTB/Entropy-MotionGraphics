@@ -10,66 +10,147 @@ using namespace ScreenGuide;
 
 void UTmp::setPosition(){
     
-    float gap = 140;
-    
-    tbName.size = "M";
-    float hName = FontManager::bb[tbName.size].height;
-    tbName.area.x = 2640;
-    tbName.area.y = 690;
-    tbName.area.width = safeAreaR.width;
-    tbName.area.height = hName;
-    
-    tbBase.size = "L";
-    float hBase = FontManager::bb[tbBase.size].height;
-    float wBase = FontManager::bb[tbBase.size].width;
-    tbBase.area.x = tbName.area.x;
-    tbBase.area.y = tbName.area.y + gap;
-    tbBase.area.width = FontManager::font[tbBase.size].stringWidth(tbBase.text.t);
-    tbBase.area.height = hBase;
-    
-    tbExp.size = "S";
-    float hExp = FontManager::bb[tbExp.size].height;
-    tbExp.area.x = tbBase.area.x + tbBase.area.width + 15;
-    tbExp.area.y = tbBase.area.y -  (hBase -hExp);
-    tbExp.area.width = FontManager::font[tbExp.size].stringWidth(tbExp.text.t);
-    
-    tbUnit.size = "S";
-    float hUnit = FontManager::bb[tbUnit.size].height;
-    tbUnit.area.x = tbExp.area.x + tbExp.area.width + 32;
-    tbUnit.area.y = tbBase.area.y;
-    tbUnit.area.width = FontManager::font[tbUnit.size].stringWidth(tbUnit.text.t);
-    
-    
     aLine.a = 1;
-    aLine.p1.x = tbName.area.x;
-    aLine.p1.y = tbUnit.area.y + 60 -13;
+    aLine.p1.x =  aLine.p2.x = 0;
+    aLine.p1.y = aLine.p2.y = 0;
     
-    aLine.p2.x = aLine.p1.x;
-    aLine.p2.y = aLine.p1.y;
+    if(motionId==0){
+        prevVal = val = targetVal;
+        base = prevfbase = fbase;
+        exp = fexp;
+        unit = prevfunit = funit;
+    }else{
+        int ide = motionId*3+1-3;
+        prevVal = val = ofApp::get()->ms[ide]->targetVal;
+        base = prevfbase = ofApp::get()->ms[ide]->fbase;
+        exp = prevfexp = ofApp::get()->ms[ide]->fexp;
+        unit = prevfunit = ofApp::get()->ms[ide]->funit;
+    }
+    
+    //cout << motionId << ", " << prevVal << ", " << val << "," << targetVal << ", " << endl;
+    //cout << motionId << ", " << base << ", " << prevfbase << "," << fbase << ", " << endl;
 }
 
 
 void UTmp::setAnimation(float st){
     
-    st += 1;
-    float stx = tbName.area.x;
+    float ppos = ofMap(log10(prevVal-min),  1, log10(max-min), 0, barLen) + 10;
+    float pos  = ofMap(log10(val-min),      1, log10(max-min), 0, barLen) + 10;
+
+    // show prev line state
+    addAnimBySec(anim, &aLine.p2.x, st, st+1, 0, ppos);
+
+    addAnimBySec(anim, &aLine.p2.x, st+change, st+change+2, ppos, pos, cubicOut);
+
+    EasingPrm prm;
+    prm.setBySec(&val, st+change, st+change+2, prevVal, targetVal);
+    prm.setCbSt([=](){
+        base = prevfbase;
+        exp = prevfexp;
+        bStart=true;
+    });
+    prm.setCb([=](){
+        base = fbase;
+        exp = fexp;
+        bComplete = true;
+    });
+    anim.push_back(prm);
+
+    addAnimBySec(anim, &aLine.p2.x, st+hold-1, st+hold, pos, 0);
+
+}
+
+void UTmp::update(int frame){
+    for( EasingPrm & p : anim){
+        p.update(frame);
+    }
     
-    float pos = ofMap(log10(val-min), 1, log10(max-min), stx , stx+safeAreaR.width) + 10;
-    addAnimBySec(anim, &aLine.p2.x, st+textAnimStSec, st+textAnimStSec+1, stx, pos, cubicOut);
-    
-    st -= 1;
-    addAnimBySec(anim, &aLine.p2.x, st+textAnimStSec+textAnimDuration, st+textAnimStSec+textAnimDuration+1, pos, stx);
-    
-    printf("pos %f\n", pos);
+    if(bStart && !bComplete){
+        if(val > pow(10, 9)){
+            // toooo small sec
+            base = "10";
+            unit = "°C";
+            int nExp = log10(val);
+            exp = ofToString( nExp, 0 );
+        }else if( val>-260){
+            base = ofToString(val, 0);
+            unit = "°C";
+            exp = "";
+            
+            string tmp = base;
+            for(int i=0; i<base.size(); i++){
+                if(i%3==0  && i!=0){
+                    int pos = base.size()-i;
+                    tmp.insert(pos, ",");
+                }
+            }
+            base = tmp;
+        }else{
+            // 0.001 ~ 1
+            int nExp = log10(val);
+            base = ofToString(val, 2);
+            unit = "°C ";
+            exp = "";
+     
+        }
+    }
 }
 
 void UTmp::draw(){
-    tbName.draw();
-    tbBase.draw();
-    tbExp.draw();
-    tbUnit.draw();
+    int x = 2640;
+    int y = 690;
+    
+    ofRectangle rS = FontManager::bb["S"];
+    ofRectangle rM = FontManager::bb["M"];
+    ofRectangle rL = FontManager::bb["L"];
+    
+    // update text appearance
+    string sName= name.substr(0, name.size() * tpos);
+    string sBase= base.substr(0, base.size() * tpos);
+    string sExp = exp.substr(0, base.size() * tpos);
+    string sUnit = unit.substr(0, unit.size() * tpos);
+    
+    ofSetColor(255, 255);
+    ofPushMatrix();
+    ofTranslate(x, y);
+    
+    FontManager::font["M"].drawString(sName, 0, 0);
+    //FontManager::font["L"].drawString(sBase, 0, 140);
+    //float wBase = FontManager::font["L"].stringWidth(base);
+    
+    float wBase;// = len; //FontManager::font["L"].stringWidth(base);
+    
+    {
+        float letterspacing = FontManager::font["L"].getLetterSpacing();
+        float textWidth = FontManager::font["L"].stringWidth("0");
+        textWidth += 2;
+        string st = sBase;
+         float nextSpace = 0;
+        float posx =0;
+        for(int i=0; i<st.size(); i++){
+            char c = st[i];
+            string s(&c);
+            posx += nextSpace;
+            if(c==',' || c=='.'){
+                nextSpace = 22;
+            }else{
+                nextSpace = textWidth+4;
+            }
+            FontManager::font["L"].drawString( s, posx, 140);
+        }
+        wBase = posx + nextSpace;
+    }
+    
+    FontManager::font["S"].drawString(sExp, wBase+15, 140-(rL.height-rS.height));
+    
+    float wExp = FontManager::font["S"].stringWidth(exp);
+    FontManager::font["S"].drawString(sUnit, wBase+wExp+15+32, 140);
+    
     
     ofSetColor(255, 255*aLine.a);
+    ofSetLineWidth(26);
+    ofTranslate(0, 140 + 60-13);
     Util::drawLineAsRect(aLine.p1, aLine.p2, 25);
+    ofPopMatrix();
     
 }

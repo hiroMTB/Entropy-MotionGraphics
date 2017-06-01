@@ -11,8 +11,11 @@ public:
     
     static void drawCircle( float x, float y, float rad, float thickness);
     static void drawArc( float x, float y, float rad, float thickness, float startAngle, float endAngle);
-
+    
+    static void replaceChar(string &text, char oldChar, char newChar);
+    static void eraseChar(string &text, char eraseChar);
     static void eraseLineBreak( string & text);
+    
     static void stringFit(string & text, const ofTrueTypeFontCustom& font, float fitWidth);
     static filesystem::path getResFolder();
     

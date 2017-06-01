@@ -10,43 +10,27 @@ using namespace ScreenGuide;
 
 void USize::setPosition(){
     
-    float gap = 140;
-    
-    tbName.size = "M";
-    float hName = FontManager::bb[tbName.size].height;
-    tbName.area.x = 1150;
-    tbName.area.y = 570;
-    tbName.area.height = hName;
-    
-    tbBase.size = "L";
-    float hBase = FontManager::bb[tbBase.size].height;
-    tbBase.area.x = tbName.area.x;
-    tbBase.area.y = tbName.area.y + gap;
-    tbBase.area.width = FontManager::font[tbBase.size].stringWidth(tbBase.text.t);
-    tbBase.area.height = hBase;
-    
-    tbExp.size = "S";
-    float hExp = FontManager::bb[tbExp.size].height;
-    tbExp.area.x = tbBase.area.x + tbBase.area.width + 15;
-    tbExp.area.y = tbBase.area.y - (hBase -hExp);
-    tbExp.area.width = FontManager::font[tbExp.size].stringWidth(tbExp.text.t);
-    
-    tbUnit.size = "S";
-    float hUnit = FontManager::bb[tbUnit.size].height;
-    tbUnit.area.x = tbExp.area.x + tbExp.area.width + 32;
-    tbUnit.area.y = tbBase.area.y;
-    tbUnit.area.width = FontManager::font[tbUnit.size].stringWidth(tbUnit.text.t);
-    
-    
     aCircle.center.x = aCirclePrev.center.x = 800;      //renderW/4;
     aCircle.center.y = aCirclePrev.center.y = 622;    //renderH/2;
+  
+    int ide = motionId*3+2-3;
     
-    if(motionId == 0){
-        aCirclePrev.rad = 0;
+    if(motionId==0){
+        prevVal = val = targetVal;
+        base = prevfbase = fbase;
+        exp = "";
+        unit = funit = prevfunit = "";
     }else{
-        float prevVal = ofApp::get()->ms[motionId*3+2-3]->val;
-        aCirclePrev.rad = ofMap(log10(prevVal), log10(min), log10(max), 10, 300);
+        prevVal = val = ofApp::get()->ms[ide]->targetVal;
+        base = prevfbase = ofApp::get()->ms[ide]->fbase;
+        exp = prevfexp = ofApp::get()->ms[ide]->fexp;
+        unit = prevfunit = ofApp::get()->ms[ide]->funit;
     }
+    
+    aCirclePrev.rad = ofMap(log10(prevVal), log10(min), log10(max), 10, 300);
+
+    cout << motionId << ", " << prevVal << ", " << val << "," << targetVal << ", " << endl;
+
 }
 
 
@@ -57,27 +41,128 @@ void USize::setAnimation(float st){
     if(motionId==0){
         addAnimBySec(anim, &aCircle.rad,    st,  st+2.0,  0, rad, cubicOut);
         addAnimBySec(anim, &aCircle.a,      st,  st+1.5);
-        addAnimBySec(anim, &aCircle.a,      st+textAnimStSec+textAnimDuration+1, st+textAnimStSec+textAnimDuration+2, 1, 0);
     }else{
         addAnimBySec(anim, &aCirclePrev.a,  st, st+1.5);
-        addAnimBySec(anim, &aCirclePrev.rad,st+2, st+4, aCirclePrev.rad, 0, cubicOut);
+        addAnimBySec(anim, &aCirclePrev.rad,st+change, st+change+2, aCirclePrev.rad, 0, cubicOut);
         
-        addAnimBySec(anim, &aCircle.rad,    st+2, st+4, renderW/3, rad, cubicOut);
-        addAnimBySec(anim, &aCircle.a,      st+2, st+4);
-        
-        addAnimBySec(anim, &aCircle.a,      st+textAnimStSec+textAnimDuration+1, st+textAnimStSec+textAnimDuration+2, 1, 0);
+        addAnimBySec(anim, &aCircle.rad,    st+change, st+change+2, renderW/3, rad, cubicOut);
+        addAnimBySec(anim, &aCircle.a,      st+change, st+change+2);
+    }
+    
+    
+    EasingPrm prm;
+    prm.setBySec(&val, st+change, st+change+2, prevVal, targetVal);
+    prm.setCbSt([=](){
+        base = prevfbase;
+        exp = prevfexp;
+        unit = prevfunit;
+        bStart=true;
+    });
+    prm.setCb([=](){
+        base = fbase;
+        exp = fexp;
+        unit = funit;
+        bComplete = true;
+    });
+    anim.push_back(prm);
+    
+    addAnimBySec(anim, &aCircle.a, st+hold-1, st+hold, 1, 0);
+    
+}
+
+void USize::update(int frame){
+    for( EasingPrm & p : anim){
+        p.update(frame);
+    }
+    
+    float cm = pow(10,-17); // lyr
+    
+    if(motionId < 1)
+        return;
+    
+    if(bStart && !bComplete){
+        if(val < cm*100 ){
+            // toooo small
+            float c = val/cm;
+            int nExp = log10(c);
+            base = ofToString( c, 3 );
+            unit = "cm";
+            exp = "";
+        }else if(val < 1){
+            base = ofToString(val, 4);
+            unit = "lyr";
+            exp = "";
+        }else if( val<1000000){
+            base = ofToString(val, 0);
+            unit = "lyr";
+            exp = "";
+        }else{
+            int nExp = log10(val);
+            base = "10";
+            unit = "lyr";
+            exp = ofToString(nExp, 0);
+        }
     }
 }
 
 void USize::draw(){
-    tbName.draw();
-    tbBase.draw();
-    tbExp.draw();
-    tbUnit.draw();
+    int x = 1150;
+    int y = 570;
+    
+    ofRectangle rS = FontManager::bb["S"];
+    ofRectangle rM = FontManager::bb["M"];
+    ofRectangle rL = FontManager::bb["L"];
+    
+    // update text appearance
+    string sName= name.substr(0, name.size() * tpos);
+    string sBase= base.substr(0, base.size() * tpos);
+    string sExp = exp.substr(0, base.size() * tpos);
+    string sUnit = unit.substr(0, unit.size() * tpos);
+    
+    ofSetColor(255, 255);
+    ofPushMatrix();
+    ofTranslate(x, y);
+    
+    FontManager::font["M"].drawString(sName, 0, 0);
+    
+    float wBase;// = FontManager::font["L"].stringWidth(base);
+    
+    if(base=="approx. 0"){
+        wBase = FontManager::font["L"].stringWidth(base);
+        FontManager::font["L"].drawString(sBase, 0, 140);
+    }else{
+        float letterspacing = FontManager::font["L"].getLetterSpacing();
+        float textWidth = FontManager::font["L"].stringWidth("0");
+        textWidth += 2;
+        string st = sBase;
+        float len = base.size() * textWidth;
+        float nextSpace = 0;
+        float posx =0;
+        for(int i=0; i<st.size(); i++){
+            char c = st[i];
+            string s(&c);
+            posx += nextSpace;
+            if(c==',' || c=='.'){
+                nextSpace = 22;
+            }else{
+                nextSpace = textWidth+4;
+            }
+            FontManager::font["L"].drawString( s, posx, 140);
+        }
+        wBase = posx + nextSpace;
+    }
+    
+    FontManager::font["S"].drawString(sExp, wBase+15, 140-(rL.height-rS.height));
+    
+    float wExp = FontManager::font["S"].stringWidth(exp);
+    FontManager::font["S"].drawString(sUnit, wBase+wExp+15+32, 140);
+
+    ofPopMatrix();
     
     ofSetColor(255, 255*aCirclePrev.a);
     Util::drawCircle(aCirclePrev.center.x, aCirclePrev.center.y, aCirclePrev.rad, 12);
     
     ofSetColor(255, 255*aCircle.a);
     Util::drawCircle(aCircle.center.x, aCircle.center.y, aCircle.rad, 12);
+    
 }
