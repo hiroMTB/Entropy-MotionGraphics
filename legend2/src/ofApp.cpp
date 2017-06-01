@@ -215,6 +215,7 @@ void ofApp::readPaper(filesystem::path p){
         tb.size = "SS";
         tb.text.t = author;
         tb.text.a = 1;
+        tb.fit = false;
         paper.push_back(tb);
     }
     
@@ -226,6 +227,8 @@ void ofApp::readPaper(filesystem::path p){
         tb.size = "SS";
         tb.text.t = abstruct;
         tb.text.a = 1;
+        tb.fit = true;
+
         paper.push_back(tb);
     }
 
@@ -235,8 +238,9 @@ void ofApp::readPaper(filesystem::path p){
         tb.area.width = width;
         tb.area.height = renderH-mainHeight;
         tb.size = "SS";
-        tb.text.t = "1234512345123451234512345123451234512345";
+        tb.text.t = "";
         tb.text.a = 1;
+        tb.fit = true;
         paper.push_back(tb);
     }
     {
@@ -246,14 +250,13 @@ void ofApp::readPaper(filesystem::path p){
         tb.area.height = renderH-mainHeight;
         tb.size = "SS";
         tb.text.t = body;
+        tb.fit = true;
         paper.push_back(tb);
     }
     
     for(int i=0; i<paper.size(); i++){
         paper[i].text.a = 1;
-        paper[i].fit = true;
         paper[i].area.y = mainHeight + FontManager::bb["SS"].height;
-
         float durationSec = paper[i].text.t.size()*0.0014;
         addAnimBySec(anim, &paper[i].text.tpos, 0.1, 0.1+durationSec);
     }
