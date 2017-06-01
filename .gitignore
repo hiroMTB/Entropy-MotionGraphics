@@ -111,3 +111,4 @@ _settings.xml
 !/res/**/*.png
 !/res/**/*.jpg
 !/res/**/*.jpeg
+*.yml
