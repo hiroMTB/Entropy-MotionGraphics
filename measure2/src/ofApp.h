@@ -2,7 +2,6 @@
 
 #include "ofMain.h"
 #include "ofxExportImageSequence.h"
-#include "ofxTextureRecorder.h"
 #include "EasingPrm.h"
 
 class UMeasure;
@@ -24,8 +23,6 @@ public:
     void writeXml();
     
     ofxExportImageSequence exporter;
-    ofxTextureRecorder recorder;
-    ofFbo fbo;
     
     bool bStart;
     int currentMotionId = 0;
