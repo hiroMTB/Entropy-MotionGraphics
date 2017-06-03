@@ -51,7 +51,7 @@ void USize::setAnimation(float st){
     
     
     EasingPrm prm;
-    prm.setBySec(&val, st+change, st+change+countSec, prevVal, targetValm exp10In);
+    prm.setBySec(&val, st+change, st+change+countSec, prevVal, targetVal, exp10In);
     prm.setCbSt([=](){
         base = prevfbase;
         exp = prevfexp;
