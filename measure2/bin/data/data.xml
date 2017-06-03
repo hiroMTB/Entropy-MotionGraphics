@@ -59,25 +59,25 @@
 		<scene>
 			<num>3.16e+16</num>
 			<name>Age</name>
-			<base>1,000,000,000</base>
+			<base>1</base>
 			<exp/>
-			<sUnit>yr</sUnit>
+			<sUnit>billion yr</sUnit>
 			<unit>Years</unit>
 		</scene>
 		<scene>
 			<num>4.3608e+17</num>
-			<name>Age</name>
-			<base>13,800,000,000</base>
+			<name>Age Today</name>
+			<base>13.8</base>
 			<exp/>
-			<sUnit>yr</sUnit>
+			<sUnit>billion yr</sUnit>
 			<unit>Years</unit>
 		</scene>
 		<scene>
 			<num>3.16e+18</num>
 			<name>Age</name>
-			<base>100,000,000,000</base>
+			<base>100</base>
 			<exp/>
-			<sUnit>yr</sUnit>
+			<sUnit>billion yr</sUnit>
 			<unit>Years</unit>
 		</scene>
 	</Measure>

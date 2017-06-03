@@ -36,22 +36,27 @@ void USize::setPosition(){
 
 
 void USize::setAnimation(float st){
+    
+    float sf = ofApp::get()->animSpdFactor;
+
     float rad = ofMap(log10(val), log10(min), log10(max), 10, 300);
     
     if(motionId==0){
-        addAnimBySec(anim, &aCircle.rad,    st,  st+2.0,  0, rad, cubicOut);
-        addAnimBySec(anim, &aCircle.a,      st,  st+1.5);
+        addAnimBySec(anim, &aCircle.rad,    st,  st+2.0*sf,  0, rad, cubicOut);
+        addAnimBySec(anim, &aCircle.a,      st,  st+1.5*sf);
     }else{
-        addAnimBySec(anim, &aCirclePrev.a,  st, st+1.5);
-        addAnimBySec(anim, &aCirclePrev.rad,st+change, st+change+countSec, aCirclePrev.rad, 0, cubicOut);
+        addAnimBySec(anim, &aCirclePrev.a,  st, st+1.5*sf);
+        addAnimBySec(anim, &aCirclePrev.rad,st+change*sf, st+(change+countSec)*sf, aCirclePrev.rad, 0, cubicOut);
         
-        addAnimBySec(anim, &aCircle.rad,    st+change, st+change+countSec, renderW/3, rad, cubicOut);
-        addAnimBySec(anim, &aCircle.a,      st+change, st+change+countSec);
+        addAnimBySec(anim, &aCircle.rad,    st+change*sf, st+(change+countSec)*sf, renderW/3, rad, cubicOut);
+        addAnimBySec(anim, &aCircle.a,      st+change*sf, st+(change+countSec)*sf);
     }
     
-    
+    float diff = log((double)targetVal) - log((double)prevVal);
+    ofxeasing::function fn = ( abs(diff) >= 3 ) ? exp10In : linIn;
+
     EasingPrm prm;
-    prm.setBySec(&val, st+change, st+change+countSec, prevVal, targetVal, exp10In);
+    prm.setBySec(&val, st+change*sf, st+(change+countSec)*sf, prevVal, targetVal, fn);
     prm.setCbSt([=](){
         base = prevfbase;
         exp = prevfexp;
@@ -66,7 +71,7 @@ void USize::setAnimation(float st){
     });
     anim.push_back(prm);
     
-    addAnimBySec(anim, &aCircle.a, st+hold-1, st+hold, 1, 0);
+    addAnimBySec(anim, &aCircle.a, st+(hold-1)*sf, st+hold*sf, 1, 0);
     
 }
 
@@ -75,21 +80,72 @@ void USize::update(int frame){
         p.update(frame);
     }
     
-    float cm = pow(10,-17); // lyr
+    double um = pow(10,-21); // pow(10,-17) lyr
+    double mm = pow(10,-18); // pow(10,-18) lyr
+    double cm = pow(10,-17); // pow(10,-17) lyr
+    double meter = cm * 100; // pow(10,-15) lyr
+    double km = meter * 1000; // pow(10,-13) lyr
     
     if(motionId < 1)
         return;
     
     if(bStart && !bComplete){
-        if(val < cm*100 ){
-            // toooo small
-            float c = val/cm;
+//        if(val < um*0.001 ){
+//            double c = (double)val/(double)um;
+//            int nExp = log10(c);
+//            base = "10";
+//            unit = "um";
+//            exp = ofToString(nExp);
+//        }else if(val < um*100){
+//            double c = (double)val/(double)um;
+//            base = ofToString(c,3);
+//            unit = "um";
+//            exp = "";
+//        }
+        if(val < mm*0.01 ){
+            double c = (double)val/(double)mm;
             int nExp = log10(c);
-            base = ofToString( c, 2);
+            base = "10";
+            unit = "mm";
+            exp = ofToString(nExp);
+        }else if(val < mm*10){
+            double c = (double)val/(double)mm;
+            base = ofToString(c,3);
+            unit = "mm";
+            exp = "";
+        }else if(val < cm ){
+            double c = (double)val/(double)cm;
+            base = ofToString(c);
             unit = "cm";
             exp = "";
+        }else if(val < meter ){
+            double c = (double)val/(double)cm;
+            base = ofToString(c, 2);
+            unit = "cm";
+            exp = "";
+        }else if(val < 100*meter ){
+            double c = (double)val/(double)meter;
+            base = ofToString(c, 2);
+            unit = "m";
+            exp = "";
+        }else if(val < 10000*km ){
+            double c = (double)val/(double)km;
+            base = ofToString(c, 2);
+            unit = "km";
+            exp = "";
+        }else if(val < 0.01){
+            double c = (double)val;
+            int nExp = log10(c);
+            base = "10";
+            unit = "ly";
+            exp = ofToString(nExp);
         }else if(val < 1){
+            int nExp = log10(val);
             base = ofToString(val, 2);
+            unit = "lyr";
+            exp = "";
+        }else if( val<10){
+            base = ofToString(val, 1);
             unit = "lyr";
             exp = "";
         }else if( val<1000000){
@@ -116,10 +172,10 @@ void USize::draw(){
     // update text appearance
     string sName= name.substr(0, name.size() * tpos);
     string sBase= base.substr(0, base.size() * tpos);
-    string sExp = exp.substr(0, base.size() * tpos);
+    string sExp = exp.substr(0, exp.size() * tpos);
     string sUnit = unit.substr(0, unit.size() * tpos);
     
-    ofSetColor(255, 255);
+    ofSetColor(255, 255*alpha);
     ofPushMatrix();
     ofTranslate(x, y);
     
@@ -147,7 +203,17 @@ void USize::draw(){
             }else{
                 nextSpace = textWidth+4;
             }
-            FontManager::font["L"].drawString( s, posx, 140);
+            
+            if(c=='*'){
+                float x = posx + FontManager::bb["L"].width/2;
+                float y = 140 - FontManager::bb["L"].height/2;
+                float s = 15;
+                ofSetLineWidth(10);
+                ofDrawLine(x-s, y-s, x+s, y+s);
+                ofDrawLine(x+s, y-s, x-s, y+s);
+            }else{
+                FontManager::font["L"].drawString( s, posx, 140);
+            }
         }
         wBase = posx + nextSpace;
     }

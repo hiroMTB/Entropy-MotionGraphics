@@ -26,9 +26,9 @@ public:
     
     bool bStart;
     int currentMotionId = 0;
-    float animSpdFactor;
+    float animSpdFactor = 1;
     int frame = -1;
-    
+    float animDuration = 20;
     vector<EasingPrm> anim;
     vector<shared_ptr<UMeasure>> ms;
 };

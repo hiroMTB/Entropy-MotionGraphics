@@ -10,7 +10,6 @@ using namespace ScreenGuide;
 
 void UTmp::setPosition(){
     
-    aLine.a = 1;
     aLine.p1.x =  aLine.p2.x = 0;
     aLine.p1.y = aLine.p2.y = 0;
     
@@ -34,17 +33,25 @@ void UTmp::setPosition(){
 
 void UTmp::setAnimation(float st){
     
-    float ppos = ofMap(log10(prevVal-min),  1, log10(max-min), 0, barLen);
+    float sf = ofApp::get()->animSpdFactor;
+
+    float ppos = ofMap(log10(prevVal-min),  1, log10(max-min), 0, barLen) + cheatLen;
     float pos  = ofMap(log10(val-min),      1, log10(max-min), 0, barLen);
 
-    // show prev line state
-    addAnimBySec(anim, &aLine.p2.x, st, st+1, 0, ppos);
+    ppos = MAX(ppos, 0);
 
-    addAnimBySec(anim, &aLine.p2.x, st+change, st+change+countSec, ppos, pos, cubicOut);
+    // show prev line state
+    //addAnimBySec(anim, &aLine.p2.x, st, st+1*sf, 0, ppos);
+    aLine.p2.x = ppos;
+
+    addAnimBySec(anim, &aLine.p2.x, st+change*sf, st+(change+countSec)*sf, ppos, pos, cubicOut);
 
     if(motionId!=0){
+        float diff = log((double)targetVal) - log((double)prevVal);
+        ofxeasing::function fn = ( abs(diff) >= 3 ) ? exp10In : linIn;
+
         EasingPrm prm;
-        prm.setBySec(&val, st+change, st+change+countSec, prevVal, targetVal, exp10In);
+        prm.setBySec(&val, st+change*sf, st+(change+countSec)*sf, prevVal, targetVal, fn);
         prm.setCbSt([=](){
             base = prevfbase;
             exp = prevfexp;
@@ -58,7 +65,7 @@ void UTmp::setAnimation(float st){
         anim.push_back(prm);
     }
     
-    addAnimBySec(anim, &aLine.p2.x, st+hold-1, st+hold, pos, 0);
+    addAnimBySec(anim, &aLine.p2.x, st+(hold-1)*sf, st+hold*sf, pos, 0);
 
 }
 
@@ -68,7 +75,7 @@ void UTmp::update(int frame){
     }
     
     if(bStart && !bComplete){
-        if(val > pow(10, 9)){
+        if(val > pow(10, 6)){
             // toooo small sec
             base = "10";
             unit = "°C";
@@ -109,10 +116,10 @@ void UTmp::draw(){
     // update text appearance
     string sName= name.substr(0, name.size() * tpos);
     string sBase= base.substr(0, base.size() * tpos);
-    string sExp = exp.substr(0, base.size() * tpos);
+    string sExp = exp.substr(0, exp.size() * tpos);
     string sUnit = unit.substr(0, unit.size() * tpos);
     
-    ofSetColor(255, 255);
+    ofSetColor(255, 255*alpha);
     ofPushMatrix();
     ofTranslate(x, y);
     
@@ -149,8 +156,8 @@ void UTmp::draw(){
     FontManager::font["S"].drawString(sUnit, wBase+wExp+15+32, 140);
     
     
-    ofSetColor(255, 255*aLine.a);
-    ofSetLineWidth(26);
+    ofSetColor(255, 255*alpha);
+    ofSetLineWidth(33);
     ofTranslate(0, 140 + 60-13);
     Util::drawLineAsRect(aLine.p1, aLine.p2, 33);
     ofPopMatrix();

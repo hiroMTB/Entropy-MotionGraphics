@@ -23,7 +23,6 @@ void ofApp::setup(){
     ofSetLogLevel(OF_LOG_NOTICE);
     
     bStart = true;
-    animSpdFactor = 1;
     
     FontManager::setup(120, 105, 84, 63, 40);
     
@@ -31,22 +30,11 @@ void ofApp::setup(){
     exporter.setOutputDir("render");
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
-    //exporter.startExport();
+    exporter.setFrameRange(0, (animDuration*10)*ofGetTargetFrameRate()-1);
+    exporter.startExport();
     
     loadXml();
-    
-    
-//    float sv = 10;
-//    float ev = 100000;
-//    for(int i=0; i<10; i++){
-//        float minIn = sv;
-//        float maxin = ev;
-//        
-//        e1(
-//        
-//    }
-    
-    
+
 }
 
 void ofApp::update(){
@@ -166,8 +154,8 @@ void ofApp::loadXml(){
     
     for(int i=0; i<ageData.size(); i++){
         
-        float durationSec = 20 * animSpdFactor;
-        float startSec =   i*durationSec;
+        float durationSec = animDuration * animSpdFactor;
+        float startSec = i*durationSec;
         
         {
             //  Age

@@ -14,7 +14,9 @@ void UMeasure::setup(tuple<float, string, string, string, string, string> data, 
     min = _min;
     max = _max;
     motionId = _motionId;
-    tpos = 0;
+    tpos = 1;
+    alpha = 0;
+    hold = ofApp::get()->animDuration;
     
     name    = std::get<1>(data);
     fbase   = std::get<2>(data);
@@ -33,20 +35,12 @@ void UMeasure::setup(tuple<float, string, string, string, string, string> data, 
 }
 
 void UMeasure::setCommonAnimation(float st){
-    
-    addAnimBySec(anim, &tpos,  st, st+0.5);
-    addAnimBySec(anim, &tpos,  st+hold-1, st+hold, 1, 0);
+    float sf = ofApp::get()->animSpdFactor;
+
+    addAnimBySec(anim, &alpha, st, st+0.5*sf);
+    addAnimBySec(anim, &alpha, st+(hold-1)*sf, st+hold*sf, 1, 0);
+    addAnimBySec(anim, &tpos,  st+(hold-1)*sf, st+hold*sf, 1, 0);
+
 }
-
-
-
-
-
-
-
-
-
-
-
 
 

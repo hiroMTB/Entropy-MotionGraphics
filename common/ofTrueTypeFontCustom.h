@@ -6,5 +6,6 @@ class ofTrueTypeFontCustom : public ofTrueTypeFont{
 
 public:
     float getCharWidth(char prevC, char c) const;
+    float getAdvance(char c) const;
     
 };

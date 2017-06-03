@@ -35,3 +35,11 @@ float ofTrueTypeFontCustom::getCharWidth(char prevC, char c) const{
     
     return X;
 }
+
+float ofTrueTypeFontCustom::getAdvance(char c) const{
+    if(c==' '){
+        return spaceSize;
+    }
+    int cy = c - NUM_CHARACTER_TO_START;
+    return cps[cy].advance * letterSpacing;
+}

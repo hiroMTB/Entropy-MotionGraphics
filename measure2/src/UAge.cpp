@@ -10,7 +10,6 @@ using namespace ScreenGuide;
 
 void UAge::setPosition(){
     
-    aLine.a = 1;
     aLine.p1.x = 0;
     aLine.p2.x = 0;
     aLine.p1.y = aLine.p2.y = 0;
@@ -32,20 +31,26 @@ void UAge::setPosition(){
 
 void UAge::setAnimation(float st){
 
-    float ppos = ofMap(log10(prevVal), log10(min), log10(max), 0, barLen);
+    float sf = ofApp::get()->animSpdFactor;
+    
+    float ppos = ofMap(log10(prevVal), log10(min), log10(max), 0, barLen) - cheatLen;
     float pos = ofMap(log10(targetVal), log10(min), log10(max), 0, barLen);
 
+    ppos = MAX(ppos, 0);
+    
     // show prev line state
-    addAnimBySec(anim, &aLine.p2.x, st, st+1, 0, ppos);
-    
-    
+    //addAnimBySec(anim, &aLine.p2.x, st, st+1*sf, 0, ppos);
+    aLine.p2.x = ppos;
+
     // LINE animation
-    addAnimBySec(anim, &aLine.p2.x, st+change, st+change+countSec, ppos, pos, cubicOut);
+    addAnimBySec(anim, &aLine.p2.x, st+change*sf, st+(change+countSec)*sf, ppos, pos, cubicOut);
    
 
     // COUNT U animation
+    float diff = log((double)targetVal) - log((double)prevVal);
+    ofxeasing::function fn = ( abs(diff) >= 3 ) ? exp10In : linIn;
     EasingPrm prm;
-    prm.setBySec(&val, st+change, st+change+countSec, prevVal, targetVal, exp10In);
+    prm.setBySec(&val, st+change*sf, st+(change+countSec)*sf, prevVal, targetVal, fn);
     prm.setCbSt([=](){
         base = prevfbase;
         exp = prevfexp;
@@ -58,7 +63,7 @@ void UAge::setAnimation(float st){
     });
     anim.push_back(prm);
     
-    addAnimBySec(anim, &aLine.p2.x, st+hold-1, st+hold, pos, 0);
+    addAnimBySec(anim, &aLine.p2.x, st+(hold-1)*sf, st+hold*sf, pos, 0);
     
 }
 
@@ -116,7 +121,7 @@ void UAge::update(int frame){
             base = ofToString(m, 0);
             unit = "m";
             exp = "";
-        }else{
+        }else if(val/year < pow(10, 8)){
             float y = val/year;
             base = ofToString(y, 0);
             unit = "yr";
@@ -130,6 +135,11 @@ void UAge::update(int frame){
                 }
             }
             base = tmp;
+        }else {
+            double y = val/year/pow(10,9);
+            base = ofToString(y, 1);
+            unit = "billion yr";
+            exp = "";
         }
     }
 }
@@ -150,7 +160,7 @@ void UAge::draw(){
     string sExp = "";
     if(exp!="") sExp  = exp.substr(0, exp.size() * tpos);
     
-    ofSetColor(255, 255);
+    ofSetColor(255, 255*alpha);
     ofPushMatrix();
     ofTranslate(x, y);
     
@@ -187,8 +197,8 @@ void UAge::draw(){
     FontManager::font["S"].drawString(sUnit, wBase+wExp+15+32, 140);
     
     
-    ofSetColor(255, 255*aLine.a);
-    ofSetLineWidth(26);
+    ofSetColor(255, 255*alpha);
+    ofSetLineWidth(33);
     ofTranslate(0, 140 + 60-13);
     Util::drawLineAsRect(aLine.p1, aLine.p2, 33);
     ofPopMatrix();

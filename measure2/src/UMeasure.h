@@ -35,9 +35,10 @@ public:
     string unit, funit, prevfunit;
     float tpos;
     
-    float hold = 20;
-    float change = 4;
-    float countSec = 5;
+    float hold;
+    float change = 1;
+    float countSec = 10;
+    float alpha;
     
 };
 
@@ -52,7 +53,8 @@ public:
     virtual void update(int frame);
     
     AnimLine aLine;
-    const float barLen = 680;
+    const float cheatLen = 100;
+    const float barLen = 680 - cheatLen;
 };
 
 class UTmp : public UMeasure{
@@ -66,7 +68,8 @@ public:
     virtual void update(int frame);
     
     AnimLine aLine;
-    const float barLen = 680;
+    const float cheatLen = 100;
+    const float barLen = 680 - cheatLen;
 
 };
 
