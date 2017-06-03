@@ -13,7 +13,7 @@ void ofApp::setup(){
     int w = 1920*2;
     int h = 1080;
     
-    FontManager::setup(1);
+    FontManager::setup();
     
     exporter.setup(1920*2, 1080, 60, GL_RGB, 4);
     exporter.setOutputDir("render");
@@ -28,14 +28,14 @@ void ofApp::setup(){
         typedef tuple<string, string, string, int, int> Data;
         typedef vector<Data> DataSet;
         DataSet dataSet =  {
-            {"Age", "yr", "Years", 6000, 4000000},
+            {"Age", "yr", "Years", 6000, 400000},
             {"Temperature", "°C", "Celsius", 11000, 3000},
             {"Size", "lyr", "Light Years", 10000000, 40000000}
         };
         
         ms.assign(3, Measure());
         for(int i=0; i<ms.size(); i++){
-            ms[i].setup(0, 45, dataSet[i]);
+            ms[i].setup(0, 60, dataSet[i]);
             
             int aw = 800;
             int ah = 400;
@@ -99,19 +99,19 @@ typedef vector<SceneData> DataSet;
 
 int main(){
     
-    ofGLFWWindowSettings s;
-    s.setPosition( ofVec2f(0,0));
-    s.title = "Entropy Motion Graphics::Measure";
-    s.setGLVersion(4, 1);
-    s.multiMonitorFullScreen = true;
-    s.windowMode = OF_WINDOW;
-    s.numSamples = 16;
-    s.width = 3840/2;
-    s.height = 1080/2;
-    s.monitor = 2;
-    s.decorated = true;
-    
-    ofCreateWindow(s);
+//    ofGLFWWindowSettings s;
+//    s.setPosition( ofVec2f(0,0));
+//    s.title = "Entropy Motion Graphics::Measure";
+//    s.setGLVersion(4, 1);
+//    s.multiMonitorFullScreen = true;
+//    s.windowMode = OF_WINDOW;
+//    s.numSamples = 16;
+//    s.width = 3840/2;
+//    s.height = 1080/2;
+//    s.monitor = 2;
+//    s.decorated = true;
+//    ofCreateWindow(s);
+    ofSetupOpenGL(1920, 1080, OF_WINDOW);
     ofRunApp(ofApp::get());
 }
 

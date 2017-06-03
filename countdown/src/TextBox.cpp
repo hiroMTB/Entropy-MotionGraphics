@@ -16,12 +16,13 @@ void TextBox::reset(){
 void TextBox::setAnimation( float startSec, float endSec ){
     
     float os = startSec;
-    addAnimBySec(anim, &(base.tpos),     startSec+0.6, startSec+1.1);
-    addAnimBySec(anim, &(measure.tpos),  startSec+0.2, startSec+0.5);
-    addAnimBySec(anim, &(shortUnit.tpos),      startSec+0.3, startSec+0.6);
-    addAnimBySec(anim, &(unit.tpos),     startSec+0.5, startSec+0.95);
-    addAnimBySec(anim, &(a),             endSec-0.5, endSec, 1, 0);
-    blinkBySec(  anim, &(a),             endSec-0.5, endSec-0.1, 0.1, 0.2);
+    float hold = 10;
+    addAnimBySec(anim, &base.tpos,      startSec+0.6,   startSec+1.1);
+    addAnimBySec(anim, &measure.tpos,   startSec+0.2,   startSec+0.5);
+    addAnimBySec(anim, &shortUnit.tpos, startSec+0.3,   startSec+0.6);
+    addAnimBySec(anim, &unit.tpos,      startSec+0.5,   startSec+0.95);
+    addAnimBySec(anim, &a,              endSec-0.5,     endSec, 1, 0);
+    blinkBySec(  anim, &a,              endSec-0.5,     endSec-0.1, 0.1, 0.2);
     
 }
 
@@ -71,7 +72,9 @@ void TextBox::draw(){
             float posx = textWidth * i;
             char c = st[i];
             string s(&c);
-            FontManager::font["XL"].drawString( s, area.x+area.width-len+posx-60-sunitw, y+area.y);
+            float xx = area.x+area.width-len+posx-60-sunitw;
+            float yy = y+area.y;
+            FontManager::font["XL"].drawString( s, xx, yy);
         }
     }
     

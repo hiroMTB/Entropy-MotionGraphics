@@ -35,7 +35,7 @@ public:
         tb.base.t = toString(startVal);
         
         currentVal = startVal;
-        addAnimBySec(anim, &currentVal, st, et, startVal, endVal);
+        addAnimBySec(anim, &currentVal, st, et-10.9, startVal, endVal);
         
     };
     
@@ -43,8 +43,7 @@ public:
         
         tb.update(frame);
         
-        int n = ofSignedNoise(ofGetElapsedTimeMicros())*20.0;
-        tb.base.t = toString(currentVal+n);
+        tb.base.t = toString(currentVal);
         
         for( EasingPrm & p : anim){
             p.update(frame);
