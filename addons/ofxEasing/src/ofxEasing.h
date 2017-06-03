@@ -6,64 +6,64 @@
 #include <map>
 
 namespace ofxeasing{
-	constexpr float pi = 3.14159265358979323846f;
+	constexpr double pi = 3.14159265358979323846;
 
 class back{
 public:
-	inline static float easeIn_s(float t,float b , float c, float d, float s) {
-		float postFix = t/=d;
+	inline static double easeIn_s(double t,double b , double c, double d, double s) {
+		double postFix = t/=d;
 		return c*(postFix)*t*((s+1)*t - s) + b;
 	}
 
-	inline static float easeIn (float t,float b , float c, float d) {
+	inline static double easeIn (double t,double b , double c, double d) {
 		return easeIn_s(t, b, c, d, 1.70158f);
 	}
 
-	inline static float easeOut_s(float t,float b , float c, float d, float s) {
+	inline static double easeOut_s(double t,double b , double c, double d, double s) {
 		t=t/d-1;
 		return c*(t*t*((s+1)*t + s) + 1) + b;
 	}
 
-	inline static float easeOut(float t,float b , float c, float d) {
+	inline static double easeOut(double t,double b , double c, double d) {
 		return easeOut_s(t, b, c, d, 1.70158f);
 	}
 
-	inline static float easeInOut_s(float t,float b , float c, float d, float s) {
+	inline static double easeInOut_s(double t,double b , double c, double d, double s) {
 		s*=(1.525f);
 		if ((t/=d/2) < 1){
 			return c/2*(t*t*((s+1)*t - s)) + b;
 		}
-		float postFix = t-=2;
+		double postFix = t-=2;
 		return c/2*((postFix)*t*((s+1)*t + s) + 2) + b;
 	}
 
-	inline static float easeInOut(float t,float b , float c, float d) {
+	inline static double easeInOut(double t,double b , double c, double d) {
 		return easeInOut_s(t, b, c, d, 1.70158f);
 	}
 };
 
 class bounce{
 	public:
-	inline static float easeIn (float t,float b , float c, float d) {
+	inline static double easeIn (double t,double b , double c, double d) {
 		return c - easeOut (d-t, 0, c, d) + b;
 	}
 
-	inline static float easeOut(float t,float b , float c, float d) {
+	inline static double easeOut(double t,double b , double c, double d) {
 		if ((t/=d) < (1/2.75f)) {
 			return c*(7.5625f*t*t) + b;
 		} else if (t < (2/2.75f)) {
-			float postFix = t-=(1.5f/2.75f);
+			double postFix = t-=(1.5f/2.75f);
 			return c*(7.5625f*(postFix)*t + .75f) + b;
 		} else if (t < (2.5/2.75)) {
-				float postFix = t-=(2.25f/2.75f);
+				double postFix = t-=(2.25f/2.75f);
 			return c*(7.5625f*(postFix)*t + .9375f) + b;
 		} else {
-			float postFix = t-=(2.625f/2.75f);
+			double postFix = t-=(2.625f/2.75f);
 			return c*(7.5625f*(postFix)*t + .984375f) + b;
 		}
 	}
 
-	inline static float easeInOut(float t,float b , float c, float d) {
+	inline static double easeInOut(double t,double b , double c, double d) {
 		if (t < d/2) return easeIn (t*2, 0, c, d) * .5f + b;
 		else return easeOut (t*2-d, 0, c, d) * .5f + c*.5f + b;
 	}
@@ -71,14 +71,14 @@ class bounce{
 
 class circ{
 	public:
-	inline static float easeIn (float t,float b , float c, float d) {
+	inline static double easeIn (double t,double b , double c, double d) {
 		return -c * (sqrt(1 - (t/=d)*t) - 1) + b;
 	}
-	inline static float easeOut(float t,float b , float c, float d) {
+	inline static double easeOut(double t,double b , double c, double d) {
 		return c * sqrt(1 - (t=t/d-1)*t) + b;
 	}
 
-	inline static float easeInOut(float t,float b , float c, float d) {
+	inline static double easeInOut(double t,double b , double c, double d) {
 		if ((t/=d/2) < 1) return c/2 * (1 - sqrt(1 - t*t)) + b;
 		return c/2 * (sqrt(1 - (t-=2)*t) + 1) + b;
 	}
@@ -87,14 +87,14 @@ class circ{
 class cubic{
 	public:
 
-	inline static float easeIn (float t,float b , float c, float d) {
+	inline static double easeIn (double t,double b , double c, double d) {
 		return c*(t/=d)*t*t + b;
 	}
-	inline static float easeOut(float t,float b , float c, float d) {
+	inline static double easeOut(double t,double b , double c, double d) {
 		return c*((t=t/d-1)*t*t + 1) + b;
 	}
 
-	inline static float easeInOut(float t,float b , float c, float d) {
+	inline static double easeInOut(double t,double b , double c, double d) {
 		if ((t/=d/2) < 1) return c/2*t*t*t + b;
 		return c/2*((t-=2)*t*t + 2) + b;
 	}
@@ -102,46 +102,46 @@ class cubic{
 
 class elastic{
 	public:
-	inline static float easeInPow (float t,float b , float c, float d, float power) {
+	inline static double easeInPow (double t,double b , double c, double d, double power) {
 		if (t==0) return b;  if ((t/=d)==1) return b+c;
-		float p=d*.3f;
-		float a=c;
-		float s=p/4;
-		float postFix =a*pow(2,power*(t-=1)); // this is a fix, again, with post-increment operators
-		return -(postFix * sin((t*d-s)*(2*float(pi))/p )) + b;
+		double p=d*.3f;
+		double a=c;
+		double s=p/4;
+		double postFix =a*pow(2,power*(t-=1)); // this is a fix, again, with post-increment operators
+		return -(postFix * sin((t*d-s)*(2*double(pi))/p )) + b;
 	}
 
-	inline static float easeOutPow(float t,float b , float c, float d, float power) {
+	inline static double easeOutPow(double t,double b , double c, double d, double power) {
 		if (t==0) return b;  if ((t/=d)==1) return b+c;
-		float p=d*.3f;
-		float a=c;
-		float s=p/4;
+		double p=d*.3f;
+		double a=c;
+		double s=p/4;
 		return (a*pow(2,-power*t) * sin( (t*d-s)*(2*pi)/p ) + c + b);
 	}
 
-	inline static float easeInOutPow(float t,float b , float c, float d, float power) {
+	inline static double easeInOutPow(double t,double b , double c, double d, double power) {
 		if (t==0) return b;  if ((t/=d/2)==2) return b+c;
-		float p=d*(.3f*1.5f);
-		float a=c;
-		float s=p/4;
+		double p=d*(.3f*1.5f);
+		double a=c;
+		double s=p/4;
 
 		if (t < 1) {
-			float postFix =a*pow(2,power*(t-=1)); // postIncrement is evil
+			double postFix =a*pow(2,power*(t-=1)); // postIncrement is evil
 			return -.5f*(postFix* sin( (t*d-s)*(2*pi)/p )) + b;
 		}
-		float postFix =  a*pow(2,-power*(t-=1)); // postIncrement is evil
+		double postFix =  a*pow(2,-power*(t-=1)); // postIncrement is evil
 		return postFix * sin( (t*d-s)*(2*pi)/p )*.5f + c + b;
 	}
 
-	inline static float easeIn (float t,float b , float c, float d) {
+	inline static double easeIn (double t,double b , double c, double d) {
 		return easeInPow(t,b,c,d,10);
 	}
 
-	inline static float easeOut(float t,float b , float c, float d) {
+	inline static double easeOut(double t,double b , double c, double d) {
 		return easeOutPow(t,b,c,d,10);
 	}
 
-	inline static float easeInOut(float t,float b , float c, float d) {
+	inline static double easeInOut(double t,double b , double c, double d) {
 		return easeInOutPow(t,b,c,d,10);
 	}
 };
@@ -149,14 +149,14 @@ class elastic{
 
 class exp{
 	public:
-	inline static float easeIn (float t,float b , float c, float d) {
+	inline static double easeIn (double t,double b , double c, double d) {
 		return (t==0) ? b : c * pow(2, 10 * (t/d - 1)) + b;
 	}
-	inline static float easeOut(float t,float b , float c, float d) {
+	inline static double easeOut(double t,double b , double c, double d) {
 		return (t==d) ? b+c : c * (-pow(2, -10 * t/d) + 1) + b;
 	}
 
-	inline static float easeInOut(float t,float b , float c, float d) {
+	inline static double easeInOut(double t,double b , double c, double d) {
 		if (t==0) return b;
 		if (t==d) return b+c;
 		if ((t/=d/2) < 1) return c/2 * pow(2, 10 * (t - 1)) + b;
@@ -164,33 +164,68 @@ class exp{
 	}
 };
 
+class exp10{
+public:
+    inline static double easeIn (double t,double b , double c, double d) {
+        
+        if(t==0){
+            return b;
+        }else{
+            double expSt = log10(b);
+            double expEnd = log10(b+c);
+            double linear = (expEnd-expSt)*t/d + expSt;
+            return pow(10, linear);
+        }
+    }
+    inline static double easeOut(double t,double b , double c, double d) {
+        if(t==0){
+            return b;
+        }else{
+            double expSt = log10(b);
+            double expEnd = log10(b+c);
+            double linear = (expEnd-expSt)*t/d + expSt;
+            return pow(10, linear);
+        }    }
+    
+    inline static double easeInOut(double t,double b , double c, double d) {
+        if(t==0){
+            return b;
+        }else{
+            double expSt = log10(b);
+            double expEnd = log10(b+c);
+            double linear = (expEnd-expSt)*t/d + expSt;
+            return pow(10, linear);
+        }
+    }
+};
+    
 class linear{
 	public:
-	inline static float easeNone (float t,float b , float c, float d) {
+	inline static double easeNone (double t,double b , double c, double d) {
 		return c*t/d + b;
 	}
-	inline static float easeIn (float t,float b , float c, float d) {
+	inline static double easeIn (double t,double b , double c, double d) {
 		return c*t/d + b;
 	}
-	inline static float easeOut(float t,float b , float c, float d) {
+	inline static double easeOut(double t,double b , double c, double d) {
 		return c*t/d + b;
 	}
 
-	inline static float easeInOut(float t,float b , float c, float d) {
+	inline static double easeInOut(double t,double b , double c, double d) {
 		return c*t/d + b;
 	}
 };
 
 class quad{
 	public:
-	inline static float easeIn (float t,float b , float c, float d) {
+	inline static double easeIn (double t,double b , double c, double d) {
 		return c*(t/=d)*t + b;
 	}
-	inline static float easeOut(float t,float b , float c, float d) {
+	inline static double easeOut(double t,double b , double c, double d) {
 		return -c *(t/=d)*(t-2) + b;
 	}
 
-	inline static float easeInOut(float t,float b , float c, float d) {
+	inline static double easeInOut(double t,double b , double c, double d) {
 		if ((t/=d/2) < 1) return c/2*t*t + b;
 		return -c/2 * ((--t)*(t-2) - 1) + b;
 
@@ -214,14 +249,14 @@ class quad{
 
 class quart{
 	public:
-	inline static float easeIn (float t,float b , float c, float d) {
+	inline static double easeIn (double t,double b , double c, double d) {
 		return c*(t/=d)*t*t*t + b;
 	}
-	inline static float easeOut(float t,float b , float c, float d) {
+	inline static double easeOut(double t,double b , double c, double d) {
 		return -c * ((t=t/d-1)*t*t*t - 1) + b;
 	}
 
-	inline static float easeInOut(float t,float b , float c, float d) {
+	inline static double easeInOut(double t,double b , double c, double d) {
 		if ((t/=d/2) < 1) return c/2*t*t*t*t + b;
 		return -c/2 * ((t-=2)*t*t*t - 2) + b;
 	}
@@ -229,14 +264,14 @@ class quart{
 
 class quint{
 	public:
-	inline static float easeIn (float t,float b , float c, float d) {
+	inline static double easeIn (double t,double b , double c, double d) {
 		return c*(t/=d)*t*t*t*t + b;
 	}
-	inline static float easeOut(float t,float b , float c, float d) {
+	inline static double easeOut(double t,double b , double c, double d) {
 		return c*((t=t/d-1)*t*t*t*t + 1) + b;
 	}
 
-	inline static float easeInOut(float t,float b , float c, float d) {
+	inline static double easeInOut(double t,double b , double c, double d) {
 		if ((t/=d/2) < 1) return c/2*t*t*t*t*t + b;
 		return c/2*((t-=2)*t*t*t*t + 2) + b;
 	}
@@ -244,47 +279,47 @@ class quint{
 
 class sine{
 	public:
-	inline static float easeIn (float t,float b , float c, float d) {
-		return -c * cos(t/d * (float(pi)/2)) + c + b;
+	inline static double easeIn (double t,double b , double c, double d) {
+		return -c * cos(t/d * (double(pi)/2)) + c + b;
 	}
-	inline static float easeOut(float t,float b , float c, float d) {
-		return c * sin(t/d * (float(pi)/2)) + b;
+	inline static double easeOut(double t,double b , double c, double d) {
+		return c * sin(t/d * (double(pi)/2)) + b;
 	}
 
-	inline static float easeInOut(float t,float b , float c, float d) {
-		return -c/2 * (cos(float(pi)*t/d) - 1) + b;
+	inline static double easeInOut(double t,double b , double c, double d) {
+		return -c/2 * (cos(double(pi)*t/d) - 1) + b;
 	}
 };
 
 template<typename Function, typename ...Args>
-std::function<float(float,float,float,float)> bind(Function f, Args... parameters){
+std::function<double(double,double,double,double)> bind(Function f, Args... parameters){
 	return std::bind(f, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, parameters...);
 }
 
-inline float map(float v, float minIn, float maxIn, float minOut, float maxOut, std::function<float(float,float,float,float)> easing){
-	float t = v - minIn;
-	float c = maxOut - minOut;
-	float d = maxIn - minIn;
-	float b = minOut;
+inline double map(double v, double minIn, double maxIn, double minOut, double maxOut, std::function<double(double,double,double,double)> easing){
+	double t = v - minIn;
+	double c = maxOut - minOut;
+	double d = maxIn - minIn;
+	double b = minOut;
 	return easing(t,b,c,d);
 }
 
 template<typename Function, typename ...Args>
-inline float map(float v, float minIn, float maxIn, float minOut, float maxOut, Function easing, Args... parameters){
+inline double map(double v, double minIn, double maxIn, double minOut, double maxOut, Function easing, Args... parameters){
 	return map(v, minIn, maxIn, minOut, maxOut, bind(easing, parameters...));
 }
 
-inline float map_clamp(float v, float minIn, float maxIn, float minOut, float maxOut, std::function<float(float,float,float,float)> easing){
+inline double map_clamp(double v, double minIn, double maxIn, double minOut, double maxOut, std::function<double(double,double,double,double)> easing){
 	v = std::min(std::max(v, minIn), maxIn);
 	return map(v,minIn,maxIn,minOut,maxOut,easing);
 }
 
 template<typename Function, typename ...Args>
-inline float map_clamp(float v, float minIn, float maxIn, float minOut, float maxOut, Function easing, Args... parameters){
+inline double map_clamp(double v, double minIn, double maxIn, double minOut, double maxOut, Function easing, Args... parameters){
 	return map_clamp(v, minIn, maxIn, minOut, maxOut, bind(easing, parameters...));
 }
 
-typedef std::function<float(float, float, float, float)> function;
+typedef std::function<double(double, double, double, double)> function;
 
 
 enum class Function {
@@ -296,6 +331,7 @@ enum class Function {
    Quartic,
    Quintic,
    Exponential,
+   Exponential10,
    Back,
    Bounce,
    Elastic
@@ -342,6 +378,10 @@ inline function easing(Function f, Type t){
 		{std::make_pair(Function::Exponential, Type::Out), exp::easeOut},
 		{std::make_pair(Function::Exponential, Type::InOut), exp::easeInOut},
 
+        {std::make_pair(Function::Exponential10, Type::In), exp10::easeIn},
+        {std::make_pair(Function::Exponential10, Type::Out), exp10::easeOut},
+        {std::make_pair(Function::Exponential10, Type::InOut), exp10::easeInOut},
+        
 		{std::make_pair(Function::Back, Type::In), back::easeIn},
 		{std::make_pair(Function::Back, Type::Out), back::easeOut},
 		{std::make_pair(Function::Back, Type::InOut), back::easeInOut},
