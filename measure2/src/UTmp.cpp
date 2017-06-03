@@ -34,28 +34,30 @@ void UTmp::setPosition(){
 
 void UTmp::setAnimation(float st){
     
-    float ppos = ofMap(log10(prevVal-min),  1, log10(max-min), 0, barLen) + 10;
-    float pos  = ofMap(log10(val-min),      1, log10(max-min), 0, barLen) + 10;
+    float ppos = ofMap(log10(prevVal-min),  1, log10(max-min), 0, barLen);
+    float pos  = ofMap(log10(val-min),      1, log10(max-min), 0, barLen);
 
     // show prev line state
     addAnimBySec(anim, &aLine.p2.x, st, st+1, 0, ppos);
 
-    addAnimBySec(anim, &aLine.p2.x, st+change, st+change+2, ppos, pos, cubicOut);
+    addAnimBySec(anim, &aLine.p2.x, st+change, st+change+countSec, ppos, pos, cubicOut);
 
-    EasingPrm prm;
-    prm.setBySec(&val, st+change, st+change+2, prevVal, targetVal);
-    prm.setCbSt([=](){
-        base = prevfbase;
-        exp = prevfexp;
-        bStart=true;
-    });
-    prm.setCb([=](){
-        base = fbase;
-        exp = fexp;
-        bComplete = true;
-    });
-    anim.push_back(prm);
-
+    if(motionId!=0){
+        EasingPrm prm;
+        prm.setBySec(&val, st+change, st+change+countSec, prevVal, targetVal, exp10In);
+        prm.setCbSt([=](){
+            base = prevfbase;
+            exp = prevfexp;
+            bStart=true;
+        });
+        prm.setCb([=](){
+            base = fbase;
+            exp = fexp;
+            bComplete = true;
+        });
+        anim.push_back(prm);
+    }
+    
     addAnimBySec(anim, &aLine.p2.x, st+hold-1, st+hold, pos, 0);
 
 }
@@ -97,7 +99,7 @@ void UTmp::update(int frame){
 }
 
 void UTmp::draw(){
-    int x = 2640;
+    int x = 2630;
     int y = 690;
     
     ofRectangle rS = FontManager::bb["S"];
@@ -150,7 +152,7 @@ void UTmp::draw(){
     ofSetColor(255, 255*aLine.a);
     ofSetLineWidth(26);
     ofTranslate(0, 140 + 60-13);
-    Util::drawLineAsRect(aLine.p1, aLine.p2, 25);
+    Util::drawLineAsRect(aLine.p1, aLine.p2, 33);
     ofPopMatrix();
     
 }

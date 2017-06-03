@@ -37,6 +37,7 @@ public:
     
     float hold = 20;
     float change = 4;
+    float countSec = 5;
     
 };
 
@@ -51,7 +52,7 @@ public:
     virtual void update(int frame);
     
     AnimLine aLine;
-    const float barLen = 500;
+    const float barLen = 680;
 };
 
 class UTmp : public UMeasure{
@@ -65,7 +66,7 @@ public:
     virtual void update(int frame);
     
     AnimLine aLine;
-    const float barLen = 800;
+    const float barLen = 680;
 
 };
 

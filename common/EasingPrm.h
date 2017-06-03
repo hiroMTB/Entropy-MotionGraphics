@@ -168,7 +168,11 @@ namespace EasingUtil{
     const ofxeasing::function expIn = easing(Function::Exponential, Type::In);
     const ofxeasing::function expOut = easing(Function::Exponential, Type::Out);
     const ofxeasing::function expInOut = easing(Function::Exponential, Type::InOut);
-    
+
+    const ofxeasing::function exp10In = easing(Function::Exponential10, Type::In);
+    const ofxeasing::function exp10Out = easing(Function::Exponential10, Type::Out);
+    const ofxeasing::function exp10InOut = easing(Function::Exponential10, Type::InOut);
+
     const ofxeasing::function backIn = easing(Function::Back, Type::In);
     const ofxeasing::function backOut = easing(Function::Back, Type::Out);
     const ofxeasing::function backInOut = easing(Function::Back, Type::InOut);

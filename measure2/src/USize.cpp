@@ -10,8 +10,8 @@ using namespace ScreenGuide;
 
 void USize::setPosition(){
     
-    aCircle.center.x = aCirclePrev.center.x = 800;      //renderW/4;
-    aCircle.center.y = aCirclePrev.center.y = 622;    //renderH/2;
+    aCircle.center.x = aCirclePrev.center.x = 780;      //renderW/4;
+    aCircle.center.y = aCirclePrev.center.y = 620;    //renderH/2;
   
     int ide = motionId*3+2-3;
     
@@ -43,15 +43,15 @@ void USize::setAnimation(float st){
         addAnimBySec(anim, &aCircle.a,      st,  st+1.5);
     }else{
         addAnimBySec(anim, &aCirclePrev.a,  st, st+1.5);
-        addAnimBySec(anim, &aCirclePrev.rad,st+change, st+change+2, aCirclePrev.rad, 0, cubicOut);
+        addAnimBySec(anim, &aCirclePrev.rad,st+change, st+change+countSec, aCirclePrev.rad, 0, cubicOut);
         
-        addAnimBySec(anim, &aCircle.rad,    st+change, st+change+2, renderW/3, rad, cubicOut);
-        addAnimBySec(anim, &aCircle.a,      st+change, st+change+2);
+        addAnimBySec(anim, &aCircle.rad,    st+change, st+change+countSec, renderW/3, rad, cubicOut);
+        addAnimBySec(anim, &aCircle.a,      st+change, st+change+countSec);
     }
     
     
     EasingPrm prm;
-    prm.setBySec(&val, st+change, st+change+2, prevVal, targetVal);
+    prm.setBySec(&val, st+change, st+change+countSec, prevVal, targetValm exp10In);
     prm.setCbSt([=](){
         base = prevfbase;
         exp = prevfexp;
@@ -85,11 +85,11 @@ void USize::update(int frame){
             // toooo small
             float c = val/cm;
             int nExp = log10(c);
-            base = ofToString( c, 3 );
+            base = ofToString( c, 2);
             unit = "cm";
             exp = "";
         }else if(val < 1){
-            base = ofToString(val, 4);
+            base = ofToString(val, 2);
             unit = "lyr";
             exp = "";
         }else if( val<1000000){

@@ -32,20 +32,20 @@ void UAge::setPosition(){
 
 void UAge::setAnimation(float st){
 
-    float ppos = ofMap(log10(prevVal), log10(min), log10(max), 0, barLen) + 10;
-    float pos = ofMap(log10(targetVal), log10(min), log10(max), 0, barLen) + 10;
+    float ppos = ofMap(log10(prevVal), log10(min), log10(max), 0, barLen);
+    float pos = ofMap(log10(targetVal), log10(min), log10(max), 0, barLen);
 
     // show prev line state
     addAnimBySec(anim, &aLine.p2.x, st, st+1, 0, ppos);
     
     
     // LINE animation
-    addAnimBySec(anim, &aLine.p2.x, st+change, st+change+2, ppos, pos, cubicOut);
+    addAnimBySec(anim, &aLine.p2.x, st+change, st+change+countSec, ppos, pos, cubicOut);
    
 
     // COUNT U animation
     EasingPrm prm;
-    prm.setBySec(&val, st+change, st+change+2, prevVal, targetVal);
+    prm.setBySec(&val, st+change, st+change+countSec, prevVal, targetVal, exp10In);
     prm.setCbSt([=](){
         base = prevfbase;
         exp = prevfexp;
@@ -134,11 +134,9 @@ void UAge::update(int frame){
     }
 }
 
-
 void UAge::draw(){
     
-
-    int x = 2640;
+    int x = 2630;
     int y = 340;
     
     ofRectangle rS = FontManager::bb["S"];
@@ -192,7 +190,7 @@ void UAge::draw(){
     ofSetColor(255, 255*aLine.a);
     ofSetLineWidth(26);
     ofTranslate(0, 140 + 60-13);
-    Util::drawLineAsRect(aLine.p1, aLine.p2, 25);
+    Util::drawLineAsRect(aLine.p1, aLine.p2, 33);
     ofPopMatrix();
     
 }

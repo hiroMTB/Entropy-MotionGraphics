@@ -6,6 +6,14 @@
 
 using namespace ScreenGuide;
 
+inline static float e1 (float t,float b , float c, float d) {
+    return (t==0) ? b : c * pow(10, log10(c) * (t/d - 1)) + b;
+}
+inline static float e2(float t,float b , float c, float d) {
+    return (t==d) ? b+c : c * (-pow(10, -log10(c) * t/d) + 1) + b;
+}
+
+
 void ofApp::setup(){
     ofSetBackgroundColor(0);
     ofSetFrameRate(60);
@@ -26,6 +34,19 @@ void ofApp::setup(){
     //exporter.startExport();
     
     loadXml();
+    
+    
+//    float sv = 10;
+//    float ev = 100000;
+//    for(int i=0; i<10; i++){
+//        float minIn = sv;
+//        float maxin = ev;
+//        
+//        e1(
+//        
+//    }
+    
+    
 }
 
 void ofApp::update(){
@@ -45,13 +66,20 @@ void ofApp::draw(){
     
     if(!exporter.isExporting()){
         ofNoFill();
-        ofSetColor(0,0,255);
+        ofSetColor(255, 100);
         ofSetLineWidth(2);
         ofDrawRectangle(0, 0, renderW, renderH);
         ofDrawLine(renderW/2, 0, renderW/2, renderH);
         ofDrawLine(0, renderH/2, renderW, renderH/2);
-        ofDrawRectangle(safeAreaL);
-        ofDrawRectangle(safeAreaR);
+        //ofDrawRectangle(safeAreaL);
+        //ofDrawRectangle(safeAreaR);
+
+        ofSetColor(0,0,255);
+        ofDrawLine( 550, 0,  550, renderH);
+        ofDrawLine(1580, 0, 1580, renderH);
+        ofDrawLine(2600, 0, 2600, renderH);
+        ofDrawLine(3300, 0, 3300, renderH);
+
     }
     
     ofPushMatrix();{
