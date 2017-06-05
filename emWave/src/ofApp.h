@@ -35,7 +35,7 @@ public:
     float phase;
     float circleRad;
     float alphaAll = 0;
-    float alphaSubLine = 0;
+    float alphaSineWave = 0;
     vector<EasingPrm> anim;
 
     ofPoint wavePos;
@@ -49,7 +49,6 @@ public:
     float wvlMax, wvlMin;
     float wavePosStartx;
     float wavePosEndx;
-
     
     float aGuideL_drawRate, aGuideR_drawRate;
     float aTextL_drawRate, aTextR_drawRate;

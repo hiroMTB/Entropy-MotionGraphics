@@ -35,11 +35,11 @@ void ofApp::setup(){
     barStartx = renderW*0.15;
     barEndx =   renderW*0.85;
     
-    float durationSec = 10;
+    float durationSec = 15;
     
     // size of universe, should be 10e+3 times bigger after CMB
     float startRad = 80;
-    float endRad = 210;
+    float endRad = 300;
     
     circleRad = endRad;
     
@@ -48,8 +48,8 @@ void ofApp::setup(){
     wavePos.x = wavePosEndx;
 
     // animation for alpha
-    addAnimBySec(anim, &alphaAll, 0, 0.5, 0, 1, circIn);
-    addAnimBySec(anim, &alphaSubLine, 1.2, 1.8, 0, 1, circIn);
+    addAnimBySec(anim, &alphaAll, 0.0, 0.1, 0, 1, circIn);
+    addAnimBySec(anim, &alphaSineWave, 1.2, 2.0, 0, 1, circIn);
 
     // arc
     aArcAngle = 0;
@@ -58,20 +58,20 @@ void ofApp::setup(){
     
     // animation for L R guide line and text
     aTextL_drawRate = aTextR_drawRate = 0;
-    addAnimBySec(anim, &aGuideL_drawRate, 1.0, 1.6, 0, 1, quadOut);
-    addAnimBySec(anim, &aTextL_drawRate,  1.2, 1.7);
+    //addAnimBySec(anim, &aGuideL_drawRate, 1.0, 1.6, 0, 1, quadOut);
+    //addAnimBySec(anim, &aTextL_drawRate,  1.2, 1.7);
 
-    addAnimBySec(anim, &aGuideR_drawRate, 1.1, 1.7, 0, 1, quadOut);
-    addAnimBySec(anim, &aTextR_drawRate,  1.4, 1.9);
+    addAnimBySec(anim, &aGuideR_drawRate, 2.5, 3.1, 0, 1, quadOut);
+    addAnimBySec(anim, &aTextR_drawRate,  2.9, 3.4);
     
 
     // Animation for bottom bar
     aLine1.p1.y = aLine1.p2.y = safeAreaL.y+safeAreaL.height-100;
-    addAnimBySec(anim, &aLine1.p1.x, 1.3, 1.9, barStartx, barStartx);
-    addAnimBySec(anim, &aLine1.p2.x, 1.3, 1.9, barStartx, barEndx, sinInOut);
+    addAnimBySec(anim, &aLine1.p1.x, 0.0, 0.6, barStartx, barStartx);
+    addAnimBySec(anim, &aLine1.p2.x, 0.0, 0.6, barStartx, barEndx, sinInOut);
 
     // legend
-    addAnimBySec(anim, &aLegend_drawRate, 1.4, 3.0);
+    addAnimBySec(anim, &aLegend_drawRate, 0.0, 0.5);
     
     // animation for circle and wave
     //addAnimBySec(anim, &wavePos.x, 5, 5+durationSec, wavePosStartx, wavePosEndx);
@@ -124,27 +124,6 @@ void ofApp::draw(){
         ofSetLineWidth(4);
         float bary = aLine1.p1.y-wavePos.y;
     
-        // calculate touching point
-        if(0){
-            float r = circleRad*0.99;
-            float ww = circleRad*0.4;
-
-            ofVec2f ch(0, bary);
-            ofVec2f w(ww, 0);
-            ofVec2f d = ch - w;
-            float radian = asin(r/d.length());
-            ofVec2f L = d.getRotatedRad(radian);
-            ofVec2f t = w + L;
-            ofPushMatrix();
-            ofTranslate(0, bary);
-
-            ofSetColor(255, alphaAll*alphaSubLine*255);
-
-            ofDrawLine( -ww, 0, t.x, -t.y);
-            ofDrawLine( ww, 0, -t.x, -t.y);
-            ofPopMatrix();
-        }
-        
         if(1){
             // wave length of CMB
             // Right side guide line and text
@@ -242,7 +221,7 @@ void ofApp::draw(){
 
         
         // draw circle and wave
-        ofSetColor(255, alphaAll*255);
+        ofSetColor(255, alphaAll*alphaSineWave*255);
         ofNoFill();
         ofSetLineWidth(5);
         //ofDrawCircle(0, 0, circleRad);
