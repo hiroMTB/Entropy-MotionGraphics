@@ -1,6 +1,9 @@
 #include "ofApp.h"
 #include "Util.h"
 #include "FontManager.h"
+#include "ScreenGuide.h"
+
+using namespace ScreenGuide;
 
 void ofApp::setup(){
     ofSetBackgroundColor(0);
@@ -15,7 +18,7 @@ void ofApp::setup(){
     
     FontManager::setup();
     
-    exporter.setup(1920*2, 1080, 60, GL_RGB, 4);
+    exporter.setup(renderW, renderH+marginH*2, 60, GL_RGB, 4);
     exporter.setOutputDir("render");
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
@@ -28,17 +31,25 @@ void ofApp::setup(){
         typedef tuple<string, string, string, int, int> Data;
         typedef vector<Data> DataSet;
         DataSet dataSet =  {
+            {"Size", "lyr", "Light Years", 10000000, 40000000},
             {"Age", "yr", "Years", 6000, 400000},
-            {"Temperature", "°C", "Celsius", 11000, 3000},
-            {"Size", "lyr", "Light Years", 10000000, 40000000}
+            {"Temperature", "°C", "Celsius", 11000, 3000}
         };
         
         ms.assign(3, Measure());
         for(int i=0; i<ms.size(); i++){
             ms[i].setup(0, 60, dataSet[i]);
+
+            int aw;
+            if(i==0){
+                aw = 0;
+            }else if(i==1){
+                aw = 1025;
+            }else{
+                aw = 925;
+            }
             
-            int aw = 800;
-            int ah = 400;
+            int ah = 250;
             int ay = h - ah - 100;
             int xmargin = 150;
             
@@ -65,15 +76,16 @@ void ofApp::draw(){
     ofBackground(0);
     
     ofPushMatrix();{
+        ofTranslate(0, marginH);
         
         for(int i=0; i<ms.size(); i++){
             ms[i].draw();
         }
         
     }ofPopMatrix();
-    
-    
     exporter.end();
+    
+    ofBackground(20);
     exporter.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight() );
     
 }
