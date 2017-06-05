@@ -26,7 +26,7 @@ public:
         
         tb.a = 1;
         
-        tb.setAnimation( st, et );
+        //tb.setAnimation( st, et );
         tb.measure.t = std::get<0>(data);
         tb.shortUnit.t = std::get<1>(data);
         tb.unit.t = std::get<2>(data);

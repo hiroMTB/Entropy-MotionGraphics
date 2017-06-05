@@ -2,8 +2,10 @@
 #include "ofApp.h"
 #include "Util.h"
 #include "FontManager.h"
+#include "ScreenGuide.h"
 
 using namespace EasingUtil;
+using namespace ScreenGuide;
 
 void TextBox::reset(){
     
@@ -16,14 +18,34 @@ void TextBox::reset(){
 void TextBox::setAnimation( float startSec, float endSec ){
     
     float os = startSec;
-    float hold = 10;
-    addAnimBySec(anim, &measure.tpos,   startSec+0.1,   startSec+0.375);
-    addAnimBySec(anim, &base.tpos,      startSec+0.3,   startSec+0.575);
-    addAnimBySec(anim, &shortUnit.tpos, startSec+0.5,   startSec+0.675);
-    addAnimBySec(anim, &unit.tpos,      startSec+0.6,   startSec+0.8);
+
+    int nRect = 30;
+    int y = area.y;
+    for(int i=0; i<nRect; i++){
+        shared_ptr<AnimRect> r(new AnimRect());
+        r->rect.x = renderW;
+        r->rect.y = y;
+        float w = r->rect.width = ofRandom(150, 200);
+        float h = r->rect.height = ofRandom(30, 150);
+        y += r->rect.height - 50;
+        r->a = 0.6;
+        
+        float d =  os + 0.25;
+        
+        addAnimBySec(anim, &r->rect.x,      os,     os+d,  renderW, area.x, quarticOut);
+        addAnimBySec(anim, &r->rect.width,  os,     os+d,  w, 0, quarticIn);
+        aRect.push_back(r);
+        
+        if(y>area.y+150) break;
+    }
+
+    os = startSec + 0.12;
+    addAnimBySec(anim, &measure.tpos,   os,   os+0.1+measure.t.size()*0.025);
+    addAnimBySec(anim, &base.tpos,      os,   os+0.1+base.t.size()*0.025);
+    addAnimBySec(anim, &shortUnit.tpos, os+0.2,   os+0.35);
+    addAnimBySec(anim, &unit.tpos,      os+0.3,   os+0.4);
     addAnimBySec(anim, &a,              endSec-0.5,     endSec, 1, 0);
     blinkBySec(  anim, &a,              endSec-0.5,     endSec-0.1, 0.1, 0.2);
-    
 }
 
 void TextBox::update(int frameNow){
@@ -51,6 +73,11 @@ void TextBox::draw(){
     
     ofApp * app = ofApp::get();
     float y = FontManager::font["L"].stringHeight(measure.t);
+    
+    for(int i=0; i<aRect.size(); i++){
+        ofSetColor(255, aRect[i]->a*255);
+        ofDrawRectangle(aRect[i]->rect);
+    }
     
     ofSetColor(255, a * measure.a*255);
     FontManager::font["L"].drawString(measure.tshow, area.x, y+area.y);

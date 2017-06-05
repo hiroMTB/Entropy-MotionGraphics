@@ -38,7 +38,9 @@ void ofApp::setup(){
         
         ms.assign(3, Measure());
         for(int i=0; i<ms.size(); i++){
-            ms[i].setup(0, 60, dataSet[i]);
+            
+            float st = 0;
+            float end = 60;
 
             int aw;
             if(i==0){
@@ -57,6 +59,8 @@ void ofApp::setup(){
             ms[i].tb.area.y = ay;
             ms[i].tb.area.width = aw;
             ms[i].tb.area.height = ah;
+            ms[i].setup(st, end, dataSet[i]);
+            ms[i].tb.setAnimation(st, end);
         }
     }
 }

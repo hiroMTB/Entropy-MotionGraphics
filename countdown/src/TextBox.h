@@ -12,6 +12,7 @@ public:
     AnimText base;
     AnimText shortUnit;
     AnimText unit;
+    vector<shared_ptr<AnimRect>> aRect;
     
     ofRectangle area;
     
