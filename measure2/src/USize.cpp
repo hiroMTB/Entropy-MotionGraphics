@@ -27,6 +27,7 @@ void USize::setPosition(){
         unit = prevfunit = ofApp::get()->ms[ide]->funit;
     }
     
+
     aCirclePrev.rad = ofMap(log10(prevVal), log10(min), log10(max), 10, 300);
 
     cout << motionId << ", " << prevVal << ", " << val << "," << targetVal << ", " << endl;
@@ -90,47 +91,30 @@ void USize::update(int frame){
         return;
     
     if(bStart && !bComplete){
-//        if(val < um*0.001 ){
-//            double c = (double)val/(double)um;
-//            int nExp = log10(c);
-//            base = "10";
-//            unit = "um";
-//            exp = ofToString(nExp);
-//        }else if(val < um*100){
-//            double c = (double)val/(double)um;
-//            base = ofToString(c,3);
-//            unit = "um";
-//            exp = "";
-//        }
-        if(val < mm*0.01 ){
-            double c = (double)val/(double)mm;
+        if(val < cm*0.01 ){
+            double c = (double)val/(double)cm;
             int nExp = log10(c);
             base = "10";
-            unit = "mm";
+            unit = "cm";
             exp = ofToString(nExp);
-        }else if(val < mm*10){
-            double c = (double)val/(double)mm;
-            base = ofToString(c,3);
-            unit = "mm";
-            exp = "";
         }else if(val < cm ){
             double c = (double)val/(double)cm;
-            base = ofToString(c);
+            base = ofToString(c,2);
             unit = "cm";
             exp = "";
         }else if(val < meter ){
             double c = (double)val/(double)cm;
-            base = ofToString(c, 2);
+            base = ofToString(c, 0);
             unit = "cm";
             exp = "";
-        }else if(val < 100*meter ){
+        }else if(val < km ){
             double c = (double)val/(double)meter;
-            base = ofToString(c, 2);
+            base = ofToString(c, 0);
             unit = "m";
             exp = "";
         }else if(val < 10000*km ){
             double c = (double)val/(double)km;
-            base = ofToString(c, 2);
+            base = ofToString(c, 0);
             unit = "km";
             exp = "";
         }else if(val < 0.01){
@@ -153,7 +137,10 @@ void USize::update(int frame){
             unit = "lyr";
             exp = "";
         }else{
-            int nExp = log10(val);
+            int nExp;
+            if(motionId==6) nExp = floor(log10(val));
+            else if(motionId==7) nExp = ceil(log10(val));
+            else nExp = ceil(log10(val));
             base = "10";
             unit = "lyr";
             exp = ofToString(nExp, 0);

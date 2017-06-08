@@ -31,7 +31,7 @@ void ofApp::setup(){
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
     exporter.setFrameRange(0, (animDuration*10)*ofGetTargetFrameRate());
-    exporter.startExport();
+    //exporter.startExport();
     
     loadXml();
 

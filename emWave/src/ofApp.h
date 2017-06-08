@@ -49,6 +49,7 @@ public:
     float wvlMax, wvlMin;
     float wavePosStartx;
     float wavePosEndx;
+    float waveSamplePos;
     
     float aGuideL_drawRate, aGuideR_drawRate;
     float aTextL_drawRate, aTextR_drawRate;

@@ -49,8 +49,11 @@ void ofApp::setup(){
 
     // animation for alpha
     addAnimBySec(anim, &alphaAll, 0.0, 0.1, 0, 1, circIn);
-    addAnimBySec(anim, &alphaSineWave, 1.2, 2.0, 0, 1, circIn);
-
+    // addAnimBySec(anim, &alphaSineWave, 1.0, 1.8, 0, 1, circIn);
+    addAnimBySec(anim, &waveSamplePos, 1.2, 2.0, 0, 1);
+    alphaSineWave = 1;
+    waveSamplePos = 0;
+    
     // arc
     aArcAngle = 0;
     addAnimBySec(anim, &aArcAngle, 0.7, 1.2, 0, 360, sinInOut);
@@ -132,7 +135,7 @@ void ofApp::draw(){
             // line
             float xL = waveLength/2 + 50;
             float xR = circleRad*1.6f;
-            float y  = circleRad/2;
+            float y  = circleRad/4;
             ofSetLineWidth(3);
             //ofDrawLine( xL*aGuideR_drawRate, y, xR*aGuideR_drawRate, y);
             //ofDrawLine( -waveLength/2*aGuideR_drawRate, y*aGuideR_drawRate, waveLength/2*aGuideR_drawRate, y*aGuideR_drawRate);
@@ -156,7 +159,7 @@ void ofApp::draw(){
                 string eShow = expText.substr(0, expText.size()*aTextR_drawRate);
                 FontManager::font["M"].drawString( eShow, xR+50, y+r.height/2);
                 
-                string expNum = "1.9mm";
+                string expNum = "1.9 mm";
                 string expNumShow = expNum.substr(0, expNum.size()*aTextR_drawRate);
                 FontManager::font["M"].drawString( expNumShow, xR+50+400, y+r.height/2);
             }
@@ -166,7 +169,7 @@ void ofApp::draw(){
                 string hzShow = hzText.substr(0, hzText.size()*aTextR_drawRate);
                 FontManager::font["M"].drawString( hzShow, xR+50, y+r.height*2);
                 
-                string hzNum = "2.5Ghz";
+                string hzNum = "160.23 Ghz";
                 string hzNumShow = hzNum.substr(0, hzNum.size()*aTextR_drawRate);
                 FontManager::font["M"].drawString( hzNumShow, xR+50+400, y+r.height*2);
             }
@@ -289,9 +292,13 @@ void ofApp::drawSineWave(float _waveLength, float _amp, float _numWave, float _p
     float totalWaveLength = _waveLength * _numWave;
     float xStart = -totalWaveLength/2;
     
+    int n = 0;
+    int nmax = _numWave*resolution*waveSamplePos;
     for(int i=0; i<_numWave; i++){
         
         for(int j=0; j<resolution; j++){
+            
+            if(n++ >= nmax) break;
             
             float angle = phase + 360.0/resolution * j;
             float rad = ofDegToRad(angle);
