@@ -146,7 +146,7 @@ void UAge::update(int frame){
 
 void UAge::draw(){
     
-    int x = 2630;
+    int x = safeAreaR.x;
     int y = 340;
     
     ofRectangle rS = FontManager::bb["S"];

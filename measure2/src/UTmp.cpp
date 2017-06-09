@@ -106,7 +106,7 @@ void UTmp::update(int frame){
 }
 
 void UTmp::draw(){
-    int x = 2630;
+    int x = 2590, 270, 680, 640);
     int y = 690;
     
     ofRectangle rS = FontManager::bb["S"];

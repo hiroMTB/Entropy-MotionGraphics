@@ -11,7 +11,7 @@ namespace ScreenGuide{
     
     const static float marginH = 100;
     
-    const static ofRectangle safeAreaL(renderW*0.1679, renderH*0.243, renderW*0.2128, renderH*0.633);
-    const static ofRectangle safeAreaR(renderW*0.6184, renderH*0.243, renderW*0.2128, renderH*0.633);
+    const static ofRectangle safeAreaL(550, 270, 1030, 640);
+    const static ofRectangle safeAreaR(2590, 270, 680, 640);
     
 };
