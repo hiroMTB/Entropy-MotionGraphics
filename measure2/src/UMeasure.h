@@ -36,7 +36,7 @@ public:
     float tpos;
     
     float hold;
-    float change = 1;
+    float change = 0;
     float countSec = 10;
     float alpha;
     
