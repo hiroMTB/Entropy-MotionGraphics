@@ -160,7 +160,7 @@ void UAge::draw(){
     ofPushMatrix();
     ofTranslate(x, y);
     
-    Util::drawMeasure(sName, sBase, sExp, sUnit);
+   Util::drawMeasure(sName, sBase, sExp, sUnit); 
     
     ofSetColor(255, 255*alpha);
     ofSetLineWidth(33);

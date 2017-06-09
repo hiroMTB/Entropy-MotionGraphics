@@ -117,6 +117,7 @@ void Util::drawMeasure(string name, string base, string exp, string unit){
     FontManager::font["L"].drawString(name, 0, 0);
     
     float wBase;
+    float y = 133;
     
     {
         float letterspacing = FontManager::font["XL"].getLetterSpacing();
@@ -135,7 +136,18 @@ void Util::drawMeasure(string name, string base, string exp, string unit){
             }else{
                 nextSpace = textWidth+4;
             }
-            FontManager::font["XL"].drawString( s, posx, 137);
+            
+            if(c=='*'){
+                float x = posx + FontManager::bb["XL"].width/2;
+                float y = 137 - FontManager::bb["XL"].height/2;
+                float s = 15;
+                ofSetLineWidth(10);
+                ofDrawLine(x-s, y-s, x+s, y+s);
+                ofDrawLine(x+s, y-s, x-s, y+s);
+            }else{
+                FontManager::font["XL"].drawString( s, posx, 137);
+            }
+            //FontManager::font["XL"].drawString( s, posx, y);
         }
         wBase = posx + nextSpace;
     }
@@ -143,8 +155,8 @@ void Util::drawMeasure(string name, string base, string exp, string unit){
     float hXL = FontManager::bb["XL"].height;
     float hXLexp = FontManager::bb["XLexp"].height;
     
-    if(exp!="") FontManager::font["XLexp"].drawString(exp, wBase+15, 137-(hXL-hXLexp));
+    if(exp!="") FontManager::font["XLexp"].drawString(exp, wBase+15, y-(hXL-hXLexp));
     
     float wExp = FontManager::font["XLexp"].stringWidth(exp);
-    FontManager::font["L"].drawString(unit, wBase+wExp+15+32, 137);
+    FontManager::font["L"].drawString(unit, wBase+wExp+15+32, y);
 }

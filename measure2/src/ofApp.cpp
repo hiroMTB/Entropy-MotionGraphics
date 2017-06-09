@@ -52,7 +52,7 @@ void ofApp::draw(){
     ofBackground(0);
     ofTranslate(0, marginH);
     
-    if(!exporter.isExporting() || frame==0){
+    if(!exporter.isExporting()){
         drawGuide();
     }
     
