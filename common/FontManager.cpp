@@ -29,10 +29,10 @@ void FontManager::setup(float XL, float L, float M, float S, float SS){
     
     {
         font["XL"].load((fontDir/"KP Bob Bold.otf").string(), XL);
-        font["XL"].setLetterSpacing(1.05);
+        font["XL"].setLetterSpacing(1.0);
         
         font["L"].load((fontDir/"KP Bob Bold.otf").string(), L);
-        font["L"].setLetterSpacing(1.05);
+        font["L"].setLetterSpacing(1.0 );
         
         font["M"].load((fontDir/"KP Bob Bold.otf").string(), M);
         font["M"].setLetterSpacing(1.05);

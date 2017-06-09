@@ -41,4 +41,6 @@ public:
 //        }
     }
 
+    
+    static void drawMeasure(string name, string base, string exp, string unit);
 };

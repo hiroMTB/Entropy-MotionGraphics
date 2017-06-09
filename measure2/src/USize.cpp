@@ -10,8 +10,8 @@ using namespace ScreenGuide;
 
 void USize::setPosition(){
     
-    aCircle.center.x = aCirclePrev.center.x = 780;      //renderW/4;
-    aCircle.center.y = aCirclePrev.center.y = 620;    //renderH/2;
+    aCircle.center.x = aCirclePrev.center.x = 780;
+    aCircle.center.y = aCirclePrev.center.y = 590;
   
     int ide = motionId*3+2-3;
     
@@ -152,10 +152,6 @@ void USize::draw(){
     int x = 1150;
     int y = 570;
     
-    ofRectangle rS = FontManager::bb["S"];
-    ofRectangle rM = FontManager::bb["M"];
-    ofRectangle rL = FontManager::bb["L"];
-    
     // update text appearance
     string sName= name.substr(0, name.size() * tpos);
     string sBase= base.substr(0, base.size() * tpos);
@@ -166,55 +162,17 @@ void USize::draw(){
     ofPushMatrix();
     ofTranslate(x, y);
     
-    FontManager::font["M"].drawString(sName, 0, 0);
-    
-    float wBase;// = FontManager::font["L"].stringWidth(base);
-    
     if(base=="approx. 0"){
-        wBase = FontManager::font["L"].stringWidth(base);
-        FontManager::font["L"].drawString(sBase, 0, 140);
+        FontManager::font["XL"].drawString(sBase, 0, 137);
+        Util::drawMeasure(sName, "", sExp, sUnit);
     }else{
-        float letterspacing = FontManager::font["L"].getLetterSpacing();
-        float textWidth = FontManager::font["L"].stringWidth("0");
-        textWidth += 2;
-        string st = sBase;
-        float len = base.size() * textWidth;
-        float nextSpace = 0;
-        float posx =0;
-        for(int i=0; i<st.size(); i++){
-            char c = st[i];
-            string s(&c);
-            posx += nextSpace;
-            if(c==',' || c=='.'){
-                nextSpace = 22;
-            }else{
-                nextSpace = textWidth+4;
-            }
-            
-            if(c=='*'){
-                float x = posx + FontManager::bb["L"].width/2;
-                float y = 140 - FontManager::bb["L"].height/2;
-                float s = 15;
-                ofSetLineWidth(10);
-                ofDrawLine(x-s, y-s, x+s, y+s);
-                ofDrawLine(x+s, y-s, x-s, y+s);
-            }else{
-                FontManager::font["L"].drawString( s, posx, 140);
-            }
-        }
-        wBase = posx + nextSpace;
+        Util::drawMeasure(sName, sBase, sExp, sUnit);
     }
     
-    FontManager::font["S"].drawString(sExp, wBase+15, 140-(rL.height-rS.height));
-    
-    float wExp = FontManager::font["S"].stringWidth(exp);
-    FontManager::font["S"].drawString(sUnit, wBase+wExp+15+32, 140);
 
     ofPopMatrix();
-    
     ofSetColor(255, 255*aCirclePrev.a);
     Util::drawCircle(aCirclePrev.center.x, aCirclePrev.center.y, aCirclePrev.rad, 12);
-    
     ofSetColor(255, 255*aCircle.a);
     Util::drawCircle(aCircle.center.x, aCircle.center.y, aCircle.rad, 12);
     

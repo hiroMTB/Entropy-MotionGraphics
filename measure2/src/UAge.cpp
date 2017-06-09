@@ -147,11 +147,7 @@ void UAge::update(int frame){
 void UAge::draw(){
     
     int x = safeAreaR.x;
-    int y = 340;
-    
-    ofRectangle rS = FontManager::bb["S"];
-    ofRectangle rM = FontManager::bb["M"];
-    ofRectangle rL = FontManager::bb["L"];
+    int y = 327;
     
     // update text appearance
     string sName = name.substr(0, name.size() * tpos);
@@ -164,42 +160,11 @@ void UAge::draw(){
     ofPushMatrix();
     ofTranslate(x, y);
     
-    FontManager::font["M"].drawString(sName, 0, 0);
-    
-    //FontManager::font["L"].drawString(sBase, 0, 140);
-    float wBase;// = len; //FontManager::font["L"].stringWidth(base);
-    
-    {
-        float letterspacing = FontManager::font["L"].getLetterSpacing();
-        float textWidth = FontManager::font["L"].stringWidth("0");
-        textWidth += 2;
-        string st = sBase;
-        float len = base.size() * textWidth;
-        float nextSpace = 0;
-        float posx =0;
-        for(int i=0; i<st.size(); i++){
-            char c = st[i];
-            string s(&c);
-            posx += nextSpace;
-            if(c==',' || c=='.'){
-                nextSpace = 22;
-            }else{
-                nextSpace = textWidth+4;
-            }
-            FontManager::font["L"].drawString( s, posx, 140);
-        }
-        wBase = posx + nextSpace;
-    }
-    
-   if(exp!="") FontManager::font["S"].drawString(sExp, wBase+15, 140-(rL.height-rS.height));
-    
-    float wExp = FontManager::font["S"].stringWidth(exp);
-    FontManager::font["S"].drawString(sUnit, wBase+wExp+15+32, 140);
-    
+    Util::drawMeasure(sName, sBase, sExp, sUnit);
     
     ofSetColor(255, 255*alpha);
     ofSetLineWidth(33);
-    ofTranslate(0, 140 + 60-13);
+    ofTranslate(0, 160);
     Util::drawLineAsRect(aLine.p1, aLine.p2, 33);
     ofPopMatrix();
     

@@ -1,5 +1,6 @@
 #include "ofMain.h"
 #include "Util.h"
+#include "FontManager.h"
 
 void Util::drawLineAsRect( ofVec2f p1, ofVec2f p2, float thickness){
 
@@ -108,4 +109,42 @@ string Util::replaceAll(std::string str, const std::string& from, const std::str
         start_pos += to.length(); // Handles case where 'to' is a substring of 'from'
     }
     return str;
+}
+
+
+void Util::drawMeasure(string name, string base, string exp, string unit){
+    
+    FontManager::font["L"].drawString(name, 0, 0);
+    
+    float wBase;
+    
+    {
+        float letterspacing = FontManager::font["XL"].getLetterSpacing();
+        float textWidth = FontManager::font["XL"].stringWidth("0");
+        textWidth += 2;
+        string st = base;
+        float len = base.size() * textWidth;
+        float nextSpace = 0;
+        float posx =0;
+        for(int i=0; i<st.size(); i++){
+            char c = st[i];
+            string s(&c);
+            posx += nextSpace;
+            if(c==',' || c=='.'){
+                nextSpace = 30;
+            }else{
+                nextSpace = textWidth+4;
+            }
+            FontManager::font["XL"].drawString( s, posx, 137);
+        }
+        wBase = posx + nextSpace;
+    }
+    
+    float hXL = FontManager::bb["XL"].height;
+    float hXLexp = FontManager::bb["XLexp"].height;
+    
+    if(exp!="") FontManager::font["XLexp"].drawString(exp, wBase+15, 137-(hXL-hXLexp));
+    
+    float wExp = FontManager::font["XLexp"].stringWidth(exp);
+    FontManager::font["L"].drawString(unit, wBase+wExp+15+32, 137);
 }

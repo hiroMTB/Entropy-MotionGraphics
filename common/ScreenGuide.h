@@ -13,5 +13,6 @@ namespace ScreenGuide{
     
     const static ofRectangle safeAreaL(550, 270, 1030, 640);
     const static ofRectangle safeAreaR(2590, 270, 680, 640);
-    
+  
+    void drawGuide();
 };

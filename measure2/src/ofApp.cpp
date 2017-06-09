@@ -24,14 +24,14 @@ void ofApp::setup(){
     
     bStart = true;
     
-    FontManager::setup(120, 105, 84, 63, 40);
+    FontManager::setup();
     
     exporter.setup(renderW, renderH+marginH*2, 60, GL_RGB, 4);
     exporter.setOutputDir("render");
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
     exporter.setFrameRange(0, (animDuration*10)*ofGetTargetFrameRate());
-    //exporter.startExport();
+    exporter.startExport();
     
     loadXml();
 
@@ -52,22 +52,8 @@ void ofApp::draw(){
     ofBackground(0);
     ofTranslate(0, marginH);
     
-    if(!exporter.isExporting()){
-        ofNoFill();
-        ofSetColor(255, 100);
-        ofSetLineWidth(2);
-        ofDrawRectangle(0, 0, renderW, renderH);
-        ofDrawLine(renderW/2, 0, renderW/2, renderH);
-        ofDrawLine(0, renderH/2, renderW, renderH/2);
-        //ofDrawRectangle(safeAreaL);
-        //ofDrawRectangle(safeAreaR);
-
-        ofSetColor(0,0,255);
-        ofDrawLine( 550, 0,  550, renderH);
-        ofDrawLine(1580, 0, 1580, renderH);
-        ofDrawLine(2600, 0, 2600, renderH);
-        ofDrawLine(3300, 0, 3300, renderH);
-
+    if(!exporter.isExporting() || frame==0){
+        drawGuide();
     }
     
     ofPushMatrix();{
