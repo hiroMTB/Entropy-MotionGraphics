@@ -26,13 +26,20 @@ void ofApp::setup(){
     
     FontManager::setup();
     
-    exporter.setup(renderW, renderH+marginH*2, 60, GL_RGB, 4);
-    exporter.setOutputDir("render");
+    exporter.setup(renderW/2+marginW*2, renderH+marginH*2, 60, GL_RGB, 4);
+    exporter.setOutputDir("L");
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
     exporter.setFrameRange(0, (animDuration*10)*ofGetTargetFrameRate());
     exporter.startExport();
-    
+
+    exporter2.setup(renderW/2+marginW*2, renderH+marginH*2, 60, GL_RGB, 4);
+    exporter2.setOutputDir("R");
+    exporter2.setAutoExit(true);
+    exporter2.setOverwriteSequence(true);
+    exporter2.setFrameRange(0, (animDuration*10)*ofGetTargetFrameRate());
+    exporter2.startExport();
+
     loadXml();
 
 }
@@ -50,23 +57,46 @@ void ofApp::draw(){
 
     exporter.begin();
     ofBackground(0);
-    ofTranslate(0, marginH);
-    
-    if(!exporter.isExporting()){
-        drawGuide();
-    }
-    
     ofPushMatrix();{
-        for(int i=0; i<ms.size(); i++){
-            ms[i]->draw();
+        ofTranslate(marginW, marginH);
+        
+        if(!exporter.isExporting() || frame==0){
+            drawGuide();
         }
+        
+        ofPushMatrix();{
+            for(int i=0; i<ms.size()/3; i++){
+                ms[i*3+2]->draw();
+            }
+        }ofPopMatrix();
     }ofPopMatrix();
-
     exporter.end();
     
-    ofBackground(20);
+    ///
+    exporter2.begin();
+    ofBackground(0);
+    ofPushMatrix();{
+        ofTranslate(-renderW/2+marginW, marginH);
     
-    exporter.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight() );
+        if(!exporter2.isExporting() || frame==0){
+            drawGuide();
+        }
+        
+        ofPushMatrix();{
+            for(int i=0; i<ms.size()/3; i++){
+                ms[i*3+0]->draw();
+                ms[i*3+1]->draw();
+            }
+        }ofPopMatrix();
+    }ofPopMatrix();
+    exporter2.end();
+    
+    ofBackground(20);
+    if(draw2){
+        exporter.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight() );
+    }else{
+        exporter2.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight() );
+    }
 }
 
 void ofApp::keyPressed(int key){
@@ -75,12 +105,14 @@ void ofApp::keyPressed(int key){
         case 'E': exporter.startExport(); exporter.setFrameRange(frame); break;
         case 'T': exporter.stopExport(); break;
         case 'F': ofToggleFullscreen(); break;
+        case 'd': draw2 = !draw2; break;
     }
     
     if(1<key-48 && key-48<9){
         turnOffAll();
         frame = (key-48) * 20 * 60-1;
     }
+    
 }
 
 // SceneData format

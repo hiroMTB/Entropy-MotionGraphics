@@ -22,7 +22,7 @@ public:
     void loadXml();
     void writeXml();
     void turnOffAll();
-    ofxExportImageSequence exporter;
+    ofxExportImageSequence exporter, exporter2;
     
     bool bStart;
     int currentMotionId = 0;
@@ -31,5 +31,7 @@ public:
     float animDuration = 20;
     vector<EasingPrm> anim;
     vector<shared_ptr<UMeasure>> ms;
+    
+    int draw2 = 0;
 };
 

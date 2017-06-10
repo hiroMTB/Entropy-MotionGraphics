@@ -49,7 +49,7 @@ void USize::setAnimation(float st){
         addAnimBySec(anim, &aCirclePrev.a,  st, st+1.5*sf);
         addAnimBySec(anim, &aCirclePrev.rad,st+change*sf, st+(change+countSec)*sf, aCirclePrev.rad, 0, cubicOut);
         
-        addAnimBySec(anim, &aCircle.rad,    st+change*sf, st+(change+countSec)*sf, renderW/3, rad, cubicOut);
+        addAnimBySec(anim, &aCircle.rad,    st+change*sf, st+(change+countSec)*sf, 1200, rad, cubicOut);
         addAnimBySec(anim, &aCircle.a,      st+change*sf, st+(change+countSec)*sf);
     }
     

@@ -53,10 +53,10 @@ void ofApp::setup(){
     loadSvg();
     
     scaleMax = -15;
-    scaleLenW = (safeAreaR.x+safeAreaR.width-safeAreaL.x)/2;
-    scaleLenH = safeAreaL.height/2;
+    scaleLenW = (renderW-200)/2;
+    scaleLenH = safeAreaL.height*1.5/2;
     
-    float durationSec = 20;
+    float durationSec = 19.5;
     EasingUtil::addAnimBySec(anim, &scaleMax, 0, durationSec, scaleMax, 42, quadIn);
 }
 
@@ -93,8 +93,9 @@ void ofApp::draw(){
         // horizontal
         ofPushMatrix();{
             ofSetLineWidth(5);
-            ofDrawLine(safeAreaL.x+3, bary, safeAreaR.x+safeAreaR.width+3, bary);
             ofTranslate(renderW/2, bary);
+            ofDrawLine(-scaleLenW, 0, scaleLenW, 0);
+            
             for(int i=0; i<ticks.size(); i++){
                 float pos = std::get<0>(ticks[i]);
                 int exp = std::get<1>(ticks[i]);
@@ -105,10 +106,25 @@ void ofApp::draw(){
     
     // vertical
     ofPushMatrix();{
-        ofTranslate(safeAreaR.x+safeAreaR.width+3, safeAreaR.y+safeAreaR.height/2+3);
-        ofSetLineWidth(5);
-        ofDrawLine(0, -scaleLenH, 0, scaleLenH);
+        ofTranslate(renderW/2+scaleLenW, safeAreaR.y+safeAreaR.height/2+3);
+        ofSetLineWidth(3);
+        //ofDrawLine(0, -scaleLenH, 0, scaleLenH);
 
+        ofRotate(90);
+        for(int i=0; i<ticks.size(); i++){
+            float pos = std::get<0>(ticks[i]);
+            int exp = std::get<1>(ticks[i]);
+            if(pos*2<scaleLenH*2){
+                drawTick(pos, exp, false);
+            }
+        }
+    }ofPopMatrix();
+
+    ofPushMatrix();{
+        ofTranslate(renderW/2-scaleLenW, safeAreaR.y+safeAreaR.height/2+3);
+        ofSetLineWidth(3);
+        //ofDrawLine(0, -scaleLenH, 0, scaleLenH);
+        
         ofRotate(-90);
         for(int i=0; i<ticks.size(); i++){
             float pos = std::get<0>(ticks[i]);
@@ -118,6 +134,7 @@ void ofApp::draw(){
             }
         }
     }ofPopMatrix();
+
     
     
     int currentExpOfBiggestBox = -12345;
@@ -145,24 +162,24 @@ void ofApp::draw(){
                 ofPushMatrix();
                 float s = diam/500.0f;
                 ofScale(s, s);
-                svgs[rectId].draw();
+                //svgs[rectId].draw();
                 ofPopMatrix();
                 
-                //ofDrawRectangle(0, 0, diam, diam);
+                ofDrawRectangle(0, 0, diam, diam);
                 ofFill();
             }else{
                 // Too big rectangle
                 ofSetLineWidth(3);
                 float a = ofMap(diam, renderH, scaleLenW*2, 200, 0);
                 ofSetColor(ofColor(255, a));
-                ofDrawLine( pos, -renderH , pos, -renderH/2+20);
-                ofDrawLine(-pos, -renderH, -pos, -renderH/2+20);
+                ofDrawLine( pos, -renderH , pos, safeAreaL.y+safeAreaL.height-renderH/2);
+                ofDrawLine(-pos, -renderH, -pos, safeAreaL.y+safeAreaL.height-renderH/2);
 
                 ofPushMatrix();
                 ofSetColor(ofColor(255, 255));
                 float s = diam/500.0f;
                 ofScale(s, s);
-                svgs[rectId].draw();
+                //svgs[rectId].draw();
                 ofPopMatrix();
 
             }
