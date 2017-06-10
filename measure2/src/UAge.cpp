@@ -60,6 +60,7 @@ void UAge::setAnimation(float st){
         base = fbase;
         exp = fexp;
         bComplete = true;
+        if(motionId==8) name = "Age Today";
     });
     anim.push_back(prm);
     
@@ -109,17 +110,11 @@ void UAge::update(int frame){
             base = ofToString(h,0);
             unit = "h";
             exp = "";
-        }else if(val < mon){
+        }else if(val < year){
             // 1~30 days
             int d = round(val/day);
             base = ofToString(d, 0);
-            unit = "day";
-            exp = "";
-        }else if(val<year){
-            // 1~12 mon
-            int m = val/mon;
-            base = ofToString(m, 0);
-            unit = "m";
+            unit = "days";
             exp = "";
         }else if(val/year < pow(10, 8)){
             float y = val/year;

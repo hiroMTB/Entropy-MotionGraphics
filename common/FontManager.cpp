@@ -4,7 +4,13 @@
 unordered_map<string, ofTrueTypeFontCustom> FontManager::font;
 unordered_map<string, ofRectangle> FontManager::bb;
 
-void FontManager::setup(float XL, float L, float M, float S, float SS){
+void FontManager::setup(){
+    
+    float XL=120.0;
+    float L=80;
+    float M=60;
+    float S=40;
+    float SS=20;
     
     ofTrueTypeFont::setGlobalDpi(72);
     

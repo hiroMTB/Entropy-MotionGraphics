@@ -41,7 +41,7 @@ void ofApp::setup(){
     hMargin = w * 0.06;
     vMargin = h * 0.243;
     
-    FontManager::setup(1);
+    FontManager::setup();
     
     exporter.setup(renderW, renderH+marginH*2, 60, GL_RGB, 4);
     exporter.setOutputDir("render");
@@ -53,8 +53,8 @@ void ofApp::setup(){
     loadSvg();
     
     scaleMax = -15;
-    scaleLenW = (renderW-hMargin)/2;
-    scaleLenH = (renderH-vMargin)/2;
+    scaleLenW = (safeAreaR.x+safeAreaR.width-safeAreaL.x)/2;
+    scaleLenH = safeAreaL.height/2;
     
     float durationSec = 20;
     EasingUtil::addAnimBySec(anim, &scaleMax, 0, durationSec, scaleMax, 42, quadIn);
@@ -78,21 +78,23 @@ void ofApp::update(){
 void ofApp::draw(){
 
     exporter.begin();
+    ofBackground(0);
  
     ofPushMatrix();
-    
     ofTranslate(0, marginH);
     
-    ofBackground(0);
-
+    if(!exporter.isExporting() && bDrawGuide) drawGuide();
+    
     ofSetColor(255);
 
+    float bary = safeAreaL.y+safeAreaL.height;
+    
     if(1){
         // horizontal
         ofPushMatrix();{
-            ofTranslate(renderW/2, renderH-vMargin/2);
             ofSetLineWidth(5);
-            ofDrawLine(-scaleLenW, 0, scaleLenW, 0);
+            ofDrawLine(safeAreaL.x+3, bary, safeAreaR.x+safeAreaR.width+3, bary);
+            ofTranslate(renderW/2, bary);
             for(int i=0; i<ticks.size(); i++){
                 float pos = std::get<0>(ticks[i]);
                 int exp = std::get<1>(ticks[i]);
@@ -103,7 +105,7 @@ void ofApp::draw(){
     
     // vertical
     ofPushMatrix();{
-        ofTranslate(renderW-hMargin/2, renderH/2);
+        ofTranslate(safeAreaR.x+safeAreaR.width+3, safeAreaR.y+safeAreaR.height/2+3);
         ofSetLineWidth(5);
         ofDrawLine(0, -scaleLenH, 0, scaleLenH);
 
@@ -178,18 +180,20 @@ void ofApp::draw(){
             
             ofRectangle bb = FontManager::font["L"].getStringBoundingBox("-15", 0, 0);
             ofRectangle bb2 = FontManager::font["XL"].getStringBoundingBox("10", 0, 0);
+            ofRectangle bb3 = FontManager::font["XLexp"].getStringBoundingBox("-15", 0, 0);
             
-            float a = ofMap(currentPosOfBiggestBox, 0, scaleLenH*2, 100, 255);
+            float a = ofMap(currentPosOfBiggestBox, 0, scaleLenH*2, 150, 255);
             ofSetColor(ofColor(255, a));
             
             ofPushMatrix();{
                 ofTranslate(renderW/2+scaleLenH*1.2, renderH/2);
                 FontManager::font["XL"].drawString("10", 0, bb2.height/2);
-                FontManager::font["L"].drawString(num, bb2.width+20, bb2.height/2-bb.height);
+                FontManager::font["XLexp"].drawString(num, bb2.width+20, bb2.height/2-bb2.height+bb3.height);
                 FontManager::font["L"].drawString(unit, bb2.width+bb.width+40, bb2.height/2);
             }ofPopMatrix();
         }
     }
+    
     
     ofPopMatrix();
     exporter.end();
@@ -230,16 +234,20 @@ void ofApp::drawTick(float pos, float exp, bool text){
 
     string s = ofToString(exp);
     ofRectangle r = FontManager::font["M"].getStringBoundingBox("10", 0, 0);
+    ofRectangle r2 = FontManager::font["Mexp"].getStringBoundingBox("10", 0, 0);
+
     float w = r.width;
     float h = r.height;
+    float w2 = r2.width;
+    float h2 = r2.height;
     
     if(text){
 
         FontManager::font["M"].drawString("10", -pos-w/2*1.2,  h*2.5);
-        FontManager::font["S"].drawString(s,    -pos+w/2,  h*1.5);
+        FontManager::font["Mexp"].drawString(s,    -pos+w/2,  h*2.5-(h-h2));
         
         FontManager::font["M"].drawString("10", pos-w/2*1.2,  h*2.5);
-        FontManager::font["S"].drawString(s,    pos+w/2,  h*1.5);
+        FontManager::font["Mexp"].drawString(s,    pos+w/2,  h*2.5-(h-h2));
     }
 }
 
@@ -247,6 +255,7 @@ void ofApp::keyPressed(int key){
     switch(key){
         case 'E': exporter.startExport(); exporter.setFrameRange(frame); break;
         case 'T': exporter.stopExport(); break;
+        case 'g': bDrawGuide = !bDrawGuide;
     }
 }
 

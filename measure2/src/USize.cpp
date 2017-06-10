@@ -136,14 +136,32 @@ void USize::update(int frame){
             base = ofToString(val, 0);
             unit = "lyr";
             exp = "";
-        }else{
-            int nExp;
-            if(motionId==6) nExp = floor(log10(val));
-            else if(motionId==7) nExp = ceil(log10(val));
-            else nExp = ceil(log10(val));
+            
+            string tmp = base;
+            for(int i=0; i<base.size(); i++){
+                if(i%3==0  && i!=0){
+                    int pos = base.size()-i;
+                    tmp.insert(pos, ",");
+                }
+            }
+            base = tmp;
+        }else if(val<pow(10,7)){
+            int nExp = ceil(log10(val));
             base = "10";
             unit = "lyr";
             exp = ofToString(nExp, 0);
+        }else{
+            // 4 x 10^11 etc
+            int nExp = floor(log10(val));
+            float multi = val/pow(10, nExp);
+            if(multi>=10){
+                nExp-=1;
+                base = "10";
+            }else{
+                base = ofToString(multi, 1) + "*10";
+            }
+            exp = ofToString(nExp, 0);
+            unit = "lyr";
         }
     }
 }

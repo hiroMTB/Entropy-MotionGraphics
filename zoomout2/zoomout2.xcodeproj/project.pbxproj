@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		45AFB3551EC9EC39007FBF38 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45AFB3541EC9EC39007FBF38 /* libtiff.a */; };
 		45AFB35B1EC9EEA6007FBF38 /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AFB3591EC9EEA6007FBF38 /* FontManager.cpp */; };
+		45C364051EEB9E7B002B5070 /* ScreenGuide.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C364041EEB9E7B002B5070 /* ScreenGuide.cpp */; };
 		45FDDFC11EC4D82F00374560 /* ofTrueTypeFontCustom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45FDDFBF1EC4D82F00374560 /* ofTrueTypeFontCustom.cpp */; };
 		4D2E9B411EC5FF9500B1993E /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D2E9B3F1EC5FF9500B1993E /* Util.cpp */; };
 		4D2E9B7B1EC6011100B1993E /* ofxExportImageSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D2E9B751EC5FFF400B1993E /* ofxExportImageSequence.cpp */; };
@@ -56,6 +57,7 @@
 		45AFB3571EC9EC5A007FBF38 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../addons/ofxExportImageSequence/libs/lib/osx/libtiff.a; sourceTree = "<group>"; };
 		45AFB3591EC9EEA6007FBF38 /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = FontManager.cpp; path = ../../common/FontManager.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45AFB35A1EC9EEA6007FBF38 /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = FontManager.h; path = ../../common/FontManager.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		45C364041EEB9E7B002B5070 /* ScreenGuide.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScreenGuide.cpp; path = ../../common/ScreenGuide.cpp; sourceTree = "<group>"; };
 		45FDDFBF1EC4D82F00374560 /* ofTrueTypeFontCustom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = ofTrueTypeFontCustom.cpp; path = ../../common/ofTrueTypeFontCustom.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45FDDFC01EC4D82F00374560 /* ofTrueTypeFontCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ofTrueTypeFontCustom.h; path = ../../common/ofTrueTypeFontCustom.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4D2E9B3F1EC5FF9500B1993E /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = Util.cpp; path = ../../common/Util.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -201,6 +203,7 @@
 				45AFB3591EC9EEA6007FBF38 /* FontManager.cpp */,
 				45AFB35A1EC9EEA6007FBF38 /* FontManager.h */,
 				455BE5C71EDE094600BA970C /* ScreenGuide.h */,
+				45C364041EEB9E7B002B5070 /* ScreenGuide.cpp */,
 			);
 			name = common;
 			sourceTree = "<group>";
@@ -401,6 +404,7 @@
 				4D2E9B7B1EC6011100B1993E /* ofxExportImageSequence.cpp in Sources */,
 				84ABB1BD1EDCF7A500EBFEA2 /* svgtiny.cpp in Sources */,
 				45FDDFC11EC4D82F00374560 /* ofTrueTypeFontCustom.cpp in Sources */,
+				45C364051EEB9E7B002B5070 /* ScreenGuide.cpp in Sources */,
 				45AFB35B1EC9EEA6007FBF38 /* FontManager.cpp in Sources */,
 				84ABB1BF1EDCF7A500EBFEA2 /* svgtiny_list.cpp in Sources */,
 				4D47AFB61EB5F8B800D3F83B /* ofApp.cpp in Sources */,

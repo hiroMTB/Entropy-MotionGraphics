@@ -22,6 +22,7 @@ public:
     virtual void update(int frame){};
     virtual void draw(){};
   
+    void turnOff();
     vector<EasingPrm> anim;
    
     float targetVal, val, prevVal, min, max;

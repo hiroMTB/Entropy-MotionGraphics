@@ -42,5 +42,7 @@ public:
     vector<EasingPrm> anim;
     
     vector<ofxSVG> svgs;
+    
+    bool bDrawGuide = true;
 };
 

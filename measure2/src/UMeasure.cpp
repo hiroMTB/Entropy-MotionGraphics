@@ -44,3 +44,7 @@ void UMeasure::setCommonAnimation(float st){
 }
 
 
+void UMeasure::turnOff(){
+    alpha = 0;
+    //tpos = 0;
+}

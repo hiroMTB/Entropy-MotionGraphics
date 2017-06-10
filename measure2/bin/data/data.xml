@@ -66,7 +66,7 @@
 		</scene>
 		<scene>
 			<num>4.3608e+17</num>
-			<name>Age Today</name>
+			<name>Age</name>
 			<base>13.8</base>
 			<exp/>
 			<sUnit>billion yr</sUnit>

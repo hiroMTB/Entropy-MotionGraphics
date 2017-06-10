@@ -42,23 +42,17 @@ void ofApp::setup(){
             float st = 0;
             float end = 60;
 
-            int aw;
+            ms[i].tb.area.x = safeAreaL.x;
             if(i==0){
-                aw = 0;
+                ms[i].tb.area.y = 270;
             }else if(i==1){
-                aw = 1025;
+                ms[i].tb.area.y = 530;
             }else{
-                aw = 925;
+                ms[i].tb.area.y = 795;
             }
             
-            int ah = 250;
-            int ay = h - ah - 100;
-            int xmargin = 150;
-            
-            ms[i].tb.area.x = xmargin + (xmargin+aw)*i;
-            ms[i].tb.area.y = ay;
-            ms[i].tb.area.width = aw;
-            ms[i].tb.area.height = ah;
+            ms[i].tb.area.width = safeAreaL.width;
+            ms[i].tb.area.height = 180;
             ms[i].setup(st, end, dataSet[i]);
             ms[i].tb.setAnimation(st, end);
         }
@@ -86,6 +80,8 @@ void ofApp::draw(){
             ms[i].draw();
         }
         
+        if(!exporter.isExporting() && bDrawGuide) drawGuide();
+        
     }ofPopMatrix();
     exporter.end();
     
@@ -99,6 +95,7 @@ void ofApp::keyPressed(int key){
         case ' ': bStart = !bStart; break;
         case 'E': exporter.startExport(); exporter.setFrameRange(frame); break;
         case 'T': exporter.stopExport(); break;
+        case 'g': bDrawGuide = !bDrawGuide; break;
     }
 }
 

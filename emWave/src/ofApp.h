@@ -57,4 +57,5 @@ public:
     float aArcAngle;
     
     double sizeOfUniverse;
+    bool bDrawGuide = true;
 };

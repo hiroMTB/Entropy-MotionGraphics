@@ -29,6 +29,7 @@ public:
 
     vector<Measure> ms;
     ofxExportImageSequence exporter;
-    
+
+    bool bDrawGuide = true;
 };
 

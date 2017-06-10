@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		459041231EEB695000EA7A35 /* ScreenGuide.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459041221EEB695000EA7A35 /* ScreenGuide.cpp */; };
 		45AFB3551EC9EC39007FBF38 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45AFB3541EC9EC39007FBF38 /* libtiff.a */; };
 		45AFB35B1EC9EEA6007FBF38 /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AFB3591EC9EEA6007FBF38 /* FontManager.cpp */; };
 		45FDDFB61EC4CBA300374560 /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45FDDFB51EC4CBA300374560 /* TextBox.cpp */; };
@@ -48,6 +49,8 @@
 
 /* Begin PBXFileReference section */
 		456585651EC4BA320028B82B /* TextBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TextBox.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		459041221EEB695000EA7A35 /* ScreenGuide.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScreenGuide.cpp; path = ../../common/ScreenGuide.cpp; sourceTree = "<group>"; };
+		459041241EEB695600EA7A35 /* ScreenGuide.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ScreenGuide.h; path = ../../common/ScreenGuide.h; sourceTree = "<group>"; };
 		45AFB3541EC9EC39007FBF38 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = "../../../../../../../../../../../../Downloads/ofxExportImageSequence-master/libs/lib/osx/libtiff.a"; sourceTree = "<group>"; };
 		45AFB3571EC9EC5A007FBF38 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../addons/ofxExportImageSequence/libs/lib/osx/libtiff.a; sourceTree = "<group>"; };
 		45AFB3591EC9EEA6007FBF38 /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = FontManager.cpp; path = ../../common/FontManager.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -190,6 +193,8 @@
 				4D2E9B821EC602ED00B1993E /* EasingPrm.h */,
 				45AFB3591EC9EEA6007FBF38 /* FontManager.cpp */,
 				45AFB35A1EC9EEA6007FBF38 /* FontManager.h */,
+				459041241EEB695600EA7A35 /* ScreenGuide.h */,
+				459041221EEB695000EA7A35 /* ScreenGuide.cpp */,
 			);
 			name = common;
 			sourceTree = "<group>";
@@ -343,6 +348,7 @@
 			files = (
 				4D2E9B7B1EC6011100B1993E /* ofxExportImageSequence.cpp in Sources */,
 				45FDDFC11EC4D82F00374560 /* ofTrueTypeFontCustom.cpp in Sources */,
+				459041231EEB695000EA7A35 /* ScreenGuide.cpp in Sources */,
 				45AFB35B1EC9EEA6007FBF38 /* FontManager.cpp in Sources */,
 				45FDDFB61EC4CBA300374560 /* TextBox.cpp in Sources */,
 				4D47AFB61EB5F8B800D3F83B /* ofApp.cpp in Sources */,

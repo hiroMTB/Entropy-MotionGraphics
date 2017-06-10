@@ -26,8 +26,8 @@ void TextBox::setAnimation( float startSec, float endSec ){
         r->rect.x = renderW;
         r->rect.y = y;
         float w = r->rect.width = ofRandom(150, 200);
-        float h = r->rect.height = ofRandom(30, 150);
-        y += r->rect.height - 50;
+        float h = r->rect.height = ofRandom(30, 80);
+        y += h;
         r->a = 0.6;
         
         float d =  os + 0.25;
@@ -36,7 +36,7 @@ void TextBox::setAnimation( float startSec, float endSec ){
         addAnimBySec(anim, &r->rect.width,  os,     os+d,  w, 0, quarticIn);
         aRect.push_back(r);
         
-        if(y>area.y+150) break;
+        if(y>area.y+180) break;
     }
 
     os = startSec + 0.12;
@@ -63,31 +63,17 @@ void TextBox::update(int frameNow){
 }
 
 void TextBox::draw(){
-    
-    // draw rect
-    if(0){
-        ofNoFill();
-        ofSetColor(255, 50);
-        ofDrawRectangle(area);
-    }
-    
-    ofApp * app = ofApp::get();
-    float y = FontManager::font["L"].stringHeight(measure.t);
+
+    ofPushMatrix();
+    ofTranslate(0, -70);
     
     for(int i=0; i<aRect.size(); i++){
         ofSetColor(255, aRect[i]->a*255);
         ofDrawRectangle(aRect[i]->rect);
     }
     
-    ofSetColor(255, a * measure.a*255);
-    FontManager::font["L"].drawString(measure.tshow, area.x, y+area.y);
-    
-    y += 120;
-    float basew  = FontManager::font["XL"].stringWidth(base.tshow);
-    float sunitw = FontManager::font["L"].stringWidth(shortUnit.t);
-    
-    y += 30;
-    
+    ofPopMatrix();
+   
     string tmp = base.t;
     for(int i=0; i<base.t.size(); i++){
         if(i%3==0  && i!=0){
@@ -97,38 +83,57 @@ void TextBox::draw(){
     }
     base.t = tmp;
     
-    float letterspacing = FontManager::font["XL"].getLetterSpacing();
-    float textWidth = FontManager::font["XL"].stringWidth("9");
-    //textWidth *= letterspacing; // buggy??
-    textWidth += 12;
-    string st = base.tshow;
-    float nextSpace = 0;
-    float posx =0;
-    float xx = area.x;
-    for(int i=0; i<st.size(); i++){
-        char c = st[i];
-        string s(&c);
-        posx += nextSpace;
-        if(c==',' || c=='.'){
-            nextSpace = 35;
-        }else{
-            nextSpace = textWidth+4;
+    ofSetColor(255, a * measure.a*255);
+ 
+    
+    ofPushMatrix();
+    ofTranslate(area.x, area.y);
+    //Util::drawMeasure(measure.tshow, base.tshow, "", shortUnit.tshow);
+    
+    FontManager::font["L"].drawString(measure.tshow, 0, 0);
+    
+    float wBase;
+    float basey = 117;
+    
+    {
+        float letterspacing = FontManager::font["XL"].getLetterSpacing();
+        float textWidth = FontManager::font["XL"].stringWidth("0");
+        textWidth += 2;
+        string st = base.tshow;
+        float len = base.t.size() * textWidth;
+        float nextSpace = 0;
+        float posx =0;
+        for(int i=0; i<st.size(); i++){
+            char c = st[i];
+            string s(&c);
+            posx += nextSpace;
+            if(c==',' || c=='.'){
+                nextSpace = 30;
+            }else{
+                nextSpace = textWidth+4;
+            }
+            
+            if(c=='*'){
+                float x = posx + FontManager::bb["XL"].width/2;
+                float y = basey - FontManager::bb["XL"].height/2;
+                float s = 15;
+                ofSetLineWidth(10);
+                ofDrawLine(x-s, y-s, x+s, y+s);
+                ofDrawLine(x+s, y-s, x-s, y+s);
+            }else{
+                FontManager::font["XL"].drawString( s, posx, basey);
+            }
+            //FontManager::font["XL"].drawString( s, posx, y);
         }
-        FontManager::font["XL"].drawString( s, xx+posx, y+area.y);
+        wBase = posx + nextSpace;
     }
-    posx += nextSpace;
     
-    FontManager::font["L"].drawString(shortUnit.tshow, area.x+posx+50, y+area.y);
+    float hXL = FontManager::bb["XL"].height;
+    float hXLexp = FontManager::bb["XLexp"].height;
     
-    // prepare text fitting
-    y += 80;
-
-    float sUnitw = FontManager::font["L"].stringWidth(shortUnit.t);
-    float unitw = FontManager::font["M"].stringWidth(unit.t);
-    //float unith = FontManager::font["M"].stringHeight(unit.tshow);
-    float unitx = area.x + posx + 50 + sUnitw - unitw;
-    float unity = area.y + y;
-    //FontManager::font["M"].drawString(unit.tshow, unitx, unity);
+    
+    FontManager::font["L"].drawString(shortUnit.tshow, wBase+15+32, basey);
+    ofPopMatrix();
     
 }
 

@@ -76,6 +76,11 @@ void ofApp::keyPressed(int key){
         case 'T': exporter.stopExport(); break;
         case 'F': ofToggleFullscreen(); break;
     }
+    
+    if(1<key-48 && key-48<9){
+        turnOffAll();
+        frame = (key-48) * 20 * 60-1;
+    }
 }
 
 // SceneData format
@@ -173,6 +178,13 @@ void ofApp::loadXml(){
     }
 }
 
+void ofApp::turnOffAll(){
+    
+    for(int i=0; i<ms.size(); i++){
+        ms[i]->turnOff();
+    }
+    
+}
 int main(){
     
     ofSetupOpenGL(renderW/2, renderH/2, OF_WINDOW);

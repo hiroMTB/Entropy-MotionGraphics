@@ -17,14 +17,14 @@ void ofApp::setup(){
     
     int w = renderW;
     int h = renderH;
-    FontManager::setup(1);
+    FontManager::setup();
     
     exporter.setup(renderW, renderH+marginH*2, 60, GL_RGB, 4);
     exporter.setOutputDir("render");
     exporter.setAutoExit(true);
     exporter.setOverwriteSequence(true);
     
-    //exporter.startExport();
+    exporter.startExport();
 
     phase = 0;
     
@@ -81,16 +81,16 @@ void ofApp::setup(){
     //addAnimBySec(anim, &circleRad, 5, 5+durationSec, startRad, endRad);
     
     // turn off
-    addAnimBySec(anim, &alphaAll, 5+durationSec, 5+durationSec+1, 1, 0, circIn);
+    addAnimBySec(anim, &alphaAll, 5+durationSec-1, 5+durationSec, 1, 0, circIn);
 
     waveType = {
-        //{"Gamma ray",   "10",   "-12",      "m",   pow(10, -12) },
-        {"X-ray",       "10",   "-10",      "m",   pow(10,-10) },
-        {"Ultraviolet", "10",   "-8",       "m",   pow(10, -8)},
-        {"Visible",     "0.5 * 10",   "-6", "m",  0.5*pow(10, -6)},
-        {"Infrared",    "10",   "-5",       "m",    pow(10, -5)},
+        {"Radio",       "1",    "",         "km",   pow(10,3)},
         {"Microwave",   "1",    "",         "cm",   1.9*pow(10,-3) },
-        {"Radio",       "1",    "",         "km",   pow(10,3)}
+        {"Infrared",    "10",   "-5",       "m",    pow(10, -5)},
+        {"Visible",     "0.5 * 10",   "-6", "m",  0.5*pow(10, -6)},
+        {"Ultraviolet", "10",   "-8",       "m",   pow(10, -8)},
+        {"X-ray",       "10",   "-10",      "m",   pow(10,-10) }
+        //{"Gamma ray",   "10",   "-12",      "m",   pow(10, -12) }
     };
     
 }
@@ -122,100 +122,49 @@ void ofApp::draw(){
         ofSetColor(255, alphaAll*255);
        
         ofTranslate(0, marginH);
-        ofTranslate(wavePos);
         
         ofSetLineWidth(4);
         float bary = aLine1.p1.y-wavePos.y;
     
         if(1){
-            // wave length of CMB
-            // Right side guide line and text
-
-            
             // line
             float xL = waveLength/2 + 50;
-            float xR = circleRad*1.6f;
-            float y  = circleRad/4;
+            float xR = safeAreaL.x; //circleRad*1.6f;
+            float y  = safeAreaL.y;
             ofSetLineWidth(3);
-            //ofDrawLine( xL*aGuideR_drawRate, y, xR*aGuideR_drawRate, y);
-            //ofDrawLine( -waveLength/2*aGuideR_drawRate, y*aGuideR_drawRate, waveLength/2*aGuideR_drawRate, y*aGuideR_drawRate);
-
-            // short
-            //ofDrawLine( -waveLength/2, (circleRad)*aGuideR_drawRate, -waveLength/2, (y+10)*aGuideR_drawRate);
-            //ofDrawLine(  waveLength/2, (circleRad)*aGuideR_drawRate,  waveLength/2, (y+10)*aGuideR_drawRate);
-                
-            // text
-            string title = "CMB\nCosmic Microwave Background";
-            string show1 = title.substr(0, title.size()*aTextR_drawRate);
-            ofRectangle rL = FontManager::font["M"].getStringBoundingBox(title, 0, 0);
-            FontManager::font["M"].drawString(show1, xR+50, y-rL.height-50);
             
-            float exp = ofMap(wavePos.x, barStartx, barEndx, wvlMin, wvlMax);
-            //string expText = ofToString(pow(10, exp+3));
-            ofRectangle r = FontManager::bb["M"];
+            // text
+            string title = "Cosmic\nMicrowave\nBackground";
+            string show1 = title.substr(0, title.size()*aTextR_drawRate);
+            ofRectangle rL = FontManager::bb["L"];
+            FontManager::font["L"].drawString(show1, xR, y-rL.height+15);
+            
+            ofRectangle r = FontManager::bb["S"];
 
+            y += 300;
+            
             {
                 string expText = "Wavelength";
                 string eShow = expText.substr(0, expText.size()*aTextR_drawRate);
-                FontManager::font["M"].drawString( eShow, xR+50, y+r.height/2);
+                FontManager::font["S"].drawString( eShow, xR, y+r.height/2);
                 
                 string expNum = "1.9 mm";
                 string expNumShow = expNum.substr(0, expNum.size()*aTextR_drawRate);
-                FontManager::font["M"].drawString( expNumShow, xR+50+400, y+r.height/2);
+                FontManager::font["S"].drawString( expNumShow, xR+400, y+r.height/2);
             }
             
             {
                 string hzText = "Frequency";
                 string hzShow = hzText.substr(0, hzText.size()*aTextR_drawRate);
-                FontManager::font["M"].drawString( hzShow, xR+50, y+r.height*2);
+                FontManager::font["S"].drawString( hzShow, xR, y+r.height*2);
                 
                 string hzNum = "160.23 Ghz";
                 string hzNumShow = hzNum.substr(0, hzNum.size()*aTextR_drawRate);
-                FontManager::font["M"].drawString( hzNumShow, xR+50+400, y+r.height*2);
+                FontManager::font["S"].drawString( hzNumShow, xR+400, y+r.height*2);
             }
         }
         
-        if(0){
-            // size of the universe
-            // draw left side guide line and text
-            
-            // line
-            float xL = safeAreaL.x + safeAreaL.width/2 - wavePos.x; //barStartx - wavePos.x;
-            float xR = 0;//circleRad*0.9;
-            float y = circleRad;
-            ofSetLineWidth(2);
-            ofDrawLine( xL*aGuideL_drawRate,  y+10, xR, y+10);
-            ofDrawLine( xL*aGuideL_drawRate, -y-10, xR, -y-10);
-            
-            // text
-            string title = "Size of the Universe";
-            string show1 = title.substr(0, title.size()*aTextL_drawRate);
-
-            ofRectangle rL = FontManager::font["M"].getStringBoundingBox(title, 0, 0);
-            FontManager::font["M"].drawString(show1, xL-rL.width-50, -rL.height/2-30);
-            
-            double sizeMin = sizeOfUniverse = 4.0*pow(10,7);         // 4*10e+07 lyr
-            double sizeMax = 5.0*pow(10,10);                         // 5*10e+10 lyr
-            sizeOfUniverse = sizeMin + (sizeMax-sizeMin)*(double)(wavePos.x-wavePosStartx)/(double)(wavePosEndx-wavePosStartx);
-            
-            char m[255];
-            sprintf(m, "%0.0f", sizeOfUniverse);
-            string expText = string(m);
-            expText +=  " lyr";
-            string show = expText.substr(0, expText.size()*aTextL_drawRate);
-            ofRectangle r = FontManager::font["M"].getStringBoundingBox(expText, 0, 0);
-            float textWidth = FontManager::font["M"].stringWidth("9")+8;
-            float len = show.size() * textWidth;
-            for(int i=0; i<show.size(); i++){
-                float posx = textWidth * i;
-                char c = show[i];
-                string s(&c);
-                FontManager::font["M"].drawString( s, xL-50+posx-len, r.height+30);
-            }
-            
-            //FontManager::font["M"].drawString(show, xL-r.width-50, r.height+30);
-            
-        }
+        ofTranslate(wavePos);
         
         // draw black circle bg
         ofFill();
@@ -235,10 +184,12 @@ void ofApp::draw(){
         
     }ofPopMatrix();
     
-    
-    // aaand spectrum
-    drawSpectrum();
-    
+    ofPushMatrix();{
+        ofTranslate(0, marginH);
+        drawSpectrum();
+        if(!exporter.isExporting() && bDrawGuide) drawGuide();
+    }ofPopMatrix();
+
     exporter.end();
     
     ofBackground(75);
@@ -248,12 +199,12 @@ void ofApp::draw(){
 void ofApp::drawSpectrum(){
     
     float thickness = 6;
-    float bary = aLine1.p1.y;
+    float bary = safeAreaL.y+safeAreaL.height; //aLine1.p1.y;
     
     ofSetRectMode(OF_RECTMODE_CORNER);
     ofFill();
     ofSetColor(255, alphaAll*255);
-    ofDrawRectangle( aLine1.p1.x, bary, aLine1.p2.x-aLine1.p1.x, thickness );
+    ofDrawRectangle( safeAreaL.x, bary, safeAreaR.x+safeAreaR.width-safeAreaL.x, thickness );
     
     // legend
     if(1){
@@ -264,11 +215,11 @@ void ofApp::drawSpectrum(){
             float posx = mapWaveLength(v);
             
             ofSetLineWidth(5);
-            ofDrawLine(posx,  aLine1.p1.y+thickness, posx,  aLine1.p1.y+thickness+30);
+            ofDrawLine(posx,  bary+thickness, posx,  bary+thickness+30);
             
             ofRectangle r = FontManager::font["S"].getStringBoundingBox(n, 0, 0);
             
-            FontManager::font["S"].drawString(n, posx-r.width/2, aLine1.p1.y+r.height+thickness+30+30 );
+            FontManager::font["S"].drawString(n, posx-r.width/2, bary+r.height+thickness+30+30 );
         }
     }
     
@@ -329,6 +280,7 @@ void ofApp::keyPressed(int key){
         case 'E': exporter.startExport(); exporter.setFrameRange(frame); break;
         case 'T': exporter.stopExport(); break;
         case 'F': ofToggleFullscreen(); break;
+        case 'g' : bDrawGuide = !bDrawGuide; break;
     }
     
 }
@@ -349,7 +301,7 @@ float ofApp::mapWaveLength(double waveLength){
     float wLenMinLog = log10(wLenMin);
     float wLenMaxLog = log10(wLenMax);
     
-    return ofMap(vLog, wLenMinLog, wLenMaxLog, barStartx, barEndx);
+    return ofMap(vLog, wLenMinLog, wLenMaxLog, barEndx, barStartx);
 }
 
 int main(){

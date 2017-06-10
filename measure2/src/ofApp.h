@@ -21,7 +21,7 @@ public:
     void keyPressed(int key);
     void loadXml();
     void writeXml();
-    
+    void turnOffAll();
     ofxExportImageSequence exporter;
     
     bool bStart;
