@@ -56,7 +56,7 @@ void ofApp::setup(){
     scaleLenW = (renderW-200)/2;
     scaleLenH = safeAreaL.height*1.5/2;
     
-    float durationSec = 19.5;
+    float durationSec = 40;
     EasingUtil::addAnimBySec(anim, &scaleMax, 0, durationSec, scaleMax, 42, quadIn);
 }
 
@@ -72,7 +72,8 @@ void ofApp::update(){
     ticks.clear();
 
     int expMin = -15;
-    ticks = calcExpScale(2.2, expMin, scaleMax, scaleLenW);
+    //ticks = calcExpScale(2.2, expMin, scaleMax, scaleLenW);
+    ticks = calcExpScale(3, expMin, scaleMax, scaleLenW);
 }
 
 void ofApp::draw(){
